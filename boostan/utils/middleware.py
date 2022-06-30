@@ -1,14 +1,14 @@
-from api.models import Visitor
-
 from os import environ as env
 
+from api.models import Visitor, get_beinol_bot_ip
+
 from .telegram import send_alert
+
 
 def vistorsMiddleware(get_response):
     def middleware(request):
 
-        ADMIN_URL = env.get("DJANGO_ADMIN_URL", 'admin').replace('/', '')
-        print(ADMIN_URL)
+        ADMIN_URL = env.get("DJANGO_ADMIN_URL", "admin").replace("/", "")
         IGNORED_PATH = [
             f"/{ADMIN_URL}/jsi18n/",
             f"/{ADMIN_URL}/api/visitor/",
@@ -24,7 +24,7 @@ def vistorsMiddleware(get_response):
         user_agent = request.META.get("HTTP_USER_AGENT")
         path = request.META.get("PATH_INFO")
 
-        if ip == "185.212.202.244":
+        if ip == get_beinol_bot_ip():
             user_agent = "BeinolBot"
 
         data = {

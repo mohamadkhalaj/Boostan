@@ -111,6 +111,7 @@ def get_deadline_message():
     except:
         return ""
 
+
 def get_insufficient_balance_message():
     try:
         return Setting.objects.get(name="insufficient_balance_message").value
@@ -127,7 +128,7 @@ def get_invalid_credential_message():
 
 def get_special_users():
     ar = []
-    values =  Setting.objects.filter(name="special_user").values_list("value")
+    values = Setting.objects.filter(name="special_user").values_list("value")
     for item in values:
         ar.append(item[0])
     return ar
@@ -193,3 +194,26 @@ def check_operating_mode():
     if not value:
         return "normal"
     return value
+
+
+def get_beinol_bot_ip():
+    try:
+        return Setting.objects.filter(name="beinol_bot_ip").first().value
+    except:
+        return ""
+
+
+def get_rate_limit():
+    try:
+        value = float(Setting.objects.filter(name="rate_limit").first().value)
+        return value
+    except:
+        return ""
+
+
+def get_connection_timeout():
+    try:
+        value = float(Setting.objects.filter(name="connection_timeout").first().value)
+        return value
+    except:
+        return ""
