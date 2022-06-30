@@ -17,6 +17,7 @@ from .models import (
     get_unknown_operation_message,
     get_whitelist_message,
     increment_count_of_used,
+    get_insufficient_balance_message,
 )
 
 # Create your views here.
@@ -73,6 +74,8 @@ def food_list(request):
         food_list_status = get_food_list(cookie, name, credit)
         if not food_list_status:
             return JsonResponse({"error": get_deadline_message()}, status=400)
+        elif food_list_status == 1:
+            return JsonResponse({"error": get_insufficient_balance_message()}, status=400)
         food_list = food_list_status
         return JsonResponse({"food_list": food_list}, status=200)
 

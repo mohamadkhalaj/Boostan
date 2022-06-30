@@ -1,7 +1,9 @@
 import re
+
 from pprint import pprint
 
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -89,7 +91,9 @@ def get_food_list(cookie, name, credit):
 
     response = requests.get(food_list_url, cookies=cookies, headers=headers)
     if "زمان انتخاب برنامه غذایی به پایان رسیده است ." in response.text:
-        return False
+        return 0
+    if "اعتبار فعلی شما برای انتخاب غذا کافی نیست" in response.text:
+        return 1
     soup = BeautifulSoup(response.text, "html.parser")
     days = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     food_lists = {

@@ -111,6 +111,12 @@ def get_deadline_message():
     except:
         return ""
 
+def get_insufficient_balance_message():
+    try:
+        return Setting.objects.get(name="insufficient_balance_message").value
+    except:
+        return ""
+
 
 def get_invalid_credential_message():
     try:
