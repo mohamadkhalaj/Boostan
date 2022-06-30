@@ -39,7 +39,7 @@ def vistorsMiddleware(get_response):
             obj.save()
 
         if path == f"/{ADMIN_URL}/" and request.user.is_authenticated:
-            message = f"🚨یک نفر با مشخصات زیر وارد پنل مدیریت بوستان شده است:\n🌐IP: {ip}\n📍User agent: {user_agent}"
+            message = f"🚨یک نفر با مشخصات زیر وارد پنل مدیریت بوستان 🍟🍔 شده است:\n🌐IP: {ip}\n📍User agent: {user_agent}"
             send_alert(message)
 
         response = get_response(request)
