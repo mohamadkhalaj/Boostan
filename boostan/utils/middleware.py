@@ -1,13 +1,17 @@
 from api.models import Visitor
 
-from .telegram import send_alert
+from os import environ as env
 
+from .telegram import send_alert
 
 def vistorsMiddleware(get_response):
     def middleware(request):
+
+        ADMIN_URL = env.get("DJANGO_ADMIN_URL", 'admin').replace('/', '')
+        print(ADMIN_URL)
         IGNORED_PATH = [
-            "/admin/jsi18n/",
-            "/admin/api/visitor/",
+            f"/{ADMIN_URL}/jsi18n/",
+            f"/{ADMIN_URL}/api/visitor/",
             "/favicon.ico",
         ]
 
@@ -30,11 +34,11 @@ def vistorsMiddleware(get_response):
 
         if path not in IGNORED_PATH:
             obj = Visitor(ip_address=ip, user_agent=user_agent, path=path, data=data)
-            if path.startswith("/admin/") and request.user.is_authenticated:
+            if path.startswith(f"/{ADMIN_URL}/") and request.user.is_authenticated:
                 obj.is_admin_panel = True
             obj.save()
 
-        if path == "/admin/" and request.user.is_authenticated:
+        if path == f"/{ADMIN_URL}/" and request.user.is_authenticated:
             message = f"🚨یک نفر با مشخصات زیر وارد پنل مدیریت بوستان شده است:\n🌐IP: {ip}\n📍User agent: {user_agent}"
             send_alert(message)
 
