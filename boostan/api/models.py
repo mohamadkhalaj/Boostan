@@ -221,7 +221,7 @@ def get_connection_timeout():
 
 def is_rate_limit_enabled():
     try:
-        value = Setting.objects.filter(name="rate_limit").first().value
+        value = get_rate_limit()
         if float(value) > 0:
             return True
         else:
