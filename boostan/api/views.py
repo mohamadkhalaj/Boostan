@@ -73,9 +73,7 @@ def rate_limit_decorator(func):
             if not stun in WAITING_LIST:
                 WAITING_LIST.append(stun)
             else:
-                while stun in WAITING_LIST:
-                    print("waiting...")
-                    time.sleep(0.1)
+                return JsonResponse({"error": get_wait_message()}, status=429)
             res, remain = rate_limit(stun)
             if not res:
                 remove_stun_from_waiting_lit(stun)
