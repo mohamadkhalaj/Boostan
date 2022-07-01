@@ -217,3 +217,21 @@ def get_connection_timeout():
         return value
     except:
         return ""
+
+
+def is_rate_limit_enabled():
+    try:
+        value = Setting.objects.filter(name="rate_limit").first().value
+        if float(value) > 0:
+            return True
+        else:
+            return False
+    except:
+        return True
+
+
+def get_wait_message():
+    try:
+        return Setting.objects.filter(name="wait_message").first().value
+    except:
+        return ""
