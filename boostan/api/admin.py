@@ -1,9 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Setting
-from .models import Student
-from .models import Visitor
+from .models import Setting, Statistics, Student, Visitor
 
 # Register your models here.
 admin.site.site_header = _("Boostan API management system")
@@ -16,6 +14,14 @@ class settingAdmin(admin.ModelAdmin):
 admin.site.register(Setting, settingAdmin)
 
 
+class statisticsAdmin(admin.ModelAdmin):
+    readonly_fields = ("name", "value")
+    list_display = ("name", "value")
+
+
+admin.site.register(Statistics, statisticsAdmin)
+
+
 class studentAdmin(admin.ModelAdmin):
     readonly_fields = [
         "full_name",
@@ -26,9 +32,21 @@ class studentAdmin(admin.ModelAdmin):
         "top_credit",
         "first_used",
         "last_used",
+        "total_recieved_list",
+        "total_reserved_food",
+        "total_forget_code",
     ]
-    list_display = ("full_name", "status", "count_of_used", "first_used_time", "last_used_time")
-    list_filter = ("status","first_used", "last_used")
+    list_display = (
+        "full_name",
+        "status",
+        "count_of_used",
+        "first_used_time",
+        "last_used_time",
+        "total_recieved_list",
+        "total_reserved_food",
+        "total_forget_code",
+    )
+    list_filter = ("status", "first_used", "last_used")
     search_fields = ("full_name", "stu_number")
     ordering = ("-last_used", "status")
 
