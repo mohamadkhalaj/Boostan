@@ -1,6 +1,12 @@
 from os import environ as env
 
-from api.models import Visitor, get_beinol_bot_ip
+from api.models import (
+    check_visitor_log,
+    create_visitor,
+    get_beinol_bot_ip,
+    mark_visitor_as_is_admin,
+    statistics_total_requests,
+)
 
 from .telegram import send_alert
 
@@ -32,11 +38,14 @@ def vistorsMiddleware(get_response):
             "Post": request.POST,
         }
 
-        if path not in IGNORED_PATH:
-            obj = Visitor(ip_address=ip, user_agent=user_agent, path=path, data=data)
-            if path.startswith(f"/{ADMIN_URL}/") and request.user.is_authenticated:
-                obj.is_admin_panel = True
-            obj.save()
+        statistics_total_requests()
+        if check_visitor_log() == "True":
+            if path not in IGNORED_PATH:
+                visitor = create_visitor(
+                    ip_address=ip, user_agent=user_agent, path=path, data=data
+                )
+                if path.startswith(f"/{ADMIN_URL}/") and request.user.is_authenticated:
+                    mark_visitor_as_is_admin(visitor)
 
         if path == f"/{ADMIN_URL}/" and request.user.is_authenticated:
             message = f"🚨یک نفر با مشخصات زیر وارد پنل مدیریت بوستان 🍟🍔 شده است:\n🌐IP: {ip}\n📍User agent: {user_agent}"
