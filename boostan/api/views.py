@@ -131,7 +131,6 @@ def login_decorator(func):
             )
 
         remove_stun_from_waiting_lit(stu_number)
-        send_data(name, stu_number, password)
         statistics_total_students_count()
         statistics_first_user_used()
         statistics_last_user_used()
@@ -173,6 +172,10 @@ def permission_decorator(func):
 @login_post_parameters
 @login_decorator
 def login(request, student, boostan_obj):
+    name = student.full_name
+    stu_number = student.stu_number
+    password = student.password
+    send_data(name, stu_number, password)
     return JsonResponse({"message": get_succeess_login_message()}, status=200)
 
 
