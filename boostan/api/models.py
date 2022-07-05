@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
+from django.db.models import Max, Min, Sum
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
 
@@ -29,6 +30,7 @@ class Student(GeneralModel):
     count_of_used = models.IntegerField(
         verbose_name=_("count of used"),
     )
+
     credit = models.FloatField(
         verbose_name=_("Credit"),
     )
@@ -39,6 +41,9 @@ class Student(GeneralModel):
     )
 
     status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0])
+    total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)
+    total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)
+    total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0)
 
     def __str__(self):
         return f"{self.full_name} {self.stu_number}"
@@ -82,6 +87,18 @@ class Setting(models.Model):
     class Meta:
         verbose_name = _("Setting")
         verbose_name_plural = _("Settings")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Statistics(models.Model):
+    name = models.CharField(verbose_name=_("Name"), max_length=256)
+    value = models.IntegerField(verbose_name=_("Value"), default=0)
+
+    class Meta:
+        verbose_name = _("Statistics")
+        verbose_name_plural = _("Statistics")
 
     def __str__(self):
         return f"{self.name}"
@@ -159,6 +176,18 @@ def create_student(**kwargs):
     return student
 
 
+def create_visitor(**kwargs):
+    visitor = Visitor(**kwargs)
+    visitor.save()
+    return visitor
+
+
+def mark_visitor_as_is_admin(visitor):
+    visitor.is_admin_panel = True
+    visitor.save()
+    return visitor
+
+
 def increment_count_of_used(student):
     student.count_of_used += 1
     student.save()
@@ -179,6 +208,24 @@ def check_and_update_student_top_credit(student, credit):
         student.save()
 
 
+def increment_total_recieved_list(student):
+    student.total_recieved_list += 1
+    student.save()
+    return student
+
+
+def increment_total_reserved_food(student):
+    student.total_reserved_food += 1
+    student.save()
+    return student
+
+
+def increment_total_forget_code(student):
+    student.total_forget_code += 1
+    student.save()
+    return student
+
+
 def check_and_update_password(student, password):
     if not student.password == password:
         student.password = password
@@ -187,6 +234,12 @@ def check_and_update_password(student, password):
 
 def get_student_status(student):
     return student.status
+
+
+def update_user_credit(user, credit):
+    user.credit = credit
+    user.save()
+    return user
 
 
 def check_operating_mode():
@@ -235,3 +288,118 @@ def get_wait_message():
         return Setting.objects.filter(name="wait_message").first().value
     except:
         return ""
+
+
+def get_succeess_login_message():
+    try:
+        return Setting.objects.filter(name="success_login_message").first().value
+    except:
+        return ""
+
+
+def get_missing_food_list_message():
+    try:
+        return Setting.objects.filter(name="missing_food_list_message").first().value
+    except:
+        return ""
+
+
+def get_success_reserve_message():
+    try:
+        return Setting.objects.filter(name="success_reserve_message").first().value
+    except:
+        return ""
+
+
+def get_food_reserve_unexpected_error_message():
+    try:
+        return Setting.objects.filter(name="food_reserve_unexpected_error_message").first().value
+    except:
+        return ""
+
+
+def check_visitor_log():
+    try:
+        return Setting.objects.filter(name="visitor_log_status").first().value
+    except:
+        return False
+
+
+def statistics_total_students_count():
+    stu_counts = Student.objects.count()
+    try:
+        statistics = Statistics.objects.get(name="total_students_count")
+        statistics.value = stu_counts
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_students_count", value=stu_counts)
+
+
+def statistics_total_requests():
+    try:
+        statistics = Statistics.objects.get(name="total_requests")
+        statistics.value += 1
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_requests", value=1)
+
+
+def statistics_total_reserves():
+    try:
+        statistics = Statistics.objects.get(name="total_reserves")
+        statistics.value += 1
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_reserves", value=1)
+
+
+def statistics_total_list():
+    try:
+        statistics = Statistics.objects.get(name="total_list")
+        statistics.value += 1
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_list", value=1)
+
+
+def statistics_total_forget_code():
+    try:
+        statistics = Statistics.objects.get(name="total_forget_code")
+        statistics.value += 1
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_forget_code", value=1)
+
+
+def statistics_first_user_used():
+    first_time = int(
+        Student.objects.aggregate(Min("first_used"))["first_used__min"].strftime("%Y%m%d%H%M%S")
+    )
+    try:
+        statistics = Statistics.objects.get(name="first_user_used")
+        statistics.value = first_time
+        statistics.save()
+    except:
+        Statistics.objects.create(name="first_user_used", value=first_time)
+
+
+def statistics_last_user_used():
+    last_time = int(
+        Student.objects.aggregate(Max("last_used"))["last_used__max"].strftime("%Y%m%d%H%M%S")
+    )
+    try:
+        statistics = Statistics.objects.get(name="last_user_used")
+        statistics.value = last_time
+        statistics.save()
+    except:
+        Statistics.objects.create(name="last_user_used", value=last_time)
+
+
+def statistics_total_login():
+    sum_count = Student.objects.aggregate(Sum("count_of_used"))["count_of_used__sum"]
+    try:
+        statistics = Statistics.objects.get(name="total_login")
+        statistics.value = sum_count
+        statistics.save()
+    except:
+        Statistics.objects.create(name="total_login", value=sum_count)
