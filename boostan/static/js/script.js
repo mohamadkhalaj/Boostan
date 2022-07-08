@@ -1320,6 +1320,7 @@ function get_default_self(meal) {
 }
 
 function submit_meal_menu() {
+    Telegram.WebApp.HapticFeedback.selectionChanged()
     if (parseFloat($('#user-credit').attr('value')) >= 0) {
         let parent = document.getElementById(this.parentElement.parentElement.id.replace('meal_menu_', ''))
         let self;
@@ -1353,6 +1354,7 @@ function submit_meal_menu() {
 }
 
 function meal_clicked() {
+    Telegram.WebApp.HapticFeedback.selectionChanged()
     $(".alert-balance").hide()
     let menu_id = "meal_menu_" + this.parentNode.id
     document.getElementById(menu_id).classList.add('meal-menu-visible')
@@ -1395,6 +1397,7 @@ function change_self(this_obj) {
 }
 
 function cancel_reserve_btn() {
+    Telegram.WebApp.HapticFeedback.selectionChanged()
     let price = get_food_price(this)
     let credit = parseFloat($('#user-credit').attr('value'))
     if (this.innerText == 'رزرو') {
@@ -1414,6 +1417,7 @@ function cancel_reserve_btn() {
 
 
 function submit() {
+    Telegram.WebApp.HapticFeedback.selectionChanged()
     reserve_list = {'total':0, 'days':[]}
     meals = ['br', 'lu', 'di']
     indexes.forEach(function(item, index){
