@@ -162,10 +162,30 @@ button {
   position: fixed;
   z-index: 100;
   top: 0;
-  background-color: white;
   left: 50%;
   transform: translateX(-50%);
   height: 40px;
   border-radius: 7px;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.alert-message {
+  top: 55px;
+  color: var(--tg-theme-text-color, #000000) !important;
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  border-radius: 7px;
+}
+
+#success-alert {
+  display: none;
+  padding-bottom: 0;
+  padding-top: 16px;  
+}
+
+.close {
+  margin-left: 10px;
 }

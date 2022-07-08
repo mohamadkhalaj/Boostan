@@ -209,7 +209,9 @@ def reserve_food(request, student, boostan):
     if not boostan.check_balance(total_reserved):
         return JsonResponse({"error": get_insufficient_balance_message()}, status=400)
     boostan.get_user_info()
-    boostan.get_food_list()
+    food_list_status = boostan.get_food_list()
+    if not food_list_status:
+        return JsonResponse({"error": get_deadline_message()}, status=400)
     food_list_status = boostan.reserve_food(food_list)
     if not food_list_status:
         return JsonResponse({"error": get_food_reserve_unexpected_error_message()}, status=400)

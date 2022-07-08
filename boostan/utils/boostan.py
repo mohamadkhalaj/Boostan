@@ -1,8 +1,10 @@
 import re
 import urllib.parse
+
 from pprint import pprint
 
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -48,6 +50,7 @@ class Boostan:
             "نام کاربری و يا کلمه عبور شما اشتباه می باشد",
             "نام کاربری شما اشتباه می باشد",
             " اطلاعات ورودی نادرست می باشد.",
+            'نام کاربری  شما اشتباه می باشد',
         ]
         for error in error_message:
             if error in response.text:

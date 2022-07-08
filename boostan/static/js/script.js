@@ -2,6 +2,7 @@ Telegram.WebApp.MainButton.showProgress(true);
 Telegram.WebApp.ready();
 const initData = Telegram.WebApp.initData || "";
 const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+var origin = window.location.origin + '/';
 
 if (!Telegram.WebApp.isExpanded) {
   Telegram.WebApp.expand();
@@ -1230,14 +1231,15 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
             })
             
             meal_menu_body.appendChild(meal_menu_body_row);
+            let form = document.createElement('form')
+            form.id = 'self-form'
             let self_select = document.createElement('select');
+            self_select.setAttribute('onChange', 'change_self(this)')
             self_select.className = 'custom-select mt-3 alert alert-danger self'
             let has_selected = false;
             let options_ar = []
             meal[0]['self'].forEach(function(inner_item, index) {
                 let option = document.createElement('option');
-                // option.addEventListener('click',change_self)
-                option.setAttribute('onClick', 'change_self(this)')
                 option.innerText = inner_item['name'];
                 option.value = inner_item['value'];
                 if (inner_item['value'] == self_id) {
@@ -1255,7 +1257,8 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                 })
             }
             options_ar = []
-            meal_menu_body.appendChild(self_select);
+            form.appendChild(self_select);
+            meal_menu_body.appendChild(form);
             let alert = document.createElement('div');
             alert.className = 'alert-balance alert alert-warning';
             alert.innerText = 'موجودی کافی نیست!'
@@ -1320,11 +1323,10 @@ function get_default_self(meal) {
 }
 
 function submit_meal_menu() {
-    Telegram.WebApp.HapticFeedback.selectionChanged()
     if (parseFloat($('#user-credit').attr('value')) >= 0) {
         let parent = document.getElementById(this.parentElement.parentElement.id.replace('meal_menu_', ''))
         let self;
-        this.parentElement.childNodes[1].childNodes.forEach(function(item, index){
+        this.parentElement.childNodes[1].childNodes[0].childNodes.forEach(function(item, index){
             if (item.hasAttribute('selected')){
                 self = item.innerText
             }
@@ -1354,7 +1356,6 @@ function submit_meal_menu() {
 }
 
 function meal_clicked() {
-    Telegram.WebApp.HapticFeedback.selectionChanged()
     $(".alert-balance").hide()
     let menu_id = "meal_menu_" + this.parentNode.id
     document.getElementById(menu_id).classList.add('meal-menu-visible')
@@ -1390,14 +1391,15 @@ function get_food_price(node) {
 }
 
 function change_self(this_obj) {
-    this_obj.parentNode.childNodes.forEach(function(item, index) {
+    var strUser = this_obj.options[this_obj.selectedIndex];
+    console.log(strUser);
+    this_obj.childNodes.forEach(function(item, index) {
         item.removeAttribute('selected')
     })
-    this_obj.setAttribute('selected', '')
+    strUser.setAttribute('selected', '')
 }
 
 function cancel_reserve_btn() {
-    Telegram.WebApp.HapticFeedback.selectionChanged()
     let price = get_food_price(this)
     let credit = parseFloat($('#user-credit').attr('value'))
     if (this.innerText == 'رزرو') {
@@ -1417,7 +1419,6 @@ function cancel_reserve_btn() {
 
 
 function submit() {
-    Telegram.WebApp.HapticFeedback.selectionChanged()
     reserve_list = {'total':0, 'days':[]}
     meals = ['br', 'lu', 'di']
     indexes.forEach(function(item, index){
@@ -1431,7 +1432,7 @@ function submit() {
                         let price = parseFloat(base.childNodes[1].getAttribute('value'));
                         let food = parseFloat(base.childNodes[0].getAttribute('value'));
 
-                        let self_select = menu.childNodes[1].childNodes[1].childNodes
+                        let self_select = menu.childNodes[1].childNodes[1].childNodes[0].childNodes
                         let self;
                         self_select.forEach(function(s_item, index) {
                             if(s_item.hasAttribute('selected')) {
@@ -1444,7 +1445,38 @@ function submit() {
             }
         })
     })
-    Telegram.WebApp.close()
+    // send request
+
+    Telegram.WebApp.MainButton.showProgress(true);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/reserve-food/`, true);
+    let username = '';
+    let password = '';
+    params = `stun=${username}&password=${password}&food-list=` + JSON.stringify(reserve_list)
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+            let alert_obj = document.getElementById('success-alert')
+            alert_obj.style.display = 'block'
+            if (this.status === 200) {
+                alert_obj.className = 'alert alert-success'
+                let message = JSON.parse(xhr.responseText)['message']
+                $('#request-alert-message').text(message);
+            }
+            else {
+                alert_obj.className = 'alert alert-danger'
+                let message = JSON.parse(xhr.responseText)['error']
+                $('#request-alert-message').text(message);
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+            setTimeout(function(param){
+                alert_obj.style.display = 'none'
+            }.bind(null), 5000);
+        }
+    };
+    xhr.send(params);
+    // Telegram.WebApp.close()
 }
 
 function create_submit_list(food, price, self, meal, item) {
