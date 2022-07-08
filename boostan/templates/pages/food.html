@@ -1,0 +1,48 @@
+{% load static  %}
+<!doctype html>
+<html lang="fa">
+
+<head>
+  <meta charset="utf-8">
+  <title>بینول بات | بوستان</title>
+  <meta name="description" content="Beinol bot boostan crawler">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="MohammadMahdi Khalaj">
+
+  <meta property="og:title" content="Password Generator">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="./">
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+  <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    function setThemeClass() {
+      document.documentElement.className = Telegram.WebApp.colorScheme;
+    }
+    Telegram.WebApp.onEvent('themeChanged', setThemeClass);
+    setThemeClass();
+  </script>
+</head>
+
+<body>
+  <div class="meal-menu-wrapper"></div>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container navbar-container">
+      <div id="user-name" class="text-lg-right font-weight-bolder"></div>
+      <div id="user-credit" class="text-lg-left font-weight-bolder"></div>
+    </div>
+  </nav>
+
+   <div class="container mt-3 mb-3" id='day-cards'>
+     
+   </div>
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

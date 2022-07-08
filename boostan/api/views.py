@@ -16,10 +16,12 @@ from .models import (
     get_blocked_message,
     get_deadline_message,
     get_food_reserve_unexpected_error_message,
+    get_forget_code_deadline_message,
     get_insufficient_balance_message,
     get_invalid_credential_message,
     get_missing_food_list_message,
     get_missing_parameter_message,
+    get_no_reserved_food_message,
     get_rate_limit,
     get_student_by_stu_number,
     get_succeess_login_message,
@@ -228,4 +230,10 @@ def reserve_food(request, student, boostan):
 def forget_code(request, student, boostan):
     statistics_total_forget_code()
     increment_total_forget_code(student)
-    return JsonResponse({"message": f"سلام {student.full_name} عزیز."}, status=404)
+    forget_code_status = boostan.get_forget_code()
+    if not forget_code_status:
+        return JsonResponse({"error": get_no_reserved_food_message()}, status=400)
+    elif forget_code_status == 2:
+        return JsonResponse({"error": get_forget_code_deadline_message()}, status=400)
+    forget_code = forget_code_status
+    return JsonResponse({"message": forget_code}, status=200)

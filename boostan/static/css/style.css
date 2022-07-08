@@ -1,0 +1,171 @@
+@font-face {
+  font-family: 'yekan';
+  src: url("/static/fonts/Yekan.ttf");
+}
+
+body {
+  font-family: 'yekan';
+  direction:  rtl;
+  background-color: var(--tg-theme-secondary-bg-color);
+  color-scheme: var(--tg-color-scheme);
+}
+
+button {
+  background-color: var(--tg-theme-button-color, #50a8eb);
+}
+
+.container {
+  text-align: right;
+}
+
+.shadow-card {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.meal-avatar {
+  width: 80px;
+  border-radius: 50%;
+}
+
+.meal-caption {
+  margin-top: 10px;
+  color: var(--tg-theme-text-color, #000000);
+  font-size: 13px;
+}
+
+.meal-caption.btn:hover {
+  color: var(--tg-theme-text-color, #000000);
+}
+
+.self-text {
+  position: absolute;
+  left: 55%;
+  border-radius: 30%;
+  font-size: 10px;
+  padding: 1px 10px 1px 10px;
+  transform: rotate(45deg);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  color: #dc3545;
+  border: 1px solid;
+  border-color: #dc3545;
+  z-index: 10;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.overlay {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  cursor: pointer;
+}
+
+.meal:hover .overlay {
+  opacity: 0.7;
+}
+
+.disabled-image {
+  opacity: 0.5;
+}
+
+.meal-menu-wrapper {
+  position: fixed;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  opacity: 0.8;
+  visibility: hidden;
+}
+
+.meal-menu-wrapper-show {
+  visibility: visible;
+}
+
+.meal-menu {
+  z-index: 35;
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  min-width: 360px;
+  height: 80%;
+  transform: translateX(-50%);
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 8px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  visibility: hidden;
+}
+
+.meal-menu-visible {
+  visibility: visible;
+}
+
+.food-items {
+  margin-top: 80px;
+  min-height: 290px;
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  border-color: var(--tg-theme-text-color, #ffffff) !important;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.self {
+  padding: 0;
+  padding-right: 30px;
+}
+
+.card-header {
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+}
+
+.card-body {
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff); 
+}
+
+.card {
+  border-color: var(--tg-theme-bg-color, #ffffff); 
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.navbar {
+  margin-bottom: 100px;
+}
+
+.navbar-container {
+  color: var(--tg-theme-text-color, #000000) !important;
+  background-color: var(--tg-theme-bg-color, #ffffff) !important; 
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  background-color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  border-radius: 7px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}

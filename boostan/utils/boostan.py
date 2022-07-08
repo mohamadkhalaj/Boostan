@@ -12,6 +12,7 @@ class Boostan:
     main_food_url = "https://stu.ikiu.ac.ir/desktopfood.aspx"
     food_list_url = "https://stu.ikiu.ac.ir/layers.aspx?quiz=resfood"
     food_reserve_url = "https://stu.ikiu.ac.ir/foodrezerv.aspx?quiz=restfood"
+    forget_code_url = "https://stu.ikiu.ac.ir/layers.aspx?quiz=forgetcartfood"
 
     def __init__(self, username, password):
         self.username = username
@@ -234,7 +235,30 @@ class Boostan:
         return form
 
     def get_forget_code(self):
-        pass
+        headers = {
+            "Host": "stu.ikiu.ac.ir",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Dnt": "1",
+            "Referer": "https://stu.ikiu.ac.ir/desktopfood.aspx",
+            "Upgrade-Insecure-Requests": "1",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Fetch-User": "?1",
+            "Connection": "close",
+            "Cookie": f"ASP.NET_SessionId={self.cookie}",
+        }
+        response = requests.get(
+            Boostan.forget_code_url, cookies=self.session_cookie, headers=headers
+        )
+        if "شما در این وعده غذایی درخواستی ثبت نکرده اید" in response.text:
+            return 0
+        elif "" in response.text:
+            return 2
+        else:
+            return 1
 
     def reserve_food(self, reserve_list):
 
