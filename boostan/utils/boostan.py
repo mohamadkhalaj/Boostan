@@ -1,10 +1,8 @@
 import re
 import urllib.parse
-
 from pprint import pprint
 
 import requests
-
 from bs4 import BeautifulSoup
 
 
@@ -50,7 +48,7 @@ class Boostan:
             "نام کاربری و يا کلمه عبور شما اشتباه می باشد",
             "نام کاربری شما اشتباه می باشد",
             " اطلاعات ورودی نادرست می باشد.",
-            'نام کاربری  شما اشتباه می باشد',
+            "نام کاربری  شما اشتباه می باشد",
         ]
         for error in error_message:
             if error in response.text:
@@ -93,6 +91,42 @@ class Boostan:
     def print_food_list(self):
         pprint(self.list, indent=4)
 
+    def get_already_reserved_foods(self, response):
+        soup = BeautifulSoup(response.text, "html.parser")
+        meals = ["br", "lu", "di"]
+        days = range(1, 10)
+
+        reserved = []
+        for day in days:
+            for meal in meals:
+                id = f"ctl00_main_dpself{meal}{day}"
+                select_status = soup.find("select", attrs={"id": id})
+                if select_status:
+                    temp = {}
+                    temp["day_id"] = day
+                    temp["meal_id"] = meal
+                    options = list(select_status.children)
+                    while options.count("\n"):
+                        options.remove("\n")
+                    for option in options:
+                        if option.get("selected", None):
+                            temp["self_id"] = option["value"]
+
+                    parent_children = list(select_status.parent.children)
+                    while parent_children.count("\n"):
+                        parent_children.remove("\n")
+
+                    table_children = list(parent_children[1].children)
+                    while table_children.count("\n"):
+                        table_children.remove("\n")
+
+                    for food in table_children:
+                        food = food.input
+                        if food.get("checked", None) and food["value"] != "-1":
+                            temp["food_id"] = food["value"]
+                    reserved.append(temp)
+        return reserved
+
     def get_food_list(self):
         headers = {
             "Host": "stu.ikiu.ac.ir",
@@ -119,6 +153,7 @@ class Boostan:
             return 0
         if "اعتبار فعلی شما برای انتخاب غذا کافی نیست" in response.text:
             return 1
+        already_reserved_foods = self.get_already_reserved_foods(response)
         form = self._create_self_form(response.text)
         response = requests.post(
             Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=form
@@ -143,9 +178,9 @@ class Boostan:
             temp["date"] = date
             temp["index"] = index + 1
             meals = {"breakfast": "br", "lunch": "lu", "dinner": "di"}
-            breakfast = self._get_foods(soup, index, meals["breakfast"])
-            lunch = self._get_foods(soup, index, meals["lunch"])
-            dinner = self._get_foods(soup, index, meals["dinner"])
+            breakfast = self._get_foods(soup, index, meals["breakfast"], already_reserved_foods)
+            lunch = self._get_foods(soup, index, meals["lunch"], already_reserved_foods)
+            dinner = self._get_foods(soup, index, meals["dinner"], already_reserved_foods)
             temp["breakfast"] = breakfast
             temp["lunch"] = lunch
             temp["dinner"] = dinner
@@ -158,7 +193,7 @@ class Boostan:
             return 0
         return self.days_index
 
-    def _get_foods(self, soup, index, meal):
+    def _get_foods(self, soup, index, meal, reserved_list):
         ar = []
         option = 0
         while True:
@@ -176,14 +211,23 @@ class Boostan:
                 name, price = meal_food.parent.text.split("-")
             value = meal_food["value"]
             temp = {}
-            temp["self"] = self._create_self_option(soup, index, meal)
+            temp["self"] = self._create_self_option(soup, index, meal, reserved_list)
             temp["name"] = name
             temp["price"] = price
             temp["value"] = value
+            temp["selected"] = False
+            for item in reserved_list:
+                if (
+                    item["day_id"] == index + 1
+                    and item["meal_id"] == meal
+                    and item["food_id"] == value
+                ):
+                    temp["selected"] = True
+                    break
             ar.append(temp)
         return ar
 
-    def _create_self_option(self, soup, index, meal):
+    def _create_self_option(self, soup, index, meal, reserved_list):
         selfs = soup.find_all("select", attrs={"name": f"ctl00$main$dpself{meal}{index+1}"})
         ar = []
         for self_ in selfs[0].find_all("option"):
@@ -191,6 +235,15 @@ class Boostan:
             temp["default"] = True if self_.get("selected", False) else False
             temp["name"] = self_.text
             temp["value"] = self_["value"]
+            temp["selected"] = False
+            for item in reserved_list:
+                if (
+                    item["day_id"] == index + 1
+                    and item["meal_id"] == meal
+                    and item["self_id"] == self_["value"]
+                ):
+                    temp["selected"] = True
+                    break
             ar.append(temp)
         return ar
 
