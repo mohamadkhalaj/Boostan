@@ -8,830 +8,16 @@ if (!Telegram.WebApp.isExpanded) {
   Telegram.WebApp.expand();
 }
 
+document.getElementById('login_btn').addEventListener('click', login_button_clicked);
+
 Telegram.WebApp.MainButton.hideProgress();
 Telegram.WebApp.MainButton.setText('Order').show().onClick(submit);
 Telegram.WebApp.BackButton.show().onClick(Telegram.WebApp.close);
 
 var indexes = [];
+var food_list;
 var reserve_list = {'total':0, 'days':[]}
-var food_list = {
-    "food_list": {
-        "name": "تست",
-        "credit": 350000,
-        "days": [
-            {
-                "day": "شنبه",
-                "date": "۱۴۰۱/۴/۱۸",
-                "index": 1,
-                "breakfast": [
-                ],
-                "lunch": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "قیمه",
-                        "price": "30000",
-                        "value": "1322۵"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": true,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "چلو خورشت قيمه , ماست",
-                        "price": "30000",
-                        "value": "13221"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "dinner": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": true,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "ناگت مرغ , دوغ , گوجه و خيارشور",
-                        "price": "21000",
-                        "value": "13241"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ]
-            },
-            {
-                "day": "دوشنبه",
-                "date": "۱۴۰۱/۴/2۰",
-                "index": 3,
-                "breakfast": [
-                    {
-                        "self": [
-                            {
-                                "default": true,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": true,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": true,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "کره و مربا",
-                        "price": "16000",
-                        "value": "13233"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "lunch": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "جوجه کباب , دوغ",
-                        "price": "35000",
-                        "value": "13223"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "dinner": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "کنسرو لوبيا قارچ , آب ميوه",
-                        "price": "35000",
-                        "value": "13243"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ]
-            },
-            {
-                "day": "سه شنبه",
-                "date": "۱۴۰۱/۴/2۱",
-                "index": 4,
-                "breakfast": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "خامه عسل",
-                        "price": "16000",
-                        "value": "13235"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "lunch": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "قيمه نثار , ماست",
-                        "price": "35000",
-                        "value": "13225"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "dinner": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "خوراک کوکو سبزي , دوغ , گوجه و خيارشور",
-                        "price": "21000",
-                        "value": "13245"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ]
-            },
-            {
-                "day": "چهارشنبه",
-                "date": "۱۴۰۱/۴/22",
-                "index": 5,
-                "breakfast": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "پنير ، خرما ، گردو",
-                        "price": "16000",
-                        "value": "13237"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "lunch": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "چلو کباب کوبيده , دوغ",
-                        "price": "35000",
-                        "value": "13227"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "dinner": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "استانبولي , ماست",
-                        "price": "21000",
-                        "value": "13247"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ]
-            },
-            {
-                "day": "پنج شنبه",
-                "date": "۱۴۰۱/۴/2۳",
-                "index": 6,
-                "breakfast": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "تخم مرغ 2 عددي",
-                        "price": "16000",
-                        "value": "13239"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "lunch": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "چلو گوشت , ماست",
-                        "price": "35000",
-                        "value": "13229"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ],
-                "dinner": [
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": false,
-                        "name": "خوراک تن ماهي , زيتون",
-                        "price": "35000",
-                        "value": "13249"
-                    },
-                    {
-                        "self": [
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه علامه رفيعي",
-                                "value": "30"
-                            },
-                            {
-                                "default": true,
-                                "selected": false,
-                                "name": "خوابگاه رجايي",
-                                "value": "31"
-                            },
-                            {
-                                "default": false,
-                                "selected": false,
-                                "name": "خوابگاه شهيد چمران",
-                                "value": "35"
-                            }
-                        ],
-                        "selected": true,
-                        "name": "عدم انتخاب",
-                        "price": null,
-                        "value": "-1"
-                    }
-                ]
-            }
-        ]
-    }
-}['food_list']
-
+var created_objects = []
 
 function create_days(){
 	let parent_day_cards = document.getElementById('day-cards');
@@ -915,9 +101,9 @@ function create_days(){
 		day_card_lunch_overlay.className = 'overlay'
 		day_card_dinner_overlay.className = 'overlay'
 
-		day_card_breakfast_overlay.addEventListener('click', meal_clicked)
-		day_card_lunch_overlay.addEventListener('click', meal_clicked)
-		day_card_dinner_overlay.addEventListener('click', meal_clicked)
+		// day_card_breakfast_overlay.addEventListener('click', meal_clicked)
+		// day_card_lunch_overlay.addEventListener('click', meal_clicked)
+		// day_card_dinner_overlay.addEventListener('click', meal_clicked)
 
 		day_card_breakfast_overlay_text.className = 'text'
 		day_card_lunch_overlay_text.className = 'text'
@@ -1016,13 +202,16 @@ function create_days(){
 
 		// meal -> self, image, overlay, status
 		if (breakfast_status) {
-		day_card_breakfast_meal.appendChild(day_card_breakfast_self)
+    		day_card_breakfast_meal.appendChild(day_card_breakfast_self)
+            day_card_breakfast_meal.addEventListener('click', meal_clicked)
 		}
 		if (lunch_status){
 			day_card_lunch_meal.appendChild(day_card_lunch_self)
+            day_card_lunch_meal.addEventListener('click', meal_clicked)
 		}
 		if (dinner_status){
 			day_card_dinner_meal.appendChild(day_card_dinner_self)
+            day_card_dinner_meal.addEventListener('click', meal_clicked)
 		}
 
 		day_card_breakfast_meal.appendChild(day_card_breakfast_img)
@@ -1069,6 +258,7 @@ function create_days(){
 
 		// parent -> others
 		parent_day_cards.appendChild(day_card_div)
+        created_objects.push(day_card_div)
 
         create_meal_menu(item['breakfast'], 'صبحانه', breakfast_reservation_status[1], breakfast_reservation_status[2], day_card_breakfast_meal.id, item['day'], item['date'], item['index'])
         create_meal_menu(item['lunch'], 'نهار', lunch_reservation_status[1], lunch_reservation_status[2], day_card_lunch_meal.id, item['day'], item['date'], item['index'])
@@ -1092,7 +282,7 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
             meal_menu.id = 'meal_menu_' + meal_id
 
             meal_menu.className = 'meal-menu p-2 text-sm-center'
-            meal_menu_title.className = 'alert fixed-top text-center'
+            meal_menu_title.className = 'alert fixed-top text-center submit-btn'
             meal_menu_title_row.className = 'row'
             meal_menu_title_name.className = 'col-4'
             meal_menu_title_day.className = 'col-4'
@@ -1122,9 +312,9 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                         let meal_menu_body_col1_right_edge = document.createElement('div');
                         let meal_menu_body_col1 = document.createElement('div');
 
-                        meal_menu_body_col1_left_edge.className = 'col-3'
-                        meal_menu_body_col1_right_edge.className = 'col-3'
-                        meal_menu_body_col1.className = 'col-6'
+                        meal_menu_body_col1_left_edge.className = 'col-2'
+                        meal_menu_body_col1_right_edge.className = 'col-2'
+                        meal_menu_body_col1.className = 'col-8'
 
                         let meal_menu_body_col1_food_item = document.createElement('div');
                         let meal_menu_body_col1_card = document.createElement('div');
@@ -1156,7 +346,7 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                         }
                         else {
                              meal_menu_body_col1_card_btn_inner_a.innerText = 'رزرو'   
-                             meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto'
+                             meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto res-btn'
                         }
 
                         meal_menu_body_col1_card_btn_inner_a.addEventListener('click', cancel_reserve_btn)
@@ -1211,7 +401,7 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                         }
                         else {
                              meal_menu_body_col1_card_btn_inner_a.innerText = 'رزرو'   
-                             meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto'
+                             meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto res-btn'
                         }
 
                         meal_menu_body_col1_card_btn_inner.appendChild(meal_menu_body_col1_card_btn_inner_a);
@@ -1263,13 +453,14 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
             alert.className = 'alert-balance alert alert-warning';
             alert.innerText = 'موجودی کافی نیست!'
             let submit = document.createElement('button');
-            submit.className = 'btn btn-primary w-100';
+            submit.className = 'btn btn-primary w-100 submit-btn';
             submit.innerText = 'اعمال تغییرات'
             submit.addEventListener('click', submit_meal_menu)
             meal_menu_body.appendChild(alert);
             meal_menu_body.appendChild(submit);
             meal_menu.appendChild(meal_menu_body);
             body.insertBefore(meal_menu, navbar)
+            created_objects.push(meal_menu)
     }
 }
 
@@ -1357,7 +548,7 @@ function submit_meal_menu() {
 
 function meal_clicked() {
     $(".alert-balance").hide()
-    let menu_id = "meal_menu_" + this.parentNode.id
+    let menu_id = "meal_menu_" + this.id
     document.getElementById(menu_id).classList.add('meal-menu-visible')
     document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
     Telegram.WebApp.MainButton.disable()
@@ -1371,13 +562,13 @@ function check_uniq_reserve(node) {
     if (childs.length == 2) {
         childs.forEach(function(item, index){
 
-            if (item.className == 'col-6' && item.parentNode.parentNode !== node_parent) {
+            if (item.className != 'col-2' && item.parentNode.parentNode !== node_parent) {
                 var child_obj = item.childNodes[0].childNodes[1].childNodes[0].childNodes[0];
                 if (child_obj.innerText == 'کنسل') {
 
                     price = parseFloat(item.childNodes[0].childNodes[0].childNodes[0].childNodes[1].getAttribute('value'))
                     child_obj.innerText = 'رزرو'
-                    child_obj.className = 'btn btn-success mt-auto'
+                    child_obj.className = 'btn btn-success mt-auto res-btn'
                     child_obj.addEventListener('click', cancel_reserve_btn)
                 }
             }
@@ -1405,12 +596,12 @@ function cancel_reserve_btn() {
     if (this.innerText == 'رزرو') {
         let others_price = check_uniq_reserve(this);
         this.innerText = 'کنسل'
-        this.className = 'btn btn-danger mt-auto'
+        this.className = 'btn btn-danger mt-auto res-btn'
         credit = credit - price + others_price
     }
     else {
         this.innerText = 'رزرو'   
-        this.className = 'btn btn-success mt-auto'
+        this.className = 'btn btn-success mt-auto res-btn'
         credit = credit + price
     }
     $('#user-credit').text("اعتبار: " + pretty_numbers(credit) + " تومان");
@@ -1427,7 +618,7 @@ function submit() {
             let menu = document.getElementById(id);
             if (menu != null) {
                 menu.childNodes[1].childNodes[0].childNodes.forEach(function(food_item, index) {
-                    if (food_item.className == 'col-6' && food_item.childNodes[0].innerHTML.includes('کنسل')){
+                    if (food_item.className != 'col-2' && food_item.childNodes[0].innerHTML.includes('کنسل')){
                         let base = food_item.childNodes[0].childNodes[0].childNodes[0];
                         let price = parseFloat(base.childNodes[1].getAttribute('value'));
                         let food = parseFloat(base.childNodes[0].getAttribute('value'));
@@ -1450,33 +641,46 @@ function submit() {
     Telegram.WebApp.MainButton.showProgress(true);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/reserve-food/`, true);
-    let username = '';
-    let password = '';
-    params = `stun=${username}&password=${password}&food-list=` + JSON.stringify(reserve_list)
+    let session = localStorage.getItem('session');
+    params = `session=${session}&food-list=` + JSON.stringify(reserve_list)
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
-            let alert_obj = document.getElementById('success-alert')
-            alert_obj.style.display = 'block'
+
             if (this.status === 200) {
-                alert_obj.className = 'alert alert-success'
                 let message = JSON.parse(xhr.responseText)['message']
-                $('#request-alert-message').text(message);
+                create_notif(message, 'success')
             }
             else {
-                alert_obj.className = 'alert alert-danger'
-                let message = JSON.parse(xhr.responseText)['error']
-                $('#request-alert-message').text(message);
+                let message = JSON.parse(xhr.responseText)
+                // check relogin attr  
+                if (message['relogin']) {
+                    document.getElementById('login-form').style.visibility='visible'
+                    document.getElementById('login-form').style.display='block'
+                    remove_objects()
+                    Telegram.WebApp.MainButton.disable();
+                    localStorage.removeItem('session');
+                }
+                create_notif(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
-            setTimeout(function(param){
-                alert_obj.style.display = 'none'
-            }.bind(null), 5000);
         }
     };
+    create_notif('لطفا کمی صبر کنید...', 'warning')
     xhr.send(params);
     // Telegram.WebApp.close()
+}
+
+function create_notif(message, type) {
+    let alert_obj = document.getElementById('success-alert')
+    alert_obj.style.display = 'block'
+    alert_obj.className = 'alert alert-' + type
+    $('#request-alert-message').text(message);
+
+    setTimeout(function(param){
+        alert_obj.style.display = 'none'
+    }.bind(null), 5000);
 }
 
 function create_submit_list(food, price, self, meal, item) {
@@ -1509,7 +713,116 @@ function create_submit_list(food, price, self, meal, item) {
     reserve_list['total'] += price
 }
 
-$('#user-name').text(food_list['name']);
-$('#user-credit').text("اعتبار: " + pretty_numbers(food_list['credit']) + " تومان");
-$('#user-credit').attr('value', food_list['credit'])
-create_days()
+function login_and_place_list(){
+    let session = localStorage.getItem('session');
+    Telegram.WebApp.MainButton.showProgress(true);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/get-food-list/`, true);
+    params = `session=${session}`
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+
+            if (this.status === 200) {
+                let message = JSON.parse(xhr.responseText)['food_list']
+
+                food_list = message;
+                document.getElementsByClassName('navbar-container')[0].style.visibility='visible';
+                $('#user-name').text(food_list['name']);
+                $('#user-credit').text("اعتبار: " + pretty_numbers(food_list['credit']) + " تومان");
+                $('#user-credit').attr('value', food_list['credit'])
+                create_days()
+            }
+            else {
+                let message = JSON.parse(xhr.responseText)
+                // check relogin attr  
+                if (message['relogin']) {
+                    document.getElementById('login-form').style.visibility='visible'
+                    document.getElementById('login-form').style.display='block'
+                    Telegram.WebApp.MainButton.disable();
+                    remove_objects()
+                    localStorage.removeItem('session');
+                }
+                create_notif(message['error'], 'danger')
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+        }
+    };
+    create_notif('لطفا کمی صبر کنید...', 'warning')
+    xhr.send(params);
+}
+
+function chek_login() {
+    // get session from local storage
+    let session = localStorage.getItem('session');
+    if (session == null) {
+        // login
+        document.getElementById('login-form').style.visibility='visible'
+        document.getElementById('login-form').style.display='block'
+        Telegram.WebApp.MainButton.disable();
+    }
+    else {
+        // get food list
+        login_and_place_list()
+    }
+}
+
+function login_button_clicked() {
+    let student_number = document.getElementById('student_number').value;
+    let student_password = document.getElementById('student_password').value;
+    get_session_from_api(student_number, student_password)
+}
+
+function remove_objects(){
+    document.getElementsByClassName('navbar-container')[0].style.visibility='hidden';
+    created_objects.forEach(function(item, index){
+        var child = item.lastElementChild; 
+        while (child) {
+            item.removeChild(child);
+            child = item.lastElementChild
+        }
+        item.remove()
+    })
+}
+
+function get_session_from_api(username, password) {
+    Telegram.WebApp.MainButton.showProgress(true);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/login/`, true);
+    params = `stun=${username}&password=${password}`
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+
+            if (this.status === 200) {
+                let response = JSON.parse(xhr.responseText)
+                let session = response['session']
+                localStorage.setItem('session', session)
+                let message = response['message']
+                document.getElementById('login-form').style.visibility='hidden'
+                document.getElementById('login-form').style.display='none'
+                login_and_place_list()
+                Telegram.WebApp.MainButton.enable();
+                create_notif(message, 'success')
+            }
+            else {
+                let message = JSON.parse(xhr.responseText)
+                if (message['relogin']) {
+                    Telegram.WebApp.MainButton.disable();
+                    document.getElementById('login-form').style.visibility='visible'
+                    document.getElementById('login-form').style.display='block'
+                    remove_objects()
+                    localStorage.removeItem('session');
+                }
+                create_notif(message['error'], 'danger')
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+        }
+    };
+    create_notif('لطفا کمی صبر کنید...', 'warning')
+    xhr.send(params);
+}
+
+Telegram.WebApp.MainButton.disable();
+chek_login()

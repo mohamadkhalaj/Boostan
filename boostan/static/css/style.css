@@ -45,8 +45,8 @@ button {
   padding: 1px 10px 1px 10px;
   transform: rotate(45deg);
   background-color: var(--tg-theme-bg-color, #ffffff);
-  color: #dc3545;
   border: 1px solid;
+  color: #dc3545;
   border-color: #dc3545;
   z-index: 10;
 }
@@ -69,7 +69,8 @@ button {
   border-radius: 50%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #008CBA;
+  background-color:  var(--tg-theme-button-color, #008CBA);
+  color:  var(--tg-theme-button-text-color, #ffffff);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -102,7 +103,7 @@ button {
 .meal-menu {
   z-index: 35;
   position: fixed;
-  top: 50px;
+  top: 65px;
   left: 50%;
   min-width: 360px;
   height: 80%;
@@ -125,13 +126,14 @@ button {
   min-height: 290px;
   color: var(--tg-theme-text-color, #000000);
   background-color: var(--tg-theme-bg-color, #ffffff);
-  border-color: var(--tg-theme-text-color, #ffffff) !important;
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .self {
   padding: 0;
   padding-right: 30px;
+  background-color:  var(--tg-theme-button-color);
+  color:  var(--tg-theme-button-text-color);
 }
 
 .card-header {
@@ -164,13 +166,16 @@ button {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 40px;
+  height: 50px;
   border-radius: 7px;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  visibility: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  font-size: 13px;
+  font-weight: bolder;
 }
 
 .alert-message {
-  top: 55px;
+  top: 65px;
   color: var(--tg-theme-text-color, #000000) !important;
   position: fixed;
   z-index: 100;
@@ -188,4 +193,45 @@ button {
 
 .close {
   margin-left: 10px;
+}
+
+.submit-btn {
+  background-color:  var(--tg-theme-button-color);
+  color:  var(--tg-theme-button-text-color);
+  margin-bottom: 15px;
+}
+
+.navbar-user-data {
+  border-radius: 18px;
+  padding: 5px;
+}
+
+.card-header {
+  background-color:  var(--tg-theme-button-color) !important;
+  color:  var(--tg-theme-button-text-color) !important;
+}
+
+.res-btn {
+ color:  var(--tg-theme-button-text-color) !important; 
+}
+
+#day-cards {
+  margin-top: 8rem !important;
+}
+
+#login-form {
+  text-align: center;
+  visibility: hidden;
+  display: none;
+}
+
+.form-label {
+ color: var(--tg-theme-text-color, #000000) !important;
+ font-weight: bolder;
+}
+
+.form-control {
+  text-align: center;
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
 }
