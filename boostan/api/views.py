@@ -113,14 +113,18 @@ def login_decorator(func):
         session = request.POST.get("session")
         student = get_student_by_session(session)
         if not student:
-            return JsonResponse({"error": get_not_logged_in_yet_message(), 'relogin':True}, status=400)
+            return JsonResponse(
+                {"error": get_not_logged_in_yet_message(), "relogin": True}, status=400
+            )
 
         stu_number = student.stu_number
         password = student.password
         boostan = Boostan(stu_number, password)
         login_status = boostan.login()
         if not login_status:
-            return JsonResponse({"error": get_invalid_credential_message(), 'relogin':True}, status=400)
+            return JsonResponse(
+                {"error": get_invalid_credential_message(), "relogin": True}, status=400
+            )
 
         name, credit = boostan.get_user_info()
 
@@ -187,13 +191,17 @@ def permission_decorator(func):
 @require_http_methods(["POST"])
 def login(request):
     if not {"stun", "password"}.issubset(set(request.POST)):
-        return JsonResponse({"error": get_missing_parameter_message(), 'relogin':True}, status=400)
+        return JsonResponse(
+            {"error": get_missing_parameter_message(), "relogin": True}, status=400
+        )
     stu_number = request.POST.get("stun")
     password = request.POST.get("password")
     boostan = Boostan(stu_number, password)
     login_status = boostan.login()
     if not login_status:
-        return JsonResponse({"error": get_invalid_credential_message(), 'relogin':True}, status=400)
+        return JsonResponse(
+            {"error": get_invalid_credential_message(), "relogin": True}, status=400
+        )
     name, credit = boostan.get_user_info()
     after_auth_stuffs(stu_number, password, name, credit)
 
@@ -231,9 +239,9 @@ def reserve_food(request, student, boostan):
     if not "food-list" in request.POST:
         return JsonResponse({"error": get_missing_food_list_message()}, status=400)
     food_list = json.loads(request.POST["food-list"])
-    total_reserved = food_list["total"]
-    if not boostan.check_balance(total_reserved):
-        return JsonResponse({"error": get_insufficient_balance_message()}, status=400)
+    # total_reserved = food_list["total"]
+    # if not boostan.check_balance(total_reserved):
+    #     return JsonResponse({"error": get_insufficient_balance_message()}, status=400)
     boostan.get_user_info()
     food_list_status = boostan.get_food_list()
     if not food_list_status:
