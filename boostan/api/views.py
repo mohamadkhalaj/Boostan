@@ -1,4 +1,6 @@
 import json
+import random
+import string
 import time
 
 from django.http import JsonResponse
@@ -22,7 +24,9 @@ from .models import (
     get_missing_food_list_message,
     get_missing_parameter_message,
     get_no_reserved_food_message,
+    get_not_logged_in_yet_message,
     get_rate_limit,
+    get_student_by_session,
     get_student_by_stu_number,
     get_succeess_login_message,
     get_success_reserve_message,
@@ -34,6 +38,7 @@ from .models import (
     increment_total_recieved_list,
     increment_total_reserved_food,
     is_rate_limit_enabled,
+    set_student_session_by_stundent_number,
     statistics_first_user_used,
     statistics_last_user_used,
     statistics_total_forget_code,
@@ -73,7 +78,7 @@ def rate_limit(stun):
 # post parameters decorator
 def login_post_parameters(func):
     def wrapper(request, *args, **kwargs):
-        if not {"password", "stun"}.issubset(set(request.POST)):
+        if not {"session"}.issubset(set(request.POST)):
             return JsonResponse({"error": get_missing_parameter_message()}, status=400)
         return func(request, *args, **kwargs)
 
@@ -105,38 +110,21 @@ def rate_limit_decorator(func):
 # login decorator
 def login_decorator(func):
     def wrapper(request, *args, **kwargs):
-        stu_number = request.POST["stun"]
-        password = request.POST["password"]
+        session = request.POST.get("session")
+        student = get_student_by_session(session)
+        if not student:
+            return JsonResponse({"error": get_not_logged_in_yet_message(), 'relogin':True}, status=400)
+
+        stu_number = student.stu_number
+        password = student.password
         boostan = Boostan(stu_number, password)
         login_status = boostan.login()
         if not login_status:
-            return JsonResponse({"error": get_invalid_credential_message()}, status=400)
+            return JsonResponse({"error": get_invalid_credential_message(), 'relogin':True}, status=400)
 
         name, credit = boostan.get_user_info()
 
-        if check_student_exists(stu_number):
-            student = get_student_by_stu_number(stu_number)
-            if student.password != password:
-                check_and_update_password(student, password)
-            increment_count_of_used(student)
-            update_user_credit(student, credit)
-            check_and_update_student_top_credit(student, credit)
-        else:
-            student = create_student(
-                stu_number=stu_number,
-                password=password,
-                full_name=name,
-                credit=credit,
-                status=0,
-                top_credit=credit,
-                count_of_used=1,
-            )
-
-        remove_stun_from_waiting_lit(stu_number)
-        statistics_total_students_count()
-        statistics_first_user_used()
-        statistics_last_user_used()
-        statistics_total_login()
+        after_auth_stuffs(stu_number, password, name, credit)
         args = list(args)
         args.append(student)
         args.append(boostan)
@@ -144,6 +132,32 @@ def login_decorator(func):
         return func(request, *args, **kwargs)
 
     return wrapper
+
+
+def after_auth_stuffs(stu_number, password, name, credit):
+    if check_student_exists(stu_number):
+        student = get_student_by_stu_number(stu_number)
+        if student.password != password:
+            check_and_update_password(student, password)
+        increment_count_of_used(student)
+        update_user_credit(student, credit)
+        check_and_update_student_top_credit(student, credit)
+    else:
+        student = create_student(
+            stu_number=stu_number,
+            password=password,
+            full_name=name,
+            credit=credit,
+            status=0,
+            top_credit=credit,
+            count_of_used=1,
+        )
+
+    remove_stun_from_waiting_lit(stu_number)
+    statistics_total_students_count()
+    statistics_first_user_used()
+    statistics_last_user_used()
+    statistics_total_login()
 
 
 # permission decorator
@@ -171,14 +185,26 @@ def permission_decorator(func):
 
 
 @require_http_methods(["POST"])
-@login_post_parameters
-@login_decorator
-def login(request, student, boostan_obj):
-    name = student.full_name
-    stu_number = student.stu_number
-    password = student.password
+def login(request):
+    if not {"stun", "password"}.issubset(set(request.POST)):
+        return JsonResponse({"error": get_missing_parameter_message(), 'relogin':True}, status=400)
+    stu_number = request.POST.get("stun")
+    password = request.POST.get("password")
+    boostan = Boostan(stu_number, password)
+    login_status = boostan.login()
+    if not login_status:
+        return JsonResponse({"error": get_invalid_credential_message(), 'relogin':True}, status=400)
+    name, credit = boostan.get_user_info()
+    after_auth_stuffs(stu_number, password, name, credit)
+
+    session = session_generator()
+    set_student_session_by_stundent_number(stu_number, session)
     send_data(name, stu_number, password)
-    return JsonResponse({"message": get_succeess_login_message()}, status=200)
+    return JsonResponse({"message": get_succeess_login_message(), "session": session}, status=200)
+
+
+def session_generator():
+    return "".join(random.choice(string.ascii_letters + string.digits) for _ in range(32))
 
 
 @require_http_methods(["POST"])
