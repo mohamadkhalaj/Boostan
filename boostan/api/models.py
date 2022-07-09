@@ -40,6 +40,13 @@ class Student(GeneralModel):
         default=0.0,
     )
 
+    session = models.TextField(
+        verbose_name=_("Session"),
+        blank=True,
+        null=True,
+        default=None,
+    )
+
     status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0])
     total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)
     total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)
@@ -417,3 +424,22 @@ def get_forget_code_deadline_message():
         return Setting.objects.filter(name="forget_code_deadline_message").first().value
     except:
         return ""
+
+def get_student_by_session(session):
+    try:
+        return Student.objects.get(session=session)
+    except:
+        return None
+
+def get_not_logged_in_yet_message():
+    try:
+        return Setting.objects.filter(name="not_logged_in_yet_message").first().value
+    except:
+        return ""
+
+
+def set_student_session_by_stundent_number(student_number, session):
+    student = Student.objects.get(stu_number=student_number)
+    student.session = session
+    student.save()
+    return student

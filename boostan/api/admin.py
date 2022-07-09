@@ -35,6 +35,7 @@ class studentAdmin(admin.ModelAdmin):
         "total_recieved_list",
         "total_reserved_food",
         "total_forget_code",
+        "session",
     ]
     list_display = (
         "full_name",
