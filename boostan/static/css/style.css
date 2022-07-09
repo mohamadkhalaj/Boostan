@@ -132,8 +132,8 @@ button {
 .self {
   padding: 0;
   padding-right: 30px;
-  background-color:  var(--tg-theme-button-color);
-  color:  var(--tg-theme-button-text-color);
+  background-color:  var(--tg-theme-button-color, blue);
+  color:  var(--tg-theme-button-text-color, white);
 }
 
 .card-header {
@@ -172,6 +172,7 @@ button {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   font-size: 13px;
   font-weight: bolder;
+  padding-top: 10px;
 }
 
 .alert-message {
@@ -196,8 +197,8 @@ button {
 }
 
 .submit-btn {
-  background-color:  var(--tg-theme-button-color);
-  color:  var(--tg-theme-button-text-color);
+  background-color:  var(--tg-theme-button-color, blue);
+  color:  var(--tg-theme-button-text-color, white);
   margin-bottom: 15px;
 }
 
@@ -207,12 +208,12 @@ button {
 }
 
 .card-header {
-  background-color:  var(--tg-theme-button-color) !important;
-  color:  var(--tg-theme-button-text-color) !important;
+  background-color:  var(--tg-theme-button-color, blue) !important;
+  color:  var(--tg-theme-button-text-color, white) !important;
 }
 
 .res-btn {
- color:  var(--tg-theme-button-text-color) !important; 
+ color:  var(--tg-theme-button-text-color, white) !important; 
 }
 
 #day-cards {

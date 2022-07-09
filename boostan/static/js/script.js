@@ -101,10 +101,6 @@ function create_days(){
 		day_card_lunch_overlay.className = 'overlay'
 		day_card_dinner_overlay.className = 'overlay'
 
-		// day_card_breakfast_overlay.addEventListener('click', meal_clicked)
-		// day_card_lunch_overlay.addEventListener('click', meal_clicked)
-		// day_card_dinner_overlay.addEventListener('click', meal_clicked)
-
 		day_card_breakfast_overlay_text.className = 'text'
 		day_card_lunch_overlay_text.className = 'text'
 		day_card_dinner_overlay_text.className = 'text'
