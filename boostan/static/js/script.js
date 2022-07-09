@@ -9,6 +9,7 @@ if (!Telegram.WebApp.isExpanded) {
 }
 
 document.getElementById('login_btn').addEventListener('click', login_button_clicked);
+document.getElementById('submit-btn-web').addEventListener('click', submit);
 
 Telegram.WebApp.MainButton.hideProgress();
 Telegram.WebApp.MainButton.setText('Order').show().onClick(submit);
@@ -654,6 +655,7 @@ function submit() {
                 if (message['relogin']) {
                     document.getElementById('login-form').style.visibility='visible'
                     document.getElementById('login-form').style.display='block'
+                    document.getElementById('submit-btn-web').style.display = 'none';
                     remove_objects()
                     Telegram.WebApp.MainButton.disable();
                     localStorage.removeItem('session');
@@ -729,6 +731,9 @@ function login_and_place_list(){
                 $('#user-credit').text("اعتبار: " + pretty_numbers(food_list['credit']) + " تومان");
                 $('#user-credit').attr('value', food_list['credit'])
                 create_days()
+                if (!Object.keys(initDataUnsafe).length) {
+                    document.getElementById('submit-btn-web').style.display = 'block';
+                }
             }
             else {
                 let message = JSON.parse(xhr.responseText)
@@ -736,6 +741,7 @@ function login_and_place_list(){
                 if (message['relogin']) {
                     document.getElementById('login-form').style.visibility='visible'
                     document.getElementById('login-form').style.display='block'
+                    document.getElementById('submit-btn-web').style.display = 'none';
                     Telegram.WebApp.MainButton.disable();
                     remove_objects()
                     localStorage.removeItem('session');
@@ -808,6 +814,7 @@ function get_session_from_api(username, password) {
                     Telegram.WebApp.MainButton.disable();
                     document.getElementById('login-form').style.visibility='visible'
                     document.getElementById('login-form').style.display='block'
+                    document.getElementById('submit-btn-web').style.display = 'none';
                     remove_objects()
                     localStorage.removeItem('session');
                 }
