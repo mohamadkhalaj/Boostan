@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Setting, Statistics, Student, Visitor
+from .models import Setting
+from .models import Statistics
+from .models import Student
+from .models import Visitor
 
 # Register your models here.
 admin.site.site_header = _("Boostan API management system")
@@ -36,6 +39,7 @@ class studentAdmin(admin.ModelAdmin):
         "total_reserved_food",
         "total_forget_code",
         "session",
+        'ip_address'
     ]
     list_display = (
         "full_name",

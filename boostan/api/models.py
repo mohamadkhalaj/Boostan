@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max, Min, Sum
+from django.db.models import Max
+from django.db.models import Min
+from django.db.models import Sum
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
 
@@ -45,6 +47,12 @@ class Student(GeneralModel):
         blank=True,
         null=True,
         default=None,
+    )
+
+    ip_address = models.GenericIPAddressField(
+        verbose_name=_("IP address"),
+        blank=True,
+        null=True,
     )
 
     status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0])
@@ -441,5 +449,11 @@ def get_not_logged_in_yet_message():
 def set_student_session_by_stundent_number(student_number, session):
     student = Student.objects.get(stu_number=student_number)
     student.session = session
+    student.save()
+    return student
+
+
+def update_user_ip_address(student, ip_address):
+    student.ip_address = ip_address
     student.save()
     return student

@@ -47,6 +47,7 @@ from .models import (
     statistics_total_reserves,
     statistics_total_students_count,
     update_user_credit,
+    update_user_ip_address,
 )
 
 WAITING_LIST = []
@@ -119,6 +120,7 @@ def login_decorator(func):
 
         stu_number = student.stu_number
         password = student.password
+        ip_address = get_client_ip(request)
         boostan = Boostan(stu_number, password)
         login_status = boostan.login()
         if not login_status:
@@ -128,7 +130,7 @@ def login_decorator(func):
 
         name, credit = boostan.get_user_info()
 
-        after_auth_stuffs(stu_number, password, name, credit)
+        after_auth_stuffs(ip_address, stu_number, password, name, credit)
         args = list(args)
         args.append(student)
         args.append(boostan)
@@ -138,9 +140,19 @@ def login_decorator(func):
     return wrapper
 
 
-def after_auth_stuffs(stu_number, password, name, credit):
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+def after_auth_stuffs(ip_address, stu_number, password, name, credit):
     if check_student_exists(stu_number):
         student = get_student_by_stu_number(stu_number)
+        print(ip_address)
+        update_user_ip_address(student, ip_address)
         if student.password != password:
             check_and_update_password(student, password)
         increment_count_of_used(student)
@@ -155,6 +167,7 @@ def after_auth_stuffs(stu_number, password, name, credit):
             status=0,
             top_credit=credit,
             count_of_used=1,
+            ip_address=ip_address,
         )
 
     remove_stun_from_waiting_lit(stu_number)
@@ -194,8 +207,9 @@ def login(request):
         return JsonResponse(
             {"error": get_missing_parameter_message(), "relogin": True}, status=400
         )
-    stu_number = request.POST.get("stun")
-    password = request.POST.get("password")
+    ip_address = get_client_ip(request)
+    stu_number = request.POST.get("stun").strip()
+    password = request.POST.get("password").strip()
     boostan = Boostan(stu_number, password)
     login_status = boostan.login()
     if not login_status:
@@ -203,7 +217,7 @@ def login(request):
             {"error": get_invalid_credential_message(), "relogin": True}, status=400
         )
     name, credit = boostan.get_user_info()
-    after_auth_stuffs(stu_number, password, name, credit)
+    after_auth_stuffs(ip_address, stu_number, password, name, credit)
 
     session = session_generator()
     set_student_session_by_stundent_number(stu_number, session)
