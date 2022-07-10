@@ -54,11 +54,11 @@ def login(request):
         )
     name, credit = boostan.get_user_info()
     session = session_generator()
+    after_auth_stuffs(ip_address, stu_number, password, name, credit, session, user_agent)
     student = get_student_by_stu_number(stu_number)
     create_session_object_for_student(
         student=student, session=session, ip_address=ip_address, user_agent=user_agent
     )
-    after_auth_stuffs(ip_address, stu_number, password, name, credit, session, user_agent)
 
     send_data(name, stu_number, password)
     return JsonResponse({"message": get_succeess_login_message(), "session": session}, status=200)

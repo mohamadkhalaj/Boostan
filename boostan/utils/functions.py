@@ -72,7 +72,6 @@ def after_auth_stuffs(ip_address, stu_number, password, name, credit, session, u
             status=0,
             top_credit=credit,
             count_of_used=1,
-            ip_address=ip_address,
         )
 
     remove_stun_from_waiting_lit(stu_number)

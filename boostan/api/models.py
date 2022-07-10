@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max, Min, Sum
+from django.db.models import Max
+from django.db.models import Min
+from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
@@ -471,12 +473,14 @@ def get_not_logged_in_yet_message():
 
 
 def update_user_ip_address_user_agent(session, ip_address, user_agent):
-    session_obj = Session.objects.get(session=session)
-    session_obj.ip_address = ip_address
-    session_obj.user_agent = user_agent
-    session_obj.save()
-    return session_obj.student
-
+    try:
+        session_obj = Session.objects.get(session=session)
+        session_obj.ip_address = ip_address
+        session_obj.user_agent = user_agent
+        session_obj.save()
+        return session_obj.student
+    except:
+        return None
 
 def create_session_object_for_student(**kwargs):
     session = Session.objects.create(**kwargs)
