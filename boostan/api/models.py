@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max
-from django.db.models import Min
-from django.db.models import Sum
+from django.db.models import Max, Min, Sum
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
 
@@ -42,19 +41,6 @@ class Student(GeneralModel):
         default=0.0,
     )
 
-    session = models.TextField(
-        verbose_name=_("Session"),
-        blank=True,
-        null=True,
-        default=None,
-    )
-
-    ip_address = models.GenericIPAddressField(
-        verbose_name=_("IP address"),
-        blank=True,
-        null=True,
-    )
-
     status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0])
     total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)
     total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)
@@ -72,6 +58,39 @@ class Student(GeneralModel):
 
     def last_used_time(self):
         return naturaltime(super().last_used)
+
+
+class Session(GeneralModel):
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="sessions",
+    )
+
+    session = models.TextField(
+        verbose_name=_("Session"),
+    )
+
+    ip_address = models.GenericIPAddressField(
+        verbose_name=_("IP address"),
+        blank=True,
+        null=True,
+    )
+
+    user_agent = models.CharField(verbose_name=_("User agent"), max_length=256, null=True)
+
+    def first_used_time(self):
+        return naturaltime(super().first_used)
+
+    def last_used_time(self):
+        return naturaltime(super().last_used)
+
+    def __str__(self):
+        return f"{self.student.full_name} {self.session}"
+
+    class Meta:
+        verbose_name = _("Session")
+        verbose_name_plural = _("Sessions")
 
 
 class Visitor(GeneralModel):
@@ -433,11 +452,16 @@ def get_forget_code_deadline_message():
     except:
         return ""
 
+
 def get_student_by_session(session):
     try:
-        return Student.objects.get(session=session)
+        stu_session = Session.objects.get(session=session)
+        stu_session.last_used = timezone.now()
+        stu_session.save()
+        return stu_session.student
     except:
         return None
+
 
 def get_not_logged_in_yet_message():
     try:
@@ -446,14 +470,14 @@ def get_not_logged_in_yet_message():
         return ""
 
 
-def set_student_session_by_stundent_number(student_number, session):
-    student = Student.objects.get(stu_number=student_number)
-    student.session = session
-    student.save()
-    return student
+def update_user_ip_address_user_agent(session, ip_address, user_agent):
+    session_obj = Session.objects.get(session=session)
+    session_obj.ip_address = ip_address
+    session_obj.user_agent = user_agent
+    session_obj.save()
+    return session_obj.student
 
 
-def update_user_ip_address(student, ip_address):
-    student.ip_address = ip_address
-    student.save()
-    return student
+def create_session_object_for_student(**kwargs):
+    session = Session.objects.create(**kwargs)
+    return session
