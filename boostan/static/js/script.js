@@ -790,9 +790,17 @@ function remove_objects(){
 
 function get_session_from_api(username, password) {
     Telegram.WebApp.MainButton.showProgress(true);
+    let telegram_data = {
+    	'id': "",
+    	'username': "",
+    }
+    if (Object.keys(initDataUnsafe).length != 0){
+    	telegram_data['id'] = initDataUnsafe.user.id;
+    	telegram_data['username'] = initDataUnsafe.user.username;
+    }
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/login/`, true);
-    params = `stun=${username}&password=${password}`
+    params = `stun=${username}&password=${password}&telegram_data=${JSON.stringify(telegram_data)}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
