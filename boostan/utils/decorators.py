@@ -72,7 +72,7 @@ def login_decorator(func):
         login_status = boostan.login()
         if not login_status:
             return JsonResponse(
-                {"error": get_invalid_credential_message(), "relogin": True}, status=400
+                {"error": get_invalid_credential_message(), "relogin": True}, status=401
             )
 
         name, credit = boostan.get_user_info()

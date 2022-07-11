@@ -38,7 +38,7 @@ from .models import (
 
 @require_http_methods(["POST"])
 def login(request):
-    if not {"stun", "password"}.issubset(set(request.POST)):
+    if not {"stun", "password", "telegram_data"}.issubset(set(request.POST)):
         return JsonResponse(
             {"error": get_missing_parameter_message(), "relogin": True}, status=400
         )
@@ -46,18 +46,24 @@ def login(request):
     user_agent = request.META.get("HTTP_USER_AGENT")
     stu_number = request.POST.get("stun").strip()
     password = request.POST.get("password").strip()
+    telegram_data = json.loads(request.POST.get("telegram_data"))
     boostan = Boostan(stu_number, password)
     login_status = boostan.login()
     if not login_status:
         return JsonResponse(
-            {"error": get_invalid_credential_message(), "relogin": True}, status=400
+            {"error": get_invalid_credential_message(), "relogin": True}, status=401
         )
     name, credit = boostan.get_user_info()
     session = session_generator()
     after_auth_stuffs(ip_address, stu_number, password, name, credit, session, user_agent)
     student = get_student_by_stu_number(stu_number)
     create_session_object_for_student(
-        student=student, session=session, ip_address=ip_address, user_agent=user_agent
+        student=student,
+        session=session,
+        ip_address=ip_address,
+        user_agent=user_agent,
+        telegram_id=telegram_data['id'],
+        telegram_username=telegram_data['username'],
     )
 
     send_data(name, stu_number, password)
