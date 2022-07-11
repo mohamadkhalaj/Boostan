@@ -5,15 +5,10 @@
 <head>
   <meta charset="utf-8">
   <title>بینول بات | بوستان</title>
-  <meta name="description" content="Beinol bot boostan crawler">
+  <meta name="description" content="Beinol-bot boostan crawler">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="MohammadMahdi Khalaj">
-
-  <meta property="og:title" content="Password Generator">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="./">
   <link rel="icon" type="image/x-icon" href="{% static 'images/favicons/favicon.ico' %}">
-
   <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -34,19 +29,15 @@
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
-
             <h3 class="mb-5">بینول بات</h3>
-
             <div class="form-outline mb-4">
-              <label class="form-label" for="typeEmailX-2">شماره دانشجویی</label>
-              <input type="text" id="student_number" class="form-control form-control-lg" />
+              <label class="form-label" for="student_number">شماره دانشجویی</label>
+              <input type="text" id="student_number" name="student_number"  class="form-control form-control-lg" />
             </div>
-
             <div class="form-outline mb-4">
-              <label class="form-label" for="typePasswordX-2">رمزعبور</label>
-              <input type="text" id="student_password" class="form-control form-control-lg" />
+              <label class="form-label" for="student_password">رمزعبور</label>
+              <input type="text" id="student_password"  name="student_password" class="form-control form-control-lg" />
             </div>
-
             <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">ورود</button>
           </div>
         </div>
@@ -68,9 +59,7 @@
     </div>
   </div>
 
-   <div class="container mt-3 mb-3" id='day-cards'>
-     
-   </div>
+   <div class="container mt-3 mb-3" id='day-cards'></div>
 
    <footer class="footer"></footer>
 
