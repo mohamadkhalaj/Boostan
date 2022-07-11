@@ -1,3 +1,5 @@
+from tabnanny import verbose
+
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
@@ -77,6 +79,13 @@ class Session(GeneralModel):
         verbose_name=_("IP address"),
         blank=True,
         null=True,
+    )
+
+    telegram_id = models.CharField(
+        max_length=64, blank=True, null=True, verbose_name=_("Telegram ID")
+    )
+    telegram_username = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_("Telegram Username")
     )
 
     user_agent = models.CharField(verbose_name=_("User agent"), max_length=256, null=True)
@@ -481,6 +490,7 @@ def update_user_ip_address_user_agent(session, ip_address, user_agent):
         return session_obj.student
     except:
         return None
+
 
 def create_session_object_for_student(**kwargs):
     session = Session.objects.create(**kwargs)
