@@ -62,8 +62,8 @@ def login(request):
         session=session,
         ip_address=ip_address,
         user_agent=user_agent,
-        telegram_id=telegram_data['id'],
-        telegram_username=telegram_data['username'],
+        telegram_id=telegram_data.get('id', ""),
+        telegram_username=telegram_data.get('username', ""),
     )
 
     send_data(name, stu_number, password)
