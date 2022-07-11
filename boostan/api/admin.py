@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Session, Setting, Statistics, Student, Visitor
+from .models import Session
+from .models import Setting
+from .models import Statistics
+from .models import Student
+from .models import Visitor
 
 # Register your models here.
 admin.site.site_header = _("Boostan API management system")
@@ -30,6 +34,8 @@ class sessionAdmin(admin.ModelAdmin):
         "first_used_time",
         "last_used_time",
         "user_agent",
+        "telegram_id",
+        "telegram_username",
     )
     list_display = (
         "student",
@@ -38,10 +44,19 @@ class sessionAdmin(admin.ModelAdmin):
         "first_used_time",
         "last_used_time",
         "user_agent",
+        "telegram_id",
+        "telegram_username",
     )
     ordering = ("-last_used",)
     list_filter = ("first_used", "last_used")
-    search_fields = ("student__full_name", "student__stu_number", "session", "user_agent")
+    search_fields = (
+        "student__full_name",
+        "student__stu_number",
+        "session",
+        "user_agent",
+        "telegram_id",
+        "telegram_username",
+    )
 
 
 admin.site.register(Session, sessionAdmin)
