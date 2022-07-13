@@ -14,6 +14,7 @@ document.getElementById('main-menu-close').addEventListener('click', close_main_
 document.getElementById('session-menu-close').addEventListener('click', close_session_menu);
 document.getElementById('forgot-code').addEventListener('click', get_forget_code);
 document.getElementById('sessions').addEventListener('click', open_session_menu);
+document.getElementById('close-alert').addEventListener('click', close_alert);
 
 Telegram.WebApp.MainButton.hideProgress();
 Telegram.WebApp.MainButton.setText('Order').show().onClick(submit);
@@ -701,6 +702,7 @@ function submit() {
 }
 
 function create_notif(message, type) {
+	document.getElementById('alert-container').style.visibility = 'visible';
 	let alert_obj = document.getElementById('success-alert');
 	if (!alert_obj) {
 		let parent_alert = document.getElementsByClassName('container alert-message')[0];
@@ -1074,6 +1076,9 @@ function open_session_menu() {
 	get_sessions()
 }
 
+function close_alert() {
+	document.getElementById('alert-container').style.visibility = 'hidden';
+}
 
 Telegram.WebApp.MainButton.disable();
 chek_login()

@@ -381,3 +381,11 @@ button#toggle-password:focus {
   display: inline;
   vertical-align: text-top;
 }
+
+.close:focus {
+  outline: none !important;
+}
+
+button:focus {
+  outline: none !important;
+}
