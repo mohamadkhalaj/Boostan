@@ -22,8 +22,8 @@ Telegram.WebApp.BackButton.show().onClick(Telegram.WebApp.close);
 var indexes = [];
 var session_lists = [];
 var food_list;
-var reserve_list = {'total':0, 'days':[]}
-var created_objects = []
+var reserve_list = {'total':0, 'days':[]};
+var created_objects = [];
 
 
 var ShowPasswordToggle = document.querySelector("[type='password']");
@@ -701,7 +701,29 @@ function submit() {
 }
 
 function create_notif(message, type) {
-    let alert_obj = document.getElementById('success-alert')
+	let alert_obj = document.getElementById('success-alert');
+	if (!alert_obj) {
+		let parent_alert = document.getElementsByClassName('container alert-message')[0];
+		let alert_main = document.createElement('div');
+		alert_main.id = 'success-alert';
+		alert_main.className = 'alert alert-success';
+
+		let alert_button = document.createElement('button');
+		alert_button.className = 'close';
+		alert_button.innerText = 'x'
+		alert_button.setAttribute('type', 'button');
+		alert_button.setAttribute('data-dismiss', 'alert');
+
+		let alert_text = document.createElement('p');
+		alert_text.id = 'request-alert-message';
+
+		alert_main.appendChild(alert_button);
+		alert_main.appendChild(alert_text);
+		parent_alert.appendChild(alert_main);
+
+		alert_obj = alert_main;
+	}
+
     alert_obj.style.display = 'block'
     alert_obj.className = 'alert alert-' + type
     $('#request-alert-message').text(message);
