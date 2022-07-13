@@ -495,3 +495,41 @@ def update_user_ip_address_user_agent(session, ip_address, user_agent):
 def create_session_object_for_student(**kwargs):
     session = Session.objects.create(**kwargs)
     return session
+
+
+def delete_session_object_for_student(session):
+    try:
+        session_obj = Session.objects.get(session=session)
+        session_obj.delete()
+        return True
+    except:
+        return None
+
+
+def get_session_not_found_message():
+    try:
+        return Setting.objects.filter(name="session_not_found_message").first().value
+    except:
+        return ""
+
+
+def get_success_logout_message():
+    try:
+        return Setting.objects.filter(name="success_logout_message").first().value
+    except:
+        return ""
+
+
+def get_session_not_passed_message():
+    try:
+        return Setting.objects.filter(name="session_not_passed_message").first().value
+    except:
+        return ""
+
+
+def get_all_user_sessions_by_sesion(session):
+    try:
+        student = get_student_by_session(session)
+        return student.sessions.all().order_by('-last_used')
+    except:
+        return None
