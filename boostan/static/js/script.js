@@ -695,7 +695,7 @@ function submit() {
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('لطفا کمی صبر کنید...', 'warning')
+    create_notif('درحال ارسال اطلاعات...', 'warning')
     xhr.send(params);
     // Telegram.WebApp.close()
 }
@@ -798,12 +798,18 @@ function login_and_place_list(){
                     remove_objects()
                     localStorage.removeItem('session');
                 }
+                if (Object.keys(message).includes('student')) {
+	                document.getElementsByClassName('navbar-container')[0].style.visibility='visible';
+	                $('#user-name').text(message['student']['name']);
+	                $('#user-credit').text("اعتبار: " + pretty_numbers(message['student']['credit']) + " تومان");
+	                $('#user-credit').attr('value', message['student']['credit'])
+                }
                 create_notif(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('لطفا کمی صبر کنید...', 'warning')
+    create_notif('درحال دریافت لیست غذا...', 'warning');
     xhr.send(params);
 }
 
@@ -883,7 +889,7 @@ function get_session_from_api(username, password) {
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('لطفا کمی صبر کنید...', 'warning')
+    create_notif('لطفا تا اتمام احراز هویت صبر کنید...', 'warning')
     xhr.send(params);
 }
 
@@ -931,7 +937,7 @@ function get_forget_code() {
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('لطفا کمی صبر کنید...', 'warning')
+    create_notif('درحال دریافت کد فراموشی...', 'warning')
     xhr.send(params);
 }
 

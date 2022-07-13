@@ -85,10 +85,15 @@ def session_generator():
 @permission_decorator
 def food_list(request, student, boostan):
     food_list_status = boostan.get_food_list()
+    name, credit = boostan.get_user_info()
+    student_info = {
+        'name': name,
+        'credit' : credit
+    }
     if not food_list_status:
-        return JsonResponse({"error": get_deadline_message()}, status=400)
+        return JsonResponse({"error": get_deadline_message(), 'student': student_info}, status=400)
     elif food_list_status == 1:
-        return JsonResponse({"error": get_insufficient_balance_message()}, status=400)
+        return JsonResponse({"error": get_insufficient_balance_message(), 'student': student_info}, status=400)
     food_list = food_list_status
     statistics_total_list()
     increment_total_recieved_list(student)
