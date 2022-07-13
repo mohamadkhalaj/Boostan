@@ -67,7 +67,7 @@ def login_decorator(func):
         stu_number = student.stu_number
         password = student.password
         ip_address = get_client_ip(request)
-        user_agent = request.META.get("HTTP_USER_AGENT")
+        user_agent = request.META.get("HTTP_USER_AGENT", "")
         boostan = Boostan(stu_number, password)
         login_status = boostan.login()
         if not login_status:

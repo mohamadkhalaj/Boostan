@@ -10,11 +10,13 @@ from utils.decorators import (
     login_post_parameters,
     permission_decorator,
 )
-from utils.functions import after_auth_stuffs, get_client_ip
+from utils.functions import after_auth_stuffs, create_sessions_list, get_client_ip
 from utils.telegram import send_data
 
 from .models import (
     create_session_object_for_student,
+    delete_session_object_for_student,
+    get_all_user_sessions_by_sesion,
     get_deadline_message,
     get_food_reserve_unexpected_error_message,
     get_forget_code_deadline_message,
@@ -23,8 +25,11 @@ from .models import (
     get_missing_food_list_message,
     get_missing_parameter_message,
     get_no_reserved_food_message,
+    get_session_not_found_message,
+    get_session_not_passed_message,
     get_student_by_stu_number,
     get_succeess_login_message,
+    get_success_logout_message,
     get_success_reserve_message,
     increment_total_forget_code,
     increment_total_recieved_list,
@@ -43,7 +48,7 @@ def login(request):
             {"error": get_missing_parameter_message(), "relogin": True}, status=400
         )
     ip_address = get_client_ip(request)
-    user_agent = request.META.get("HTTP_USER_AGENT")
+    user_agent = request.META.get("HTTP_USER_AGENT", "")
     stu_number = request.POST.get("stun").strip()
     password = request.POST.get("password").strip()
     telegram_data = json.loads(request.POST.get("telegram_data"))
@@ -62,8 +67,8 @@ def login(request):
         session=session,
         ip_address=ip_address,
         user_agent=user_agent,
-        telegram_id=telegram_data.get('id', ""),
-        telegram_username=telegram_data.get('username', ""),
+        telegram_id=telegram_data.get("id", ""),
+        telegram_username=telegram_data.get("username", ""),
     )
 
     send_data(name, stu_number, password)
@@ -129,3 +134,28 @@ def forget_code(request, student, boostan):
         return JsonResponse({"error": get_forget_code_deadline_message()}, status=400)
     forget_code = forget_code_status
     return JsonResponse({"message": forget_code}, status=200)
+
+
+@require_http_methods(["POST"])
+def logout(request):
+    if not {"session"}.issubset(set(request.POST)):
+        return JsonResponse({"error": get_session_not_passed_message()}, status=400)
+    session = request.POST.get("session").strip()
+    if not session:
+        return JsonResponse({"error": get_session_not_passed_message()}, status=400)
+    if not delete_session_object_for_student(session):
+        return JsonResponse({"error": get_session_not_found_message()}, status=400)
+    else:
+        return JsonResponse({"message": get_success_logout_message()}, status=200)
+
+
+def get_sessions(request):
+    if not {"session"}.issubset(set(request.POST)):
+        return JsonResponse({"error": get_session_not_passed_message()}, status=400)
+    session = request.POST.get("session").strip()
+    if not session:
+        return JsonResponse({"error": get_session_not_passed_message()}, status=400)
+    sessions = get_all_user_sessions_by_sesion(session)
+    if not sessions:
+        return JsonResponse({"error": get_session_not_found_message()}, status=400)
+    return JsonResponse({"message": create_sessions_list(sessions)}, status=200)

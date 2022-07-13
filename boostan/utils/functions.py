@@ -1,6 +1,8 @@
 import time
 
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.utils import timezone
+from user_agents import parse as user_agent_parser
 
 from api.models import (
     check_and_update_password,
@@ -79,3 +81,26 @@ def after_auth_stuffs(ip_address, stu_number, password, name, credit, session, u
     statistics_first_user_used()
     statistics_last_user_used()
     statistics_total_login()
+
+
+def parse_user_agent(user_agent):
+    parsed = user_agent_parser(user_agent)
+    useragent = {}
+    useragent["browser"] = parsed.browser.family
+    useragent["browser-version"] = parsed.browser.version_string
+    useragent["os"] = parsed.os.family
+    useragent["os-version"] = parsed.os.version_string
+    useragent["device"] = parsed.device.family
+    return useragent
+
+
+def create_sessions_list(sessions):
+    sessions_list = []
+    for session in sessions:
+        temp = {}
+        temp["session"] = session.session
+        temp["ip_address"] = session.ip_address
+        temp["last_used"] = naturaltime(session.last_used)
+        temp["user_agent"] = parse_user_agent(session.user_agent)
+        sessions_list.append(temp)
+    return sessions_list
