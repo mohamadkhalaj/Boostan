@@ -24,6 +24,20 @@
 <body>
   <div class="meal-menu-wrapper"></div>
 
+  <div class="main-menu" id="main-menu">
+    <div class="container mt-3">
+      <button type="button" class="btn-close" id='main-menu-close' aria-label="Close"></button>
+      <div id="forgot-code" ><button class="btn submit-btn w-100">کد فراموشی</button></div>
+      <div id="sessions" ><button class="btn submit-btn w-100">نشست ها</button></div>
+    </div>
+  </div>
+
+  <div class="session-menu" id="session-menu">
+    <div class="container mt-3" id='session-menu-parent'>
+      <button type="button" class="btn-close" id='session-menu-close' aria-label="Close"></button>
+    </div>
+  </div>
+
   <div class="container py-5 h-100" id="login-form">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -32,11 +46,14 @@
             <h3 class="mb-5">بینول بات</h3>
             <div class="form-outline mb-4">
               <label class="form-label" for="student_number">شماره دانشجویی</label>
-              <input type="text" id="student_number" name="student_number"  class="form-control form-control-lg" />
+              <input type="text" id="student_number" name="student_number" class="form-control form-control-lg" required>
             </div>
             <div class="form-outline mb-4">
               <label class="form-label" for="student_password">رمزعبور</label>
-              <input type="text" id="student_password"  name="student_password" class="form-control form-control-lg" />
+              <input type="password" id="student_password" spellcheck="false" autocapitalize="off" autocorrect="off" name="student_password" autocomplete="student_password" class="form-control form-control-lg text-lg-left" required>
+               <button id="toggle-password" type="button" class="d-none"
+                  aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+               </button>
             </div>
             <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">ورود</button>
           </div>
@@ -47,7 +64,7 @@
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container navbar-container">
-      <div id="user-name" class="text-lg-right font-weight-bolder submit-btn navbar-user-data"></div>
+      <div id="user-name" onclick="main_menu()" class="text-lg-right font-weight-bolder submit-btn navbar-user-data"></div>
       <div id="user-credit" class="text-lg-left font-weight-bolder submit-btn navbar-user-data"></div>
     </div>
   </nav>

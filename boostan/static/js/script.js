@@ -10,15 +10,45 @@ if (!Telegram.WebApp.isExpanded) {
 
 document.getElementById('login_btn').addEventListener('click', login_button_clicked);
 document.getElementById('submit-btn-web').addEventListener('click', submit);
+document.getElementById('main-menu-close').addEventListener('click', close_main_menu);
+document.getElementById('session-menu-close').addEventListener('click', close_session_menu);
+document.getElementById('forgot-code').addEventListener('click', get_forget_code);
+document.getElementById('sessions').addEventListener('click', open_session_menu);
 
 Telegram.WebApp.MainButton.hideProgress();
 Telegram.WebApp.MainButton.setText('Order').show().onClick(submit);
 Telegram.WebApp.BackButton.show().onClick(Telegram.WebApp.close);
 
 var indexes = [];
+var session_lists = [];
 var food_list;
 var reserve_list = {'total':0, 'days':[]}
 var created_objects = []
+
+
+var ShowPasswordToggle = document.querySelector("[type='password']");
+ShowPasswordToggle.onclick = function () {
+  document.querySelector("[type='password']").classList.add("input-password");
+  document.getElementById("toggle-password").classList.remove("d-none");
+
+  const passwordInput = document.querySelector("[type='password']");
+  const togglePasswordButton = document.getElementById("toggle-password");
+
+  togglePasswordButton.addEventListener("click", togglePassword);
+  function togglePassword() {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      togglePasswordButton.setAttribute("aria-label", "Hide password.");
+    } else {
+      passwordInput.type = "password";
+      togglePasswordButton.setAttribute(
+        "aria-label",
+        "Show password as plain text. " +
+          "Warning: this will display your password on the screen."
+      );
+    }
+  }
+};
 
 function create_days(){
 	let parent_day_cards = document.getElementById('day-cards');
@@ -676,9 +706,9 @@ function create_notif(message, type) {
     alert_obj.className = 'alert alert-' + type
     $('#request-alert-message').text(message);
 
-    setTimeout(function(param){
-        alert_obj.style.display = 'none'
-    }.bind(null), 5000);
+    // setTimeout(function(param){
+    //     alert_obj.style.display = 'none'
+    // }.bind(null), 5000000);
 }
 
 function create_submit_list(food, price, self, meal, item) {
@@ -834,6 +864,188 @@ function get_session_from_api(username, password) {
     create_notif('لطفا کمی صبر کنید...', 'warning')
     xhr.send(params);
 }
+
+function main_menu() {
+	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
+	document.getElementById('main-menu').style.visibility = "visible";
+}
+
+function close_main_menu(){
+	document.getElementById('main-menu').style.visibility = "hidden";
+	document.getElementsByClassName('meal-menu-wrapper')[0].classList.remove('meal-menu-wrapper-show')
+}
+
+function close_session_menu(){
+	document.getElementById('session-menu').style.visibility = "hidden";
+	document.getElementById('main-menu').style.visibility = "visible";
+}
+
+function get_forget_code() {
+	Telegram.WebApp.MainButton.showProgress(true);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/get-forget-code/`, true);
+    let session = localStorage.getItem('session');
+    params = `session=${session}`
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+
+            if (this.status === 200) {
+                let response = JSON.parse(xhr.responseText)
+                create_notif(message, 'success')
+            }
+            else {
+                let message = JSON.parse(xhr.responseText)
+                if (message['relogin']) {
+                    Telegram.WebApp.MainButton.disable();
+                    document.getElementById('login-form').style.visibility='visible'
+                    document.getElementById('login-form').style.display='block'
+                    document.getElementById('submit-btn-web').style.display = 'none';
+                    remove_objects()
+                    localStorage.removeItem('session');
+                }
+                create_notif(message['error'], 'danger')
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+        }
+    };
+    create_notif('لطفا کمی صبر کنید...', 'warning')
+    xhr.send(params);
+}
+
+function create_sessions(sessions) {
+	let session = localStorage.getItem('session');
+	let parent = document.getElementById('session-menu-parent');
+	sessions.forEach(function (item, index) {
+		let useragent = item['user_agent'];
+
+		let session_container = document.createElement('div');
+		session_container.className = 'container session-cards';
+
+		let session_text = document.createElement('div');
+		session_text.className = 'session-text'
+
+		let session_Browser = document.createElement('div');
+		session_Browser.className = 'session-items';
+		session_Browser.innerText = "مرورگر: " + useragent['browser'] + ` ${useragent['browser-version']}`;
+		let session_OS = document.createElement('div');
+		session_OS.className = 'session-items';
+		session_OS.innerText = "سیستم عامل: " + useragent['os'] + ` ${useragent['os-version']}`;
+		let session_Device = document.createElement('div');
+		session_Device.className = 'session-items';
+		session_Device.innerText = "دستگاه: " +  useragent['device'];
+		let session_IP = document.createElement('div');
+		session_IP.className = 'session-items';
+		session_IP.innerText = "آی پی: " + item['ip_address'];
+		let session_LAST_USED = document.createElement('div');
+		session_LAST_USED.className = 'session-items';
+		session_LAST_USED.innerText = "آخرین استفاده: " + item['last_used'];
+		if (item['session'] == session) {
+			session_LAST_USED.innerText += " (این دستگاه)";
+		}
+
+		let session_logout_btn = document.createElement('button');
+		session_logout_btn.className = 'btn submit-btn w-100';
+		session_logout_btn.innerText = 'خروج';
+		session_logout_btn.id = item['session'];
+		session_logout_btn.addEventListener('click', logout);
+
+		session_text.appendChild(session_Browser);
+		session_text.appendChild(session_OS);
+		session_text.appendChild(session_Device);
+		session_text.appendChild(session_IP);
+		session_text.appendChild(session_LAST_USED);
+
+		session_container.appendChild(session_text);
+		session_container.appendChild(session_logout_btn);
+
+		parent.appendChild(session_container);
+		session_lists.push(session_container);
+	})
+}
+
+
+function logout() {
+	Telegram.WebApp.MainButton.showProgress(true);
+	let main_this = this;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/logout/`, true);
+    let main_session = localStorage.getItem('session');
+    let session = this.id;
+    params = `session=${session}`
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+
+            if (this.status === 200) {
+                let response = JSON.parse(xhr.responseText)
+                create_notif(response['message'], 'success')
+                main_this.parentNode.remove();
+                if (main_session == session) {
+                	Telegram.WebApp.MainButton.disable();
+					close_session_menu()
+                	close_main_menu()
+                    document.getElementById('login-form').style.visibility='visible'
+                    document.getElementById('login-form').style.display='block'
+                    document.getElementById('submit-btn-web').style.display = 'none';
+                    remove_objects()
+                    localStorage.removeItem('session');
+                }
+                Telegram.WebApp.MainButton.enable();
+            }
+            else {
+                let message = JSON.parse(xhr.responseText)
+                create_notif(message['error'], 'danger')
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+        }
+    };
+    xhr.send(params);
+}
+
+function rempve_sessions() {
+    session_lists.forEach(function(item, index){
+        var child = item.lastElementChild; 
+        while (child) {
+            item.removeChild(child);
+            child = item.lastElementChild
+        }
+        item.remove()
+    })
+}
+
+function get_sessions() {
+	Telegram.WebApp.MainButton.showProgress(true);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", `${origin}api/v1/get-sessions/`, true);
+    let session = localStorage.getItem('session');
+    params = `session=${session}`
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE) {
+
+            if (this.status === 200) {
+                let response = JSON.parse(xhr.responseText)
+                rempve_sessions();
+                create_sessions(response['message']);
+                Telegram.WebApp.MainButton.enable();
+            }
+            else {
+                let message = JSON.parse(xhr.responseText)
+                create_notif(message['error'], 'danger')
+            }
+            Telegram.WebApp.MainButton.hideProgress();
+        }
+    };
+    xhr.send(params);
+}
+
+function open_session_menu() {
+	document.getElementById('main-menu').style.visibility = "hidden";
+	document.getElementById('session-menu').style.visibility = "visible";
+	get_sessions()
+}
+
 
 Telegram.WebApp.MainButton.disable();
 chek_login()
