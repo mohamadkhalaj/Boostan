@@ -41,7 +41,9 @@ class Student(GeneralModel):
         default=0.0,
     )
 
-    status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0])
+    status = models.IntegerField(
+        choices=STATUSES, default=STATUSES[0][0], verbose_name=_("Status")
+    )
     total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)
     total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)
     total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0)
@@ -56,8 +58,12 @@ class Student(GeneralModel):
     def first_used_time(self):
         return naturaltime(super().first_used)
 
+    first_used_time.short_description = _("First used time")
+
     def last_used_time(self):
         return naturaltime(super().last_used)
+
+    last_used_time.short_description = _("Last used time")
 
 
 class Session(GeneralModel):
@@ -65,6 +71,7 @@ class Session(GeneralModel):
         Student,
         on_delete=models.CASCADE,
         related_name="sessions",
+        verbose_name=_("Student"),
     )
 
     session = models.TextField(
@@ -89,8 +96,12 @@ class Session(GeneralModel):
     def first_used_time(self):
         return naturaltime(super().first_used)
 
+    first_used_time.short_description = _("First used time")
+
     def last_used_time(self):
         return naturaltime(super().last_used)
+
+    last_used_time.short_description = _("Last used time")
 
     def __str__(self):
         return f"{self.student.full_name} {self.session}"
@@ -113,9 +124,11 @@ class Visitor(GeneralModel):
     def last_used_time(self):
         return naturaltime(super().last_used)
 
+    last_used_time.short_description = _("Last used time")
+
     class Meta:
-        verbose_name = "visitor"
-        verbose_name_plural = "visitors"
+        verbose_name = _("visitor")
+        verbose_name_plural = _("visitors")
 
     def __str__(self):
         return f"{self.ip_address}, {self.user_agent}"

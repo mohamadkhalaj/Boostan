@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-14 10:18+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: boostan/api/admin.py:6
+msgid "Boostan API management system"
+msgstr ""
+
+#: boostan/api/models.py:14
+msgid "Normal"
+msgstr ""
+
+#: boostan/api/models.py:15
+msgid "Blocked user"
+msgstr ""
+
+#: boostan/api/models.py:16
+msgid "Whitelist user"
+msgstr ""
+
+#: boostan/api/models.py:20
+msgid "Full name"
+msgstr ""
+
+#: boostan/api/models.py:24
+msgid "Student number"
+msgstr ""
+
+#: boostan/api/models.py:28
+msgid "Password"
+msgstr ""
+
+#: boostan/api/models.py:32
+msgid "count of used"
+msgstr ""
+
+#: boostan/api/models.py:36
+msgid "Credit"
+msgstr ""
+
+#: boostan/api/models.py:40
+msgid "Top credit"
+msgstr ""
+
+#: boostan/api/models.py:45
+msgid "Status"
+msgstr ""
+
+#: boostan/api/models.py:47
+msgid "Tota received list"
+msgstr ""
+
+#: boostan/api/models.py:48
+msgid "Total reserved food"
+msgstr ""
+
+#: boostan/api/models.py:49
+msgid "Total forget code"
+msgstr ""
+
+#: boostan/api/models.py:55 boostan/api/models.py:74
+msgid "Student"
+msgstr ""
+
+#: boostan/api/models.py:56
+msgid "Students"
+msgstr ""
+
+#: boostan/api/models.py:61 boostan/api/models.py:99
+msgid "First used time"
+msgstr ""
+
+#: boostan/api/models.py:66 boostan/api/models.py:104 boostan/api/models.py:127
+msgid "Last used time"
+msgstr ""
+
+#: boostan/api/models.py:78 boostan/api/models.py:110
+msgid "Session"
+msgstr ""
+
+#: boostan/api/models.py:82 boostan/api/models.py:116
+msgid "IP address"
+msgstr ""
+
+#: boostan/api/models.py:88
+msgid "Telegram ID"
+msgstr ""
+
+#: boostan/api/models.py:91
+msgid "Telegram Username"
+msgstr ""
+
+#: boostan/api/models.py:94 boostan/api/models.py:119
+msgid "User agent"
+msgstr ""
+
+#: boostan/api/models.py:111
+msgid "Sessions"
+msgstr ""
+
+#: boostan/api/models.py:120
+msgid "Url path"
+msgstr ""
+
+#: boostan/api/models.py:121
+msgid "Is admin panel"
+msgstr ""
+
+#: boostan/api/models.py:122
+msgid "Data"
+msgstr ""
+
+#: boostan/api/models.py:130
+msgid "visitor"
+msgstr ""
+
+#: boostan/api/models.py:131
+msgid "visitors"
+msgstr ""
+
+#: boostan/api/models.py:138 boostan/api/models.py:150
+#: boostan/api/models.py:162
+msgid "Name"
+msgstr ""
+
+#: boostan/api/models.py:139 boostan/api/models.py:151
+#: boostan/api/models.py:163
+msgid "Value"
+msgstr ""
+
+#: boostan/api/models.py:142
+msgid "Setting"
+msgstr ""
+
+#: boostan/api/models.py:143
+msgid "Settings"
+msgstr ""
+
+#: boostan/api/models.py:154
+msgid "Message"
+msgstr ""
+
+#: boostan/api/models.py:155
+msgid "Messages"
+msgstr ""
+
+#: boostan/api/models.py:166 boostan/api/models.py:167
+msgid "Statistics"
+msgstr ""
+
+#: boostan/templates/account/account_inactive.html:5
+#: boostan/templates/account/account_inactive.html:8
+msgid "Account Inactive"
+msgstr ""
+
+#: boostan/templates/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr ""
+
+#: boostan/templates/account/email.html:7
+msgid "Account"
+msgstr ""
+
+#: boostan/templates/account/email.html:10
+msgid "E-mail Addresses"
+msgstr ""
+
+#: boostan/templates/account/email.html:13
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: boostan/templates/account/email.html:27
+msgid "Verified"
+msgstr ""
+
+#: boostan/templates/account/email.html:29
+msgid "Unverified"
+msgstr ""
+
+#: boostan/templates/account/email.html:31
+msgid "Primary"
+msgstr ""
+
+#: boostan/templates/account/email.html:37
+msgid "Make Primary"
+msgstr ""
+
+#: boostan/templates/account/email.html:38
+msgid "Re-send Verification"
+msgstr ""
+
+#: boostan/templates/account/email.html:39
+msgid "Remove"
+msgstr ""
+
+#: boostan/templates/account/email.html:46
+msgid "Warning:"
+msgstr ""
+
+#: boostan/templates/account/email.html:46
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: boostan/templates/account/email.html:51
+msgid "Add E-mail Address"
+msgstr ""
+
+#: boostan/templates/account/email.html:56
+msgid "Add E-mail"
+msgstr ""
+
+#: boostan/templates/account/email.html:66
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: boostan/templates/account/email_confirm.html:6
+#: boostan/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: boostan/templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: boostan/templates/account/email_confirm.html:20
+msgid "Confirm"
+msgstr ""
+
+#: boostan/templates/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: boostan/templates/account/login.html:7
+#: boostan/templates/account/login.html:11
+#: boostan/templates/account/login.html:56 boostan/templates/base.html:73
+msgid "Sign In"
+msgstr ""
+
+#: boostan/templates/account/login.html:17
+msgid "Please sign in with one of your existing third party accounts:"
+msgstr ""
+
+#: boostan/templates/account/login.html:19
+#, python-format
+msgid ""
+"Or, <a href=\"%(signup_url)s\">sign up</a> for a %(site_name)s account and "
+"sign in below:"
+msgstr ""
+
+#: boostan/templates/account/login.html:32
+msgid "or"
+msgstr ""
+
+#: boostan/templates/account/login.html:41
+#, python-format
+msgid ""
+"If you have not created an account yet, then please <a href=\"%(signup_url)s"
+"\">sign up</a> first."
+msgstr ""
+
+#: boostan/templates/account/login.html:55
+msgid "Forgot Password?"
+msgstr ""
+
+#: boostan/templates/account/logout.html:5
+#: boostan/templates/account/logout.html:8
+#: boostan/templates/account/logout.html:17 boostan/templates/base.html:62
+msgid "Sign Out"
+msgstr ""
+
+#: boostan/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: boostan/templates/account/password_change.html:6
+#: boostan/templates/account/password_change.html:9
+#: boostan/templates/account/password_change.html:14
+#: boostan/templates/account/password_reset_from_key.html:5
+#: boostan/templates/account/password_reset_from_key.html:8
+#: boostan/templates/account/password_reset_from_key_done.html:4
+#: boostan/templates/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr ""
+
+#: boostan/templates/account/password_reset.html:7
+#: boostan/templates/account/password_reset.html:11
+#: boostan/templates/account/password_reset_done.html:6
+#: boostan/templates/account/password_reset_done.html:9
+msgid "Password Reset"
+msgstr ""
+
+#: boostan/templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: boostan/templates/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr ""
+
+#: boostan/templates/account/password_reset.html:24
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: boostan/templates/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: boostan/templates/account/password_reset_from_key.html:8
+msgid "Bad Token"
+msgstr ""
+
+#: boostan/templates/account/password_reset_from_key.html:12
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: boostan/templates/account/password_reset_from_key.html:18
+msgid "change password"
+msgstr ""
+
+#: boostan/templates/account/password_reset_from_key.html:21
+#: boostan/templates/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr ""
+
+#: boostan/templates/account/password_set.html:6
+#: boostan/templates/account/password_set.html:9
+#: boostan/templates/account/password_set.html:14
+msgid "Set Password"
+msgstr ""
+
+#: boostan/templates/account/signup.html:6
+msgid "Signup"
+msgstr ""
+
+#: boostan/templates/account/signup.html:9
+#: boostan/templates/account/signup.html:19 boostan/templates/base.html:68
+msgid "Sign Up"
+msgstr ""
+
+#: boostan/templates/account/signup.html:11
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: boostan/templates/account/signup_closed.html:5
+#: boostan/templates/account/signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr ""
+
+#: boostan/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: boostan/templates/account/verification_sent.html:5
+#: boostan/templates/account/verification_sent.html:8
+#: boostan/templates/account/verified_email_required.html:5
+#: boostan/templates/account/verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: boostan/templates/account/verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: boostan/templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: boostan/templates/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: boostan/templates/account/verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: boostan/templates/base.html:58
+msgid "My Profile"
+msgstr ""
+
+#: boostan/users/admin.py:18
+msgid "Personal info"
+msgstr ""
+
+#: boostan/users/admin.py:20
+msgid "Permissions"
+msgstr ""
+
+#: boostan/users/admin.py:31
+msgid "Important dates"
+msgstr ""
+
+#: boostan/users/apps.py:7
+msgid "Users"
+msgstr ""
+
+#: boostan/users/forms.py:25 boostan/users/tests/test_forms.py:39
+msgid "This username has already been taken."
+msgstr ""
+
+#: boostan/users/models.py:15
+msgid "Name of User"
+msgstr ""
+
+#: boostan/users/views.py:25
+msgid "Information successfully updated"
+msgstr ""
+
+#: boostan/utils/general_model.py:7
+msgid "First Used Time"
+msgstr ""
+
+#: boostan/utils/general_model.py:11
+msgid "Last Used Time"
+msgstr ""
+
+#: boostan/utils/telegram.py:28 boostan/utils/telegram.py:46
+msgid "Telegram timeout."
+msgstr ""
