@@ -1,5 +1,3 @@
-from tabnanny import verbose
-
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
@@ -135,6 +133,18 @@ class Setting(models.Model):
         return f"{self.name}"
 
 
+class Message(models.Model):
+    name = models.CharField(verbose_name=_("Name"), max_length=256)
+    value = models.TextField(verbose_name=_("Value"))
+
+    class Meta:
+        verbose_name = _("Message")
+        verbose_name_plural = _("Messages")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class Statistics(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.BigIntegerField(verbose_name=_("Value"), default=0)
@@ -167,21 +177,21 @@ def get_main_admin_chat_id():
 
 def get_deadline_message():
     try:
-        return Setting.objects.get(name="deadline_message").value
+        return Message.objects.get(name="deadline_message").value
     except:
         return ""
 
 
 def get_insufficient_balance_message():
     try:
-        return Setting.objects.get(name="insufficient_balance_message").value
+        return Message.objects.get(name="insufficient_balance_message").value
     except:
         return ""
 
 
 def get_invalid_credential_message():
     try:
-        return Setting.objects.get(name="invalid_credential_message").value
+        return Message.objects.get(name="invalid_credential_message").value
     except:
         return ""
 
@@ -196,21 +206,21 @@ def get_special_users():
 
 def get_missing_parameter_message():
     try:
-        return Setting.objects.get(name="missing_parameter_message").value
+        return Message.objects.get(name="missing_parameter_message").value
     except:
         return ""
 
 
 def get_blocked_message():
-    return Setting.objects.filter(name="blocked_message").first().value
+    return Message.objects.filter(name="blocked_message").first().value
 
 
 def get_whitelist_message():
-    return Setting.objects.filter(name="whitelist_message").first().value
+    return Message.objects.filter(name="whitelist_message").first().value
 
 
 def get_unknown_operation_message():
-    return Setting.objects.filter(name="unknown_operation_message").first().value
+    return Message.objects.filter(name="unknown_operation_message").first().value
 
 
 def create_student(**kwargs):
@@ -328,35 +338,35 @@ def is_rate_limit_enabled():
 
 def get_wait_message():
     try:
-        return Setting.objects.filter(name="wait_message").first().value
+        return Message.objects.filter(name="wait_message").first().value
     except:
         return ""
 
 
 def get_succeess_login_message():
     try:
-        return Setting.objects.filter(name="success_login_message").first().value
+        return Message.objects.filter(name="success_login_message").first().value
     except:
         return ""
 
 
 def get_missing_food_list_message():
     try:
-        return Setting.objects.filter(name="missing_food_list_message").first().value
+        return Message.objects.filter(name="missing_food_list_message").first().value
     except:
         return ""
 
 
 def get_success_reserve_message():
     try:
-        return Setting.objects.filter(name="success_reserve_message").first().value
+        return Message.objects.filter(name="success_reserve_message").first().value
     except:
         return ""
 
 
 def get_food_reserve_unexpected_error_message():
     try:
-        return Setting.objects.filter(name="food_reserve_unexpected_error_message").first().value
+        return Message.objects.filter(name="food_reserve_unexpected_error_message").first().value
     except:
         return ""
 
@@ -450,14 +460,14 @@ def statistics_total_login():
 
 def get_no_reserved_food_message():
     try:
-        return Setting.objects.filter(name="no_reserved_food_message").first().value
+        return Message.objects.filter(name="no_reserved_food_message").first().value
     except:
         return ""
 
 
 def get_forget_code_deadline_message():
     try:
-        return Setting.objects.filter(name="forget_code_deadline_message").first().value
+        return Message.objects.filter(name="forget_code_deadline_message").first().value
     except:
         return ""
 
@@ -474,7 +484,7 @@ def get_student_by_session(session):
 
 def get_not_logged_in_yet_message():
     try:
-        return Setting.objects.filter(name="not_logged_in_yet_message").first().value
+        return Message.objects.filter(name="not_logged_in_yet_message").first().value
     except:
         return ""
 
@@ -506,21 +516,21 @@ def delete_session_object_for_student(session):
 
 def get_session_not_found_message():
     try:
-        return Setting.objects.filter(name="session_not_found_message").first().value
+        return Message.objects.filter(name="session_not_found_message").first().value
     except:
         return ""
 
 
 def get_success_logout_message():
     try:
-        return Setting.objects.filter(name="success_logout_message").first().value
+        return Message.objects.filter(name="success_logout_message").first().value
     except:
         return ""
 
 
 def get_session_not_passed_message():
     try:
-        return Setting.objects.filter(name="session_not_passed_message").first().value
+        return Message.objects.filter(name="session_not_passed_message").first().value
     except:
         return ""
 
