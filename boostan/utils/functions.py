@@ -1,3 +1,5 @@
+import random
+import string
 import time
 
 from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -104,3 +106,7 @@ def create_sessions_list(sessions):
         temp["user_agent"] = parse_user_agent(session.user_agent)
         sessions_list.append(temp)
     return sessions_list
+
+
+def session_generator():
+    return "".join(random.choice(string.ascii_letters + string.digits) for _ in range(32))

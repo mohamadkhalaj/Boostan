@@ -1,13 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Session
-from .models import Setting
-from .models import Statistics
-from .models import Student
-from .models import Visitor
+from .models import Session, Setting, Statistics, Student, Visitor
 
-# Register your models here.
 admin.site.site_header = _("Boostan API management system")
 
 

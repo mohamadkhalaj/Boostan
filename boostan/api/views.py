@@ -1,6 +1,4 @@
 import json
-import random
-import string
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -10,7 +8,12 @@ from utils.decorators import (
     login_post_parameters,
     permission_decorator,
 )
-from utils.functions import after_auth_stuffs, create_sessions_list, get_client_ip
+from utils.functions import (
+    after_auth_stuffs,
+    create_sessions_list,
+    get_client_ip,
+    session_generator,
+)
 from utils.telegram import send_data
 
 from .models import (
@@ -75,10 +78,6 @@ def login(request):
     return JsonResponse({"message": get_succeess_login_message(), "session": session}, status=200)
 
 
-def session_generator():
-    return "".join(random.choice(string.ascii_letters + string.digits) for _ in range(32))
-
-
 @require_http_methods(["POST"])
 @login_post_parameters
 @login_decorator
@@ -86,14 +85,13 @@ def session_generator():
 def food_list(request, student, boostan):
     food_list_status = boostan.get_food_list()
     name, credit = boostan.get_user_info()
-    student_info = {
-        'name': name,
-        'credit' : credit
-    }
+    student_info = {"name": name, "credit": credit}
     if not food_list_status:
-        return JsonResponse({"error": get_deadline_message(), 'student': student_info}, status=400)
+        return JsonResponse({"error": get_deadline_message(), "student": student_info}, status=400)
     elif food_list_status == 1:
-        return JsonResponse({"error": get_insufficient_balance_message(), 'student': student_info}, status=400)
+        return JsonResponse(
+            {"error": get_insufficient_balance_message(), "student": student_info}, status=400
+        )
     food_list = food_list_status
     statistics_total_list()
     increment_total_recieved_list(student)

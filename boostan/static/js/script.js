@@ -26,6 +26,27 @@ var food_list;
 var reserve_list = {'total':0, 'days':[]};
 var created_objects = [];
 
+const cancel_text = 'کنسل';
+const reserve_text = 'رزرو';
+const already_reserved_text = 'رزرو شده';
+const not_reserved_text = 'رزرو نشده';
+const logout_text = 'خروج';
+const insufficient_balance_text = 'موجودی شما کافی نیست';
+const meal_submit_text = 'اعمال تغییرات';
+const breakfast_text = 'صبحانه';
+const lunch_text = 'نهار';
+const dinner_text = 'شام';
+const login_text_message = 'لطفا تا اتمام احراز هویت صبر کنید...';
+const reserve_food_text_message = 'درحال ارسال اطلاعات...';
+const get_food_list_text_message = 'درحال دریافت لیست غذا...';
+const get_forget_code_text_message = 'درحال دریافت کد فراموشی...';
+const sessions_ip_text = 'آی پی: ';
+const sessions_os_text = 'سیستم عامل: ';
+const sessions_browser_text = 'مرورگر: ';
+const sessions_last_used_text = 'آخرین استفاده: ';
+const sessions_device_text = 'دستگاه: ';
+const sessions_current_device_text = ' (این دستگاه)';
+
 
 const passwordInput = document.querySelector("[type='password']");
 const togglePasswordButton = document.getElementById("toggle-password");
@@ -176,34 +197,34 @@ function create_days(){
 		day_card_dinner_img.alt = 'dinner'
 
 		// assign overlay text
-		day_card_breakfast_overlay_text.innerText = 'صبحانه'
-		day_card_lunch_overlay_text.innerText = 'نهار'
-		day_card_dinner_overlay_text.innerText = 'شام'
+		day_card_breakfast_overlay_text.innerText = breakfast_text
+		day_card_lunch_overlay_text.innerText = lunch_text
+		day_card_dinner_overlay_text.innerText = dinner_text
 
 		// assign self
 		if (breakfast_reservation_status[0]) {
 			day_card_breakfast_self.innerText = breakfast_reservation_status[0]
-			day_card_breakfast_status.innerText = 'رزرو شده'
+			day_card_breakfast_status.innerText = already_reserved_text
 		}
 		else {
 			day_card_breakfast_self.innerText = get_default_self(item['breakfast'])[0]
-			day_card_breakfast_status.innerText  = 'رزرو نشده'
+			day_card_breakfast_status.innerText  = not_reserved_text
 		}
 		if (lunch_reservation_status[0]) {
 			day_card_lunch_self.innerText = lunch_reservation_status[0]
-			day_card_lunch_status.innerText= 'رزرو شده'
+			day_card_lunch_status.innerText= already_reserved_text
 		}
 		else {
 			day_card_lunch_self.innerText = get_default_self(item['lunch'])[0]
-			day_card_lunch_status.innerText = 'رزرو نشده'
+			day_card_lunch_status.innerText = not_reserved_text
 		}
 		if (dinner_reservation_status[0]) {
 			day_card_dinner_self.innerText = dinner_reservation_status[0]
-			day_card_dinner_status.innerText= 'رزرو شده'
+			day_card_dinner_status.innerText= already_reserved_text
 		}
 		else {
 			day_card_dinner_self.innerText = get_default_self(item['dinner'])[0]
-			day_card_dinner_status.innerText = 'رزرو نشده'
+			day_card_dinner_status.innerText = not_reserved_text
 		}
 
 		// check status class
@@ -276,9 +297,9 @@ function create_days(){
 		parent_day_cards.appendChild(day_card_div)
         created_objects.push(day_card_div)
 
-        create_meal_menu(item['breakfast'], 'صبحانه', breakfast_reservation_status[1], breakfast_reservation_status[2], day_card_breakfast_meal.id, item['day'], item['date'], item['index'])
-        create_meal_menu(item['lunch'], 'نهار', lunch_reservation_status[1], lunch_reservation_status[2], day_card_lunch_meal.id, item['day'], item['date'], item['index'])
-        create_meal_menu(item['dinner'], 'شام', dinner_reservation_status[1], dinner_reservation_status[2], day_card_dinner_meal.id, item['day'], item['date'], item['index'])
+        create_meal_menu(item['breakfast'], breakfast_text, breakfast_reservation_status[1], breakfast_reservation_status[2], day_card_breakfast_meal.id, item['day'], item['date'], item['index'])
+        create_meal_menu(item['lunch'], lunch_text, lunch_reservation_status[1], lunch_reservation_status[2], day_card_lunch_meal.id, item['day'], item['date'], item['index'])
+        create_meal_menu(item['dinner'], dinner_text, dinner_reservation_status[1], dinner_reservation_status[2], day_card_dinner_meal.id, item['day'], item['date'], item['index'])
 	})
 }
 
@@ -358,10 +379,10 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                         meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-danger mt-auto'
 
                        if (item['value'] == food_id) {
-                            meal_menu_body_col1_card_btn_inner_a.innerText = 'کنسل'
+                            meal_menu_body_col1_card_btn_inner_a.innerText = cancel_text
                         }
                         else {
-                             meal_menu_body_col1_card_btn_inner_a.innerText = 'رزرو'   
+                             meal_menu_body_col1_card_btn_inner_a.innerText = reserve_text   
                              meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto res-btn'
                         }
 
@@ -413,10 +434,10 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
                         meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-danger mt-auto'
 
                         if (item['value'] == food_id) {
-                            meal_menu_body_col1_card_btn_inner_a.innerText = 'کنسل'
+                            meal_menu_body_col1_card_btn_inner_a.innerText = cancel_text
                         }
                         else {
-                             meal_menu_body_col1_card_btn_inner_a.innerText = 'رزرو'   
+                             meal_menu_body_col1_card_btn_inner_a.innerText = reserve_text   
                              meal_menu_body_col1_card_btn_inner_a.className = 'btn btn-success mt-auto res-btn'
                         }
 
@@ -467,16 +488,16 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
             meal_menu_body.appendChild(form);
             let alert = document.createElement('div');
             alert.className = 'alert-balance alert alert-warning';
-            alert.innerText = 'موجودی کافی نیست!'
+            alert.innerText = insufficient_balance_text;
             let submit = document.createElement('button');
             submit.className = 'btn btn-primary w-100 submit-btn';
-            submit.innerText = 'اعمال تغییرات'
+            submit.innerText = meal_submit_text;
             submit.addEventListener('click', submit_meal_menu)
             meal_menu_body.appendChild(alert);
             meal_menu_body.appendChild(submit);
             meal_menu.appendChild(meal_menu_body);
             body.insertBefore(meal_menu, navbar)
-            created_objects.push(meal_menu)
+            created_objects.push(meal_menu);
     }
 }
 
@@ -499,9 +520,7 @@ function meal_reservation_status(day, meal) {
         }
     })
     if (found[0]) {
-        found[0] = found[0].replace('خوابگاه', 'خ');
-        found[0] = found[0].replace('شهيد', '');
-        found[0]= found[0].replace('سلف', '');
+        found[0] = clean_self_name(found[0]);
     }
     return found;
 }
@@ -521,12 +540,16 @@ function get_default_self(meal) {
         })
     })
     if (found[0]) {
-
-        found[0] = found[0].replace('خوابگاه', 'خ');
-        found[0] = found[0].replace('شهيد', '');
-        found[0] = found[0].replace('سلف', '');
+        found[0] = clean_self_name(found[0]);
     }
     return found;
+}
+
+function clean_self_name(self) {
+    self = self.replace('خوابگاه', 'خ');
+    self = self.replace('شهيد', '');
+    self = self.replace('سلف', '');
+    return self;
 }
 
 function submit_meal_menu() {
@@ -538,17 +561,15 @@ function submit_meal_menu() {
                 self = item.innerText
             }
         })
-        self = self.replace('خوابگاه', 'خ');
-        self = self.replace('شهيد', '');
-        self = self.replace('سلف', '');
+        self = clean_self_name(self);
         parent.childNodes[0].innerText = self;
 
-        if (this.parentElement.childNodes[0].innerText.includes('کنسل')) {
-            parent.childNodes[3].innerText = 'رزرو شده'
+        if (this.parentElement.childNodes[0].innerText.includes(cancel_text)) {
+            parent.childNodes[3].innerText = already_reserved_text
             parent.childNodes[3].className = 'btn meal-caption d-block bg-success'
         }
         else {
-            parent.childNodes[3].innerText = 'رزرو نشده'
+            parent.childNodes[3].innerText = not_reserved_text
             parent.childNodes[3].className = 'btn meal-caption d-block bg-danger'
         }
         this.parentElement.parentElement.classList.remove('meal-menu-visible')
@@ -580,10 +601,10 @@ function check_uniq_reserve(node) {
 
             if (item.className != 'col-2' && item.parentNode.parentNode !== node_parent) {
                 var child_obj = item.childNodes[0].childNodes[1].childNodes[0].childNodes[0];
-                if (child_obj.innerText == 'کنسل') {
+                if (child_obj.innerText == cancel_text) {
 
                     price = parseFloat(item.childNodes[0].childNodes[0].childNodes[0].childNodes[1].getAttribute('value'))
-                    child_obj.innerText = 'رزرو'
+                    child_obj.innerText = reserve_text
                     child_obj.className = 'btn btn-success mt-auto res-btn'
                     child_obj.addEventListener('click', cancel_reserve_btn)
                 }
@@ -609,14 +630,14 @@ function change_self(this_obj) {
 function cancel_reserve_btn() {
     let price = get_food_price(this)
     let credit = parseFloat($('#user-credit').attr('value'))
-    if (this.innerText == 'رزرو') {
+    if (this.innerText == reserve_text) {
         let others_price = check_uniq_reserve(this);
-        this.innerText = 'کنسل'
+        this.innerText = cancel_text
         this.className = 'btn btn-danger mt-auto res-btn'
         credit = credit - price + others_price
     }
     else {
-        this.innerText = 'رزرو'   
+        this.innerText = reserve_text   
         this.className = 'btn btn-success mt-auto res-btn'
         credit = credit + price
     }
@@ -634,7 +655,7 @@ function submit() {
             let menu = document.getElementById(id);
             if (menu != null) {
                 menu.childNodes[1].childNodes[0].childNodes.forEach(function(food_item, index) {
-                    if (food_item.className != 'col-2' && food_item.childNodes[0].innerHTML.includes('کنسل')){
+                    if (food_item.className != 'col-2' && food_item.childNodes[0].innerHTML.includes(cancel_text)){
                         let base = food_item.childNodes[0].childNodes[0].childNodes[0];
                         let price = parseFloat(base.childNodes[1].getAttribute('value'));
                         let food = parseFloat(base.childNodes[0].getAttribute('value'));
@@ -666,7 +687,7 @@ function submit() {
 
             if (this.status === 200) {
                 let message = JSON.parse(xhr.responseText)['message']
-                create_notif(message, 'success')
+                create_alert_notification(message, 'success')
             }
             else {
                 let message = JSON.parse(xhr.responseText)
@@ -679,17 +700,17 @@ function submit() {
                     Telegram.WebApp.MainButton.disable();
                     localStorage.removeItem('session');
                 }
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('درحال ارسال اطلاعات...', 'warning')
+    create_alert_notification(reserve_food_text_message, 'warning')
     xhr.send(params);
     // Telegram.WebApp.close()
 }
 
-function create_notif(message, type) {
+function create_alert_notification(message, type) {
 	document.getElementById('alert-container').style.visibility = 'visible';
 	let alert_obj = document.getElementById('success-alert');
 	if (!alert_obj) {
@@ -794,16 +815,16 @@ function login_and_place_list(){
 	                $('#user-credit').text("اعتبار: " + pretty_numbers(message['student']['credit']) + " تومان");
 	                $('#user-credit').attr('value', message['student']['credit'])
                 }
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('درحال دریافت لیست غذا...', 'warning');
+    create_alert_notification(get_food_list_text_message, 'warning');
     xhr.send(params);
 }
 
-function chek_login() {
+function check_login() {
     // get session from local storage
     let session = localStorage.getItem('session');
     if (session == null) {
@@ -862,7 +883,7 @@ function get_session_from_api(username, password) {
                 document.getElementById('login-form').style.display='none'
                 login_and_place_list()
                 Telegram.WebApp.MainButton.enable();
-                create_notif(message, 'success')
+                create_alert_notification(message, 'success')
             }
             else {
                 let message = JSON.parse(xhr.responseText)
@@ -874,12 +895,12 @@ function get_session_from_api(username, password) {
                     remove_objects()
                     localStorage.removeItem('session');
                 }
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('لطفا تا اتمام احراز هویت صبر کنید...', 'warning')
+    create_alert_notification(login_text_message, 'warning')
     xhr.send(params);
 }
 
@@ -910,7 +931,7 @@ function get_forget_code() {
 
             if (this.status === 200) {
                 let response = JSON.parse(xhr.responseText)
-                create_notif(message, 'success')
+                create_alert_notification(message, 'success')
             }
             else {
                 let message = JSON.parse(xhr.responseText)
@@ -922,12 +943,12 @@ function get_forget_code() {
                     remove_objects()
                     localStorage.removeItem('session');
                 }
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
-    create_notif('درحال دریافت کد فراموشی...', 'warning')
+    create_alert_notification(get_forget_code_text_message, 'warning')
     xhr.send(params);
 }
 
@@ -945,26 +966,26 @@ function create_sessions(sessions) {
 
 		let session_Browser = document.createElement('div');
 		session_Browser.className = 'session-items';
-		session_Browser.innerText = "مرورگر: " + useragent['browser'] + ` ${useragent['browser-version']}`;
+		session_Browser.innerText = sessions_browser_text + useragent['browser'] + ` ${useragent['browser-version']}`;
 		let session_OS = document.createElement('div');
 		session_OS.className = 'session-items';
-		session_OS.innerText = "سیستم عامل: " + useragent['os'] + ` ${useragent['os-version']}`;
+		session_OS.innerText = sessions_os_text + useragent['os'] + ` ${useragent['os-version']}`;
 		let session_Device = document.createElement('div');
 		session_Device.className = 'session-items';
-		session_Device.innerText = "دستگاه: " +  useragent['device'];
+		session_Device.innerText = sessions_device_text +  useragent['device'];
 		let session_IP = document.createElement('div');
 		session_IP.className = 'session-items';
-		session_IP.innerText = "آی پی: " + item['ip_address'];
+		session_IP.innerText = sessions_ip_text + item['ip_address'];
 		let session_LAST_USED = document.createElement('div');
 		session_LAST_USED.className = 'session-items';
-		session_LAST_USED.innerText = "آخرین استفاده: " + item['last_used'];
+		session_LAST_USED.innerText = sessions_last_used_text + item['last_used'];
 		if (item['session'] == session) {
-			session_LAST_USED.innerText += " (این دستگاه)";
+			session_LAST_USED.innerText += sessions_current_device_text;
 		}
 
 		let session_logout_btn = document.createElement('button');
 		session_logout_btn.className = 'btn submit-btn w-100';
-		session_logout_btn.innerText = 'خروج';
+		session_logout_btn.innerText = logout_text;
 		session_logout_btn.id = item['session'];
 		session_logout_btn.addEventListener('click', logout);
 
@@ -997,7 +1018,7 @@ function logout() {
 
             if (this.status === 200) {
                 let response = JSON.parse(xhr.responseText)
-                create_notif(response['message'], 'success')
+                create_alert_notification(response['message'], 'success')
                 main_this.parentNode.remove();
                 if (main_session == session) {
                 	Telegram.WebApp.MainButton.disable();
@@ -1013,7 +1034,7 @@ function logout() {
             }
             else {
                 let message = JSON.parse(xhr.responseText)
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
@@ -1050,7 +1071,7 @@ function get_sessions() {
             }
             else {
                 let message = JSON.parse(xhr.responseText)
-                create_notif(message['error'], 'danger')
+                create_alert_notification(message['error'], 'danger')
             }
             Telegram.WebApp.MainButton.hideProgress();
         }
@@ -1069,4 +1090,4 @@ function close_alert() {
 }
 
 Telegram.WebApp.MainButton.disable();
-chek_login()
+check_login()

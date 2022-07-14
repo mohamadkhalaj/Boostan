@@ -3,9 +3,7 @@ from tabnanny import verbose
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max
-from django.db.models import Min
-from django.db.models import Sum
+from django.db.models import Max, Min, Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
@@ -530,6 +528,6 @@ def get_session_not_passed_message():
 def get_all_user_sessions_by_sesion(session):
     try:
         student = get_student_by_session(session)
-        return student.sessions.all().order_by('-last_used')
+        return student.sessions.all().order_by("-last_used")
     except:
         return None

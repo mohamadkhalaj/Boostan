@@ -1,4 +1,3 @@
-# post parameters decorator
 from django.http import JsonResponse
 from utils.boostan import Boostan
 from utils.functions import (
@@ -23,6 +22,7 @@ from api.models import (
 )
 
 
+# post parameters decorator
 def login_post_parameters(func):
     def wrapper(request, *args, **kwargs):
         if not {"session"}.issubset(set(request.POST)):
