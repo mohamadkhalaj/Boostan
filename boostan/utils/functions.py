@@ -103,7 +103,18 @@ def create_sessions_list(sessions):
         temp["session"] = session.session
         temp["ip_address"] = session.ip_address
         temp["last_used"] = naturaltime(session.last_used)
-        temp["user_agent"] = parse_user_agent(session.user_agent)
+        parsed_user_agent = {
+            "browser": None,
+            "browser-version": None,
+            "os": None,
+            "os-version": None,
+            "device": None,
+        }
+        try:
+            parsed_user_agent = parse_user_agent(session.user_agent)
+        except:
+            pass
+        temp["user_agent"] = parsed_user_agent
         sessions_list.append(temp)
     return sessions_list
 
