@@ -1,0 +1,74 @@
+[
+{
+    "model": "api.setting",
+    "pk": 1,
+    "fields": {
+        "name": "telegram_api",
+        "value": "1111"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 2,
+    "fields": {
+        "name": "main_admin",
+        "value": "1"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 3,
+    "fields": {
+        "name": "telegram_chat_id",
+        "value": "1"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 7,
+    "fields": {
+        "name": "special_user",
+        "value": "1"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 9,
+    "fields": {
+        "name": "operating_mode",
+        "value": "normal"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 14,
+    "fields": {
+        "name": "beinol_bot_ip",
+        "value": "1.1.1.1"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 15,
+    "fields": {
+        "name": "rate_limit",
+        "value": "2"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 16,
+    "fields": {
+        "name": "connection_timeout",
+        "value": "5"
+    }
+},
+{
+    "model": "api.setting",
+    "pk": 22,
+    "fields": {
+        "name": "visitor_log_status",
+        "value": "False"
+    }
+}
+]

@@ -1,0 +1,146 @@
+[
+{
+    "model": "api.message",
+    "pk": 1,
+    "fields": {
+        "name": "deadline_message",
+        "value": "زمان انتخاب برنامه غذایی به پایان رسیده است."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 2,
+    "fields": {
+        "name": "invalid_credential_message",
+        "value": "نام کاربری یا رمز عبور اشتباه است."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 3,
+    "fields": {
+        "name": "missing_parameter_message",
+        "value": "سشن ارسال نشده است."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 4,
+    "fields": {
+        "name": "blocked_message",
+        "value": "شما اجازه استفاده ندارید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 5,
+    "fields": {
+        "name": "whitelist_message",
+        "value": "متاسفانه فقط کاربرانی خاص به این api دسترسی دارند."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 6,
+    "fields": {
+        "name": "unknown_operation_message",
+        "value": "مود عملیاتی تعریف نشده."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 7,
+    "fields": {
+        "name": "insufficient_balance_message",
+        "value": "اعتبار فعلی شما برای رزرو غذا کافی نیست."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 8,
+    "fields": {
+        "name": "wait_message",
+        "value": "درخواست قبلی شما درحال پردازش می باشد لطفا تا اتمام آن منتظر بمانید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 9,
+    "fields": {
+        "name": "success_login_message",
+        "value": "لاگین با موفقیت انجام شد."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 10,
+    "fields": {
+        "name": "missing_food_list_message",
+        "value": "لیست رزرو غذا ارسال نشده است."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 11,
+    "fields": {
+        "name": "success_reserve_message",
+        "value": "غذا با موفقیت رزرو شد."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 12,
+    "fields": {
+        "name": "food_reserve_unexpected_error_message",
+        "value": "خطای نا منتطره رخ داده است لطفا تا اطلاع ثانوی از طریق سامانه بوستان غذای خود را سفارش دهید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 13,
+    "fields": {
+        "name": "no_reserved_food_message",
+        "value": "شما در این وعده غذایی درخواستی ثبت نکرده اید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 14,
+    "fields": {
+        "name": "forget_code_deadline_message",
+        "value": "زمان دریافت کد فراموشی ۱۰ − ۱۴ می باشد."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 15,
+    "fields": {
+        "name": "not_logged_in_yet_message",
+        "value": "سشن شما یافت نشد دوباره وارد شوید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 16,
+    "fields": {
+        "name": "session_not_passed_message",
+        "value": "سشنس ارسال نشده است."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 17,
+    "fields": {
+        "name": "success_logout_message",
+        "value": "خروج با موفقیت انجام شد."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 18,
+    "fields": {
+        "name": "session_not_found_message",
+        "value": "این سشن موجود نمی باشد."
+    }
+}
+]
