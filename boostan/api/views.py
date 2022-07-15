@@ -152,6 +152,7 @@ def logout(request):
         return JsonResponse({"message": get_success_logout_message()}, status=200)
 
 
+@require_http_methods(["POST"])
 def get_sessions(request):
     if not {"session"}.issubset(set(request.POST)):
         return JsonResponse({"error": get_session_not_passed_message()}, status=400)
