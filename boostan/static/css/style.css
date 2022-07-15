@@ -257,7 +257,7 @@ button {
 .main-menu {
   z-index: 300;
   position: fixed;
-  top: 65px;
+  top: 35%;
   left: 50%;
   min-width: 360px;
   height: auto;
