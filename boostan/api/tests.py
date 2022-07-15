@@ -233,7 +233,7 @@ class TestApi(TestCase):
         operating_mode.value = "00"
         operating_mode.save()
         response = typical_view(request, student)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 500)
 
     def test_rate_limit_decorator(self):
         @rate_limit_decorator

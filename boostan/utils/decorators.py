@@ -106,6 +106,6 @@ def permission_decorator(func):
         if operating_mode == "normal" or is_legal_user:
             return func(request, *args, **kwargs)
         else:
-            return JsonResponse({"error": get_unknown_operation_message()}, status=400)
+            return JsonResponse({"error": get_unknown_operation_message()}, status=500)
 
     return wrapper
