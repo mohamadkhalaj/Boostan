@@ -5,7 +5,7 @@ from api.models import Message, Setting
 
 
 class Command(BaseCommand):
-    help = "Migrate and load fixtures to db"
+    help = "Load fixtures to db"
 
     def handle(self, *args, **kwargs):
         fixtures_path = "boostan/api/fixtures/"
