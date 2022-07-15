@@ -16,7 +16,6 @@ class Command(BaseCommand):
         else:
             self.stdout.write("Skip loading data for setting model.")
 
-        messagess_count = Message.objects.all().delete()
         messagess_count = Message.objects.all().count()
         if not messagess_count:
             self.stdout.write("Load messages model data...")
