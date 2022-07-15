@@ -1,19 +1,28 @@
 import time
 
 from django.http import JsonResponse
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory
+from django.test import TestCase
 from django.urls import reverse
-from utils.decorators import permission_decorator, rate_limit_decorator
+from utils.decorators import permission_decorator
+from utils.decorators import rate_limit_decorator
 
-from api.models import Session, Setting, Student
-from api.views import food_list, forget_code, get_sessions, login, logout, reserve_food
+from api.models import Session
+from api.models import Setting
+from api.models import Student
+from api.views import food_list
+from api.views import forget_code
+from api.views import get_sessions
+from api.views import login
+from api.views import logout
+from api.views import reserve_food
 
 
 class TestApi(TestCase):
-
+    fixtures_path = "boostan/api/fixtures"
     fixtures = [
-        "fixtures/settings.json",
-        "fixtures/messages.json",
+        f"{fixtures_path}/settings.json",
+        f"{fixtures_path}/messages.json",
     ]
 
     def setUp(self) -> None:
