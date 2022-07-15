@@ -1,8 +1,10 @@
 import re
 import urllib.parse
+
 from pprint import pprint
 
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -149,7 +151,8 @@ class Boostan:
         response = requests.get(
             Boostan.food_list_url, cookies=self.session_cookie, headers=headers
         )
-        if "زمان انتخاب برنامه غذایی به پایان رسیده است ." in response.text:
+        if "زمان انتخاب برنامه غذایی به پایان رسیده است ." in response.text\
+         or "زمان انتخاب برنامه غذایی نرسیده است ." in response.text:
             return 0
         if "اعتبار فعلی شما برای انتخاب غذا کافی نیست" in response.text:
             return 1
@@ -347,6 +350,7 @@ class Boostan:
             return 0
         elif "میزان غذای انتخابی شما از میزان اعتبار شما بیشتر است" in response.text:
             return 2
+        print(response.text)
         return response
 
     def url_encoder(self, url):
