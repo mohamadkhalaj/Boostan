@@ -105,9 +105,9 @@ def create_sessions_list(sessions):
         temp["last_used"] = naturaltime(session.last_used)
         parsed_user_agent = {
             "browser": None,
-            "browser-version": None,
+            "browser-version": "",
             "os": None,
-            "os-version": None,
+            "os-version": "",
             "device": None,
         }
         try:
