@@ -37,6 +37,9 @@ jobs:
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
         run: |
           pip install -r requirements.txt && pip install -r requirements/local.txt
+      - name: Collect statics
+        run: |
+          python manage.py collectstatic --noinput  
       - name: Migrate
         run: |
           python manage.py migrate
