@@ -17,19 +17,16 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
- 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Set up Python
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup Python 3.8
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt && pip install -r requirements/local.txt
-      - name: Run migrations
+          python-version: 3.8
+      - name: Install requirements
         env:
           DJANGO_DEBUG: false
           DEBUG: false
@@ -39,11 +36,13 @@ jobs:
           DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
         run: |
-          python manage.py makemigrations --noinput
-          python manage.py migrate --noinput
+          pip install -r requirements.txt && pip install -r requirements/local.txt
+      - name: Migrate
+        run: |
+          python manage.py migrate
       - name: Run Tests
         run: |
-          python manage.py test
+          python manage.py test api
       - name: Check Syntax #We are just testing the syntax in names app; pycodestyle uses pep8 conventions of max line length of 79 characters while Django recommends 119 characters
         run: pycodestyle --statistics names
   #Before deploy job you would usually have the build job in case you are using docker images
