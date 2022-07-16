@@ -1,0 +1,47 @@
+name: Example CI Django & Postgres Tests
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    services:
+      postgres_main:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: boostan
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Run Tests
+        env:
+          DJANGO_DEBUG: "0"
+          DJANGO_SECRET_KEY: "$(openssl rand -base64 64)"
+          DJANGO_SETTINGS_MODULE: "config.settings.production"
+          DJANGO_ALLOWED_HOSTS: "*"
+          DJANGO_ADMIN_URL: "$(openssl rand -base64 4096 | tr -dc 'A-HJ-NP-Za-km-z2-9' | head -c 32)/"
+          DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
+        run: |
+          python manage.py test
