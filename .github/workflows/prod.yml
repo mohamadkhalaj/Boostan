@@ -21,7 +21,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -49,7 +49,7 @@ jobs:
       needs: [health-checkup-job]
       steps:
         - name: Init heroku
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
         - name: Deploying to heroku
           uses: akhileshns/heroku-deploy@v3.12.12
           with:
