@@ -30,16 +30,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run migrations
-        run: |
-          python manage.py makemigrations --noinput
-          python manage.py migrate --noinput
         env:
-          DJANGO_DEBUG: "0"
+          DJANGO_DEBUG: 0
           DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"
           DJANGO_SETTINGS_MODULE: "config.settings.production"
           DJANGO_ALLOWED_HOSTS: "*"
           DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
+        run: |
+          python manage.py makemigrations --noinput
+          python manage.py migrate --noinput
       - name: Run Tests
         run: |
           python manage.py test
