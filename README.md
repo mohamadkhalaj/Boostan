@@ -4,6 +4,7 @@ reserve food from boostan website.
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Example CI Django & Postgres Tests](https://github.com/mohamadkhalaj/Boostan/actions/workflows/dev.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/dev.yml)
 
 ## Settings
 
