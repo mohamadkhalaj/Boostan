@@ -43,8 +43,6 @@ jobs:
       - name: Run Tests
         run: |
           python manage.py test api
-      - name: Check Syntax #We are just testing the syntax in names app; pycodestyle uses pep8 conventions of max line length of 79 characters while Django recommends 119 characters
-        run: pycodestyle --statistics names
   #Before deploy job you would usually have the build job in case you are using docker images
   deploy-job:
       runs-on: ubuntu-latest
@@ -59,10 +57,3 @@ jobs:
             heroku_api_key: ${{secrets.HEROKU_API_KEY}}
             heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
             heroku_email: ${{secrets.HEROKU_EMAIL}}
-        # - name: Set environment
-        #   env:
-        #     DJANGO_DEBUG: "0"
-        #     DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"
-        #     DJANGO_SETTINGS_MODULE: "config.settings.production"
-        #     DJANGO_ALLOWED_HOSTS: "*"
-        #     DJANGO_ADMIN_URL: "admin/"
