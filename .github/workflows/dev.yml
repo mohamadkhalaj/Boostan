@@ -38,10 +38,10 @@ jobs:
       - name: Run Tests
         env:
           DJANGO_DEBUG: "0"
-          DJANGO_SECRET_KEY: "$(openssl rand -base64 64)"
+          DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"
           DJANGO_SETTINGS_MODULE: "config.settings.production"
           DJANGO_ALLOWED_HOSTS: "*"
-          DJANGO_ADMIN_URL: "$(openssl rand -base64 4096 | tr -dc 'A-HJ-NP-Za-km-z2-9' | head -c 32)/"
+          DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
         run: |
           python manage.py test
