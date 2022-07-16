@@ -44,4 +44,4 @@ jobs:
           DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
         run: |
-          python manage.py test
+          python manage.py test api
