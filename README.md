@@ -39,7 +39,7 @@ To run the tests, check your test coverage, and generate an HTML coverage report
 
 #### Running tests with pytest
 
-    $ pytest
+    $ python manage.py test api
 
 ### Live reloading and Sass CSS compilation
 
