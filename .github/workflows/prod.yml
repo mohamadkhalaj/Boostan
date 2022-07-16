@@ -35,6 +35,8 @@ jobs:
           DJANGO_ALLOWED_HOSTS: "*"
           DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
+          BOOSTAN_USERNAME: ${{secrets.BOOSTAN_USERNAME}}
+          BOOSTAN_PASSWORD: ${{secrets.BOOSTAN_PASSWORD}}
         run: |
           pip install -r requirements.txt && pip install -r requirements/local.txt
       - name: Collect statics

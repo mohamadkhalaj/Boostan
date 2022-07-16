@@ -1,21 +1,20 @@
+import json
 import time
+from os import environ as env
 
 from django.http import JsonResponse
-from django.test import RequestFactory
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.urls import reverse
-from utils.decorators import permission_decorator
-from utils.decorators import rate_limit_decorator
+from utils.decorators import permission_decorator, rate_limit_decorator
 
-from .models import Session
-from .models import Setting
-from .models import Student
-from .views import food_list
-from .views import forget_code
-from .views import get_sessions
-from .views import login
-from .views import logout
-from .views import reserve_food
+from .models import (
+    Session,
+    Setting,
+    Student,
+    get_invalid_credential_message,
+    get_succeess_login_message,
+)
+from .views import food_list, forget_code, get_sessions, login, logout, reserve_food
 
 
 class TestApi(TestCase):
@@ -40,6 +39,8 @@ class TestApi(TestCase):
         self.headers = {
             "content_type": "application/x-www-form-urlencoded",
         }
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
 
     def test_get_request(self):
 
@@ -330,3 +331,37 @@ class TestApi(TestCase):
         )
         response = logout(request)
         self.assertEqual(response.status_code, 400)
+
+    def test_success_login_view(self):
+        if self.boostan_username and self.boostan_password:
+            login_request = RequestFactory().post(
+                reverse("boostan_api:login"),
+                **self.headers,
+                data=f"stun={self.boostan_username}&password={self.boostan_password}&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
+            )
+            login_request_data = login(login_request)
+            self.assertEqual(login_request_data.status_code, 200)
+            self.assertIsInstance(login_request_data, JsonResponse)
+            self.assertEqual(
+                json.loads(login_request_data.content)["message"], get_succeess_login_message()
+            )
+            self.assertNotEqual(json.loads(login_request_data.content)["session"], "")
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
+
+    def test_failed_login_view(self):
+        if self.boostan_username and self.boostan_password:
+            login_request = RequestFactory().post(
+                reverse("boostan_api:login"),
+                **self.headers,
+                data=f"stun=1&password=1&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
+            )
+            login_request_data = login(login_request)
+            self.assertEqual(login_request_data.status_code, 401)
+            self.assertIsInstance(login_request_data, JsonResponse)
+            self.assertEqual(
+                json.loads(login_request_data.content)["error"], get_invalid_credential_message()
+            )
+            self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
