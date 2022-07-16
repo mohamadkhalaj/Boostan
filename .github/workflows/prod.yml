@@ -19,8 +19,9 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
  
     steps:
+      - name: Set up Python
+        uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
-      - uses: actions/checkout@v2
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
@@ -50,9 +51,10 @@ jobs:
       needs: [health-checkup-job]
       if: ${{ github.event_name == 'push' }}
       steps:
+        - name: Init heroku
+          uses: actions/checkout@v2
         - name: Deploying to heroku
-        - uses: actions/checkout@v2
-        - uses: akhileshns/heroku-deploy@v3.12.12
+          uses: akhileshns/heroku-deploy@v3.12.12
           with:
             heroku_api_key: ${{secrets.HEROKU_API_KEY}}
             heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
