@@ -15,6 +15,7 @@ class Boostan:
     food_list_url = "https://stu.ikiu.ac.ir/layers.aspx?quiz=resfood"
     food_reserve_url = "https://stu.ikiu.ac.ir/foodrezerv.aspx?quiz=restfood"
     forget_code_url = "https://stu.ikiu.ac.ir/layers.aspx?quiz=forgetcartfood"
+    forget_code_btn = "https://stu.ikiu.ac.ir/forgetcartrepfood.aspx?quiz=forgetcartfood"
 
     def __init__(self, username, password):
         self.username = username
@@ -312,12 +313,53 @@ class Boostan:
         response = requests.get(
             Boostan.forget_code_url, cookies=self.session_cookie, headers=headers
         )
+        message = 2
+        soup = BeautifulSoup(response.text, "html.parser")
+        alert_div = soup.find('div', attrs={'id':'ctl00_main_tberror', 'class':'bg-danger'})
+        if alert_div:
+            message = alert_div.text.strip() + '.'
         if "شما در این وعده غذایی درخواستی ثبت نکرده اید" in response.text:
             return 0
-        elif "" in response.text:
+        elif "کاربر گرامی شما در زمان دریافت کدفراموشی نمی باشید ساعت دریافت غذای کدفراموشی برای وعده نهار در امروز از ساعت :10:00:00 AMتا ساعت2:00:00 PM می باشد" in response.text: # need regex for more accuracy.
             return 2
+        elif "کاربر گرامي دقت بفرماييد بعد از استفاده از حداکثر تعداد مجاز در بازه زماني مشخص امکان دريافت کد فراموشي براي شما به شرط پرداخت جريمه مي باشد" in response.text\
+            or "درخواست یادآوری کد" in response.text:
+            return _forget_code_btn_send()
         else:
-            return 1
+            return message # more exceptions should be handled.
+
+    def _forget_code_btn_send(self):
+        headers = {
+            'Host': 'stu.ikiu.ac.ir',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0',
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Microsoftajax': 'Delta=true',
+            'Cache-Control': 'no-cache',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Origin': 'https://stu.ikiu.ac.ir',
+            'Dnt': '1',
+            'Referer': 'https://stu.ikiu.ac.ir/layers.aspx?quiz=forgetcartfood',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            'Pragma': 'no-cache',
+            'Cookie': f'ASP.NET_SessionId={self.cookie}',
+        }
+
+        data = 'ctl00%24Scm=ctl00%24UpdatePanel1%7Cctl00%24main%24btsend&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTgxOTM1MTE3OA9kFgJmD2QWAgIDD2QWAgIDD2QWAmYPZBYSAgEPFgIeBFRleHQF2wE8aSBjbGFzcz0nYmFkZ2UgYmFkZ2Utc3VjY2Vzcycgc3R5bGU9J2ZvbnQtc2l6ZTogMThweDsnPiAg2YbYp9mFIDog2YXYrdmF2K%2FZhdmH2K%2FZiiDYrtmE2KwgPC9pPjxpICBzdHlsZT0nZm9udC1zaXplOiAxOHB4O2RpcmVjdGlvbjpydGwnIGNsYXNzPSdiYWRnZSBiYWRnZS1wcmltYXJ5IG15LWNhcnQtYmFkZ2UnPiDYp9i52KrYqNin2LEg2LTZhdinIDE3NTAwMCDYsduM2KfZhDwvaT5kAgMPFgIeB1Zpc2libGVoZAIEDxYCHwFoZAIGDxYCHwFoZAIMDxYCHglpbm5lcmh0bWwFGti02YbYqNmHINiMIDI1INiq2YrYsSAxNDAxZAIODxYCHwFoZAIQDw8WAh8BaGRkAhQPZBYOAgEPFgIfAWhkAgMPFgIfAWhkAgUPFgIfAWhkAgcPFgIfAWhkAgkPFgIfAWhkAgsPFgIfAWhkAg8PFgIfAWhkAhYPZBYEAgEPZBYCAgEPDxYCHwAF%2FgHaqdin2LHYqNixINqv2LHYp9mF2Yog2K%2FZgtiqINio2YHYsdmF2KfZitmK2K8g2KjYudivINin2LIg2KfYs9iq2YHYp9iv2Ycg2KfYsiDYrdiv2Kfaqdir2LEg2KrYudiv2KfYryDZhdis2KfYsiDYr9ixINio2KfYstmHINiy2YXYp9mG2Yog2YXYtNiu2LUg2KfZhdqp2KfZhiDYr9ix2YrYp9mB2Kog2qnYryDZgdix2KfZhdmI2LTZiiDYqNix2KfZiiDYtNmF2Kcg2KjZhyDYtNix2Lcg2b7Ysdiv2KfYrtiqINis2LHZitmF2Ycg2YXZiiDYqNin2LTYr2RkAgMPDxYCHwAFBzM1Mzk5NzNkZGSdFCe4IRiL%2F22RqeYEP17lZ5YKJrydXgUQtyrVN3EQng%3D%3D&__VIEWSTATEGENERATOR=090A0A27&__EVENTVALIDATION=%2FwEdAAJdSSm2pzEtL5tHG5QWYpekd65JHDP6t62kwiwXgYR0S7t%2BF%2BuBEL1LGJo%2BKutCLTtzK1tGxk1KDXKK3nf2NfOO&__ASYNCPOST=true&ctl00%24main%24btsend=%D8%AF%D8%B1%D8%AE%D9%88%D8%A7%D8%B3%D8%AA%20%DB%8C%D8%A7%D8%AF%D8%A2%D9%88%D8%B1%DB%8C%20%DA%A9%D8%AF'
+        response = requests.post(forget_code_btn, cookies=self.session_cookie, headers=headers, data=data)
+        soup = BeautifulSoup(response.text, "html.parser")
+        alert_div = soup.find('div', attrs={'id':'ctl00_main_tberror', 'class':'bg-success'})
+        if alert_div:
+            return alert_div.text.strip() + '.'
+        else:
+            alert_div = soup.find('div', attrs={'id':'ctl00_main_tberror', 'class':'bg-danger'})
+            if alert_div:
+                return alert_div.text.strip() + '.'
+            else:
+                return 2
 
     def reserve_food(self, reserve_list):
 
@@ -350,7 +392,6 @@ class Boostan:
             return 0
         elif "میزان غذای انتخابی شما از میزان اعتبار شما بیشتر است" in response.text:
             return 2
-        print(response.text)
         return response
 
     def url_encoder(self, url):

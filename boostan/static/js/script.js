@@ -39,6 +39,7 @@ const dinner_text = 'شام';
 const login_text_message = 'لطفا تا اتمام احراز هویت صبر کنید...';
 const reserve_food_text_message = 'درحال ارسال اطلاعات...';
 const get_food_list_text_message = 'درحال دریافت لیست غذا...';
+const success_food_list_text_message = 'لیست با موفقیت دریافت شد.';
 const get_forget_code_text_message = 'درحال دریافت کد فراموشی...';
 const sessions_ip_text = 'آی پی: ';
 const sessions_os_text = 'سیستم عامل: ';
@@ -787,7 +788,7 @@ function login_and_place_list(){
 
             if (this.status === 200) {
                 let message = JSON.parse(xhr.responseText)['food_list']
-
+            	create_alert_notification(success_food_list_text_message, 'success');
                 food_list = message;
                 document.getElementsByClassName('navbar-container')[0].style.visibility='visible';
                 $('#user-name').text(food_list['name']);
@@ -930,8 +931,8 @@ function get_forget_code() {
         if (this.readyState === XMLHttpRequest.DONE) {
 
             if (this.status === 200) {
-                let response = JSON.parse(xhr.responseText)
-                create_alert_notification(message, 'success')
+                let response = JSON.parse(xhr.responseText)['message'];
+                create_alert_notification(response, 'success');
             }
             else {
                 let message = JSON.parse(xhr.responseText)
