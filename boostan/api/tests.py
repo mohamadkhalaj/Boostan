@@ -178,7 +178,6 @@ class TestApi(TestCase):
         self.assertEqual(food_list_reqeust_data.status_code, 401)
 
     def test_permission_decorator(self):
-        print(Student.objects.all())
         @permission_decorator
         def typical_view(request, student):
             return JsonResponse(data={}, status=200)
@@ -186,13 +185,14 @@ class TestApi(TestCase):
         request = RequestFactory().get("/")
 
         # Normal mode test
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
+        print(student)
         operating_mode = Setting.objects.get(name="operating_mode")
         response = typical_view(request, student)
         self.assertEqual(response.status_code, 200)
 
         # Blocked mode test
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
         student.status = 1
         student.save()
         operating_mode.value = "blocked"
@@ -201,7 +201,7 @@ class TestApi(TestCase):
         self.assertEqual(response.status_code, 403)
 
         # Blocked mode test but user not blocked
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
         student.status = 0
         student.save()
         operating_mode.value = "blocked"
@@ -210,7 +210,7 @@ class TestApi(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # White list mode test
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
         student.status = 0
         student.save()
         operating_mode.value = "whited"
@@ -219,7 +219,7 @@ class TestApi(TestCase):
         self.assertEqual(response.status_code, 403)
 
         # White list mode test but user is whited
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
         student.status = 2
         student.save()
         operating_mode.value = "whited"
@@ -228,7 +228,7 @@ class TestApi(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Unknown oparing mode test
-        student = Student.objects.get(id=1)
+        student = Student.objects.filter(id=1).first()
         student.status = 2
         student.save()
         operating_mode.value = "00"
