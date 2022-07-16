@@ -33,12 +33,6 @@ jobs:
         with:
           python-version: 3.8
       - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-      - name: Migrate
-        run: |
-          python manage.py migrate
-      - name: Run Tests
         env:
           DJANGO_DEBUG: "0"
           DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"
@@ -46,5 +40,11 @@ jobs:
           DJANGO_ALLOWED_HOSTS: "*"
           DJANGO_ADMIN_URL: "admin/"
           DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/$POSTGRES_DB"
+        run: |
+          pip install -r requirements.txt
+      - name: Migrate
+        run: |
+          python manage.py migrate
+      - name: Run Tests
         run: |
           python manage.py test api
