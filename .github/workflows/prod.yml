@@ -32,7 +32,6 @@ jobs:
         run: |
           python manage.py makemigrations --noinput
           python manage.py migrate --noinput
-      - name: Run Tests
         env:
           DJANGO_DEBUG: "0"
           DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"

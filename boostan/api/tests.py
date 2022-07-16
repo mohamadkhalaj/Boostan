@@ -7,15 +7,15 @@ from django.urls import reverse
 from utils.decorators import permission_decorator
 from utils.decorators import rate_limit_decorator
 
-from api.models import Session
-from api.models import Setting
-from api.models import Student
-from api.views import food_list
-from api.views import forget_code
-from api.views import get_sessions
-from api.views import login
-from api.views import logout
-from api.views import reserve_food
+from .models import Session
+from .models import Setting
+from .models import Student
+from .views import food_list
+from .views import forget_code
+from .views import get_sessions
+from .views import login
+from .views import logout
+from .views import reserve_food
 
 
 class TestApi(TestCase):
@@ -178,6 +178,7 @@ class TestApi(TestCase):
         self.assertEqual(food_list_reqeust_data.status_code, 401)
 
     def test_permission_decorator(self):
+        print(Student.objects.all())
         @permission_decorator
         def typical_view(request, student):
             return JsonResponse(data={}, status=200)
