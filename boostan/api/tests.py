@@ -54,7 +54,9 @@ class BaseTest(TestCase):
         self.boostan_username = env.get("BOOSTAN_USERNAME", None)
         self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
         
-        print(env.get('DATABASE_URL'))
+        import environ
+        envv = environ.Env()
+        print(envv('DATABASE_URL'))
 
         self.assertIsNotNone(self.boostan_username)
         self.assertIsNotNone(self.boostan_password)
