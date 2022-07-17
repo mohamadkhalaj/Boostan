@@ -1,6 +1,7 @@
 import json
 import time
-from os import environ as env
+# from os import environ as env
+from test.support import EnvironmentVarGuard
 
 from django.http import JsonResponse
 from django.test import RequestFactory, TestCase
@@ -51,6 +52,23 @@ class BaseTest(TestCase):
         self.headers = {
             "content_type": "application/x-www-form-urlencoded",
         }
+        with EnvironmentVarGuard() as env:
+            self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+            self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+            self.assertIsNotNone(self.boostan_username)
+            self.assertIsNotNone(self.boostan_password)
+
+            self.real_student = Student.objects.create(
+                stu_number=self.boostan_username,
+                password=self.boostan_password,
+                full_name="real user",
+                count_of_used=0,
+                credit=0,
+            )
+            self.real_session = Session.objects.create(
+                student=self.real_student, session="real_session"
+            )
 
 
 class TestDecorators(BaseTest):
@@ -162,24 +180,6 @@ class TestDecorators(BaseTest):
         self.assertEqual(response_json["error"], get_missing_parameter_message())
 
     def test_login_decorator(self):
-
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-
         @login_decorator
         def typical_view(request, student, boostan):
             return JsonResponse(
@@ -452,24 +452,6 @@ class TestApi(BaseTest):
         self.assertEqual(response.status_code, 400)
 
     def test_success_login_view(self):
-
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-
         if self.boostan_username and self.boostan_password:
             login_request = RequestFactory().post(
                 reverse("boostan_api:login"),
@@ -487,38 +469,23 @@ class TestApi(BaseTest):
             print("Please set boostan_username and boostan_password in environment variables")
 
     def test_failed_login_view(self):
-        login_request = RequestFactory().post(
-            reverse("boostan_api:login"),
-            **self.headers,
-            data=f"stun=1&password=1&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
-        )
-        login_request_data = login(login_request)
-        self.assertEqual(login_request_data.status_code, 401)
-        self.assertIsInstance(login_request_data, JsonResponse)
-        self.assertEqual(
-            json.loads(login_request_data.content)["error"], get_invalid_credential_message()
-        )
-        self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
+        if self.boostan_username and self.boostan_password:
+            login_request = RequestFactory().post(
+                reverse("boostan_api:login"),
+                **self.headers,
+                data=f"stun=1&password=1&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
+            )
+            login_request_data = login(login_request)
+            self.assertEqual(login_request_data.status_code, 401)
+            self.assertIsInstance(login_request_data, JsonResponse)
+            self.assertEqual(
+                json.loads(login_request_data.content)["error"], get_invalid_credential_message()
+            )
+            self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
 
     def test_food_list_view(self):
-
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-
         login_request = RequestFactory().post(
             reverse("boostan_api:get-food-list"),
             **self.headers,
@@ -539,24 +506,6 @@ class TestApi(BaseTest):
         self.assertIsInstance(food_list_request_data, JsonResponse)
 
     def test_reserve_food_view(self):
-
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-        
         # Foodlist passed
         sample_list = {
             "total": 0,
