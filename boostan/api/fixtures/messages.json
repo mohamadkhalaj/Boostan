@@ -142,5 +142,29 @@
         "name": "session_not_found_message",
         "value": "این سشن موجود نمی باشد."
     }
+},
+{
+    "model": "api.message",
+    "pk": 19,
+    "fields": {
+        "name": "404_message",
+        "value": "صفحه موردنظر شما یافت نشد."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 20,
+    "fields": {
+        "name": "500_message",
+        "value": "خطای داخلی رخ داده است لطفا پارامتر های ارسالی را بررسی کنید."
+    }
+},
+{
+    "model": "api.message",
+    "pk": 21,
+    "fields": {
+        "name": "403_message",
+        "value": "شما مجاز به دیدن این بخش نیستید."
+    }
 }
 ]
