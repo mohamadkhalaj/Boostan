@@ -29,15 +29,14 @@ from .models import (
 from .views import food_list, forget_code, get_sessions, login, logout, reserve_food
 
 
-
-class TestDecorators(TestCase):
+class BaseTest(TestCase):
     fixtures_path = "boostan/api/fixtures"
     fixtures = [
         f"{fixtures_path}/settings.json",
         f"{fixtures_path}/messages.json",
     ]
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.number_of_students = 9
         for i in range(self.number_of_students):
             student = Student.objects.create(
@@ -52,23 +51,9 @@ class TestDecorators(TestCase):
         self.headers = {
             "content_type": "application/x-www-form-urlencoded",
         }
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
 
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
 
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-
+class TestDecorators(BaseTest):
     def test_permission_decorator(self):
         @permission_decorator
         def typical_view(request, student):
@@ -177,6 +162,24 @@ class TestDecorators(TestCase):
         self.assertEqual(response_json["error"], get_missing_parameter_message())
 
     def test_login_decorator(self):
+
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
+
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
+
         @login_decorator
         def typical_view(request, student, boostan):
             return JsonResponse(
@@ -235,46 +238,7 @@ class TestDecorators(TestCase):
         self.real_student.save()
 
 
-class TestApi(TestCase):
-
-    fixtures_path = "boostan/api/fixtures"
-    fixtures = [
-        f"{fixtures_path}/settings.json",
-        f"{fixtures_path}/messages.json",
-    ]
-
-    def setUp(self):
-        self.number_of_students = 9
-        for i in range(self.number_of_students):
-            student = Student.objects.create(
-                stu_number=i,
-                password=i,
-                full_name="test user",
-                count_of_used=i,
-                credit=i,
-            )
-            Session.objects.create(student=student, session=i)
-
-        self.headers = {
-            "content_type": "application/x-www-form-urlencoded",
-        }
-        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
-        
+class TestApi(BaseTest):
     def test_get_request(self):
 
         login_request = RequestFactory().get(
@@ -488,6 +452,24 @@ class TestApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_success_login_view(self):
+
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
+
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
+
         if self.boostan_username and self.boostan_password:
             login_request = RequestFactory().post(
                 reverse("boostan_api:login"),
@@ -505,23 +487,38 @@ class TestApi(TestCase):
             print("Please set boostan_username and boostan_password in environment variables")
 
     def test_failed_login_view(self):
-        if self.boostan_username and self.boostan_password:
-            login_request = RequestFactory().post(
-                reverse("boostan_api:login"),
-                **self.headers,
-                data=f"stun=1&password=1&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
-            )
-            login_request_data = login(login_request)
-            self.assertEqual(login_request_data.status_code, 401)
-            self.assertIsInstance(login_request_data, JsonResponse)
-            self.assertEqual(
-                json.loads(login_request_data.content)["error"], get_invalid_credential_message()
-            )
-            self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
-        else:
-            print("Please set boostan_username and boostan_password in environment variables")
+        login_request = RequestFactory().post(
+            reverse("boostan_api:login"),
+            **self.headers,
+            data=f"stun=1&password=1&telegram_data={json.dumps({'id':'test', 'username':'test'})}",
+        )
+        login_request_data = login(login_request)
+        self.assertEqual(login_request_data.status_code, 401)
+        self.assertIsInstance(login_request_data, JsonResponse)
+        self.assertEqual(
+            json.loads(login_request_data.content)["error"], get_invalid_credential_message()
+        )
+        self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
 
     def test_food_list_view(self):
+
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
+
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
+
         login_request = RequestFactory().post(
             reverse("boostan_api:get-food-list"),
             **self.headers,
@@ -542,6 +539,24 @@ class TestApi(TestCase):
         self.assertIsInstance(food_list_request_data, JsonResponse)
 
     def test_reserve_food_view(self):
+
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
+
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
+        
         # Foodlist passed
         sample_list = {
             "total": 0,
