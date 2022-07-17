@@ -28,8 +28,6 @@ from .models import (
 )
 from .views import food_list, forget_code, get_sessions, login, logout, reserve_food
 
-boostan_username = env.get("BOOSTAN_USERNAME", None)
-boostan_password = env.get("BOOSTAN_PASSWORD", None)
 
 class BaseTest(TestCase):
     fixtures_path = "boostan/api/fixtures"
@@ -53,22 +51,20 @@ class BaseTest(TestCase):
         self.headers = {
             "content_type": "application/x-www-form-urlencoded",
         }
-        self.boostan_username = boostan_username
-        self.boostan_password = boostan_password
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
 
-        self.assertIsNotNone(self.boostan_username)
-        self.assertIsNotNone(self.boostan_password)
-
-        self.real_student = Student.objects.create(
-            stu_number=self.boostan_username,
-            password=self.boostan_password,
-            full_name="real user",
-            count_of_used=0,
-            credit=0,
-        )
-        self.real_session = Session.objects.create(
-            student=self.real_student, session="real_session"
-        )
+        if self.boostan_username and self.boostan_password:
+            self.real_student = Student.objects.create(
+                stu_number=self.boostan_username,
+                password=self.boostan_password,
+                full_name="real user",
+                count_of_used=0,
+                credit=0,
+            )
+            self.real_session = Session.objects.create(
+                student=self.real_student, session="real_session"
+            )
 
 
 class TestDecorators(BaseTest):
@@ -186,20 +182,23 @@ class TestDecorators(BaseTest):
                 data={"student": student.stu_number, "boostan": boostan.username}, status=200
             )
 
-        # Successfull login
-        session = self.real_session.session
-        request = RequestFactory().post(
-            "/",
-            **self.headers,
-            data=f"session={session}",
-        )
+        if self.boostan_username and self.boostan_password:
+            # Successfull login
+            session = self.real_session.session
+            request = RequestFactory().post(
+                "/",
+                **self.headers,
+                data=f"session={session}",
+            )
 
-        response = typical_view(request)
-        response_json = json.loads(response.content)
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(response_json["student"], self.boostan_username)
-        self.assertEqual(response_json["boostan"], self.boostan_username)
+            response = typical_view(request)
+            response_json = json.loads(response.content)
+            self.assertEqual(response.status_code, 200)
+            self.assertIsInstance(response, JsonResponse)
+            self.assertEqual(response_json["student"], self.boostan_username)
+            self.assertEqual(response_json["boostan"], self.boostan_username)
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
 
         # Invalid session
         request = RequestFactory().post(
@@ -215,28 +214,30 @@ class TestDecorators(BaseTest):
         self.assertEqual(response_json["relogin"], True)
         self.assertEqual(response_json["error"], get_not_logged_in_yet_message())
 
-        # Invalid user password but valid session
-        request = RequestFactory().post(
-            "/",
-            **self.headers,
-            data=f"session={session}",
-        )
-        # Change password
-        real_password = self.real_student.password
-        self.real_student.password = "1111"
-        self.real_student.save()
+        if self.boostan_username and self.boostan_password:
+            # Invalid user password but valid session
+            request = RequestFactory().post(
+                "/",
+                **self.headers,
+                data=f"session={session}",
+            )
+            # Change password
+            real_password = self.real_student.password
+            self.real_student.password = "1111"
+            self.real_student.save()
 
-        response = typical_view(request)
-        response_json = json.loads(response.content)
-        self.assertEqual(response.status_code, 401)
-        self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(response_json["relogin"], True)
-        self.assertEqual(response_json["error"], get_invalid_credential_message())
+            response = typical_view(request)
+            response_json = json.loads(response.content)
+            self.assertEqual(response.status_code, 401)
+            self.assertIsInstance(response, JsonResponse)
+            self.assertEqual(response_json["relogin"], True)
+            self.assertEqual(response_json["error"], get_invalid_credential_message())
 
-        # Restore password
-        self.real_student.password = real_password
-        self.real_student.save()
-
+            # Restore password
+            self.real_student.password = real_password
+            self.real_student.save()
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
 
 class TestApi(BaseTest):
     def test_get_request(self):
@@ -486,76 +487,82 @@ class TestApi(BaseTest):
             print("Please set boostan_username and boostan_password in environment variables")
 
     def test_food_list_view(self):
-        login_request = RequestFactory().post(
-            reverse("boostan_api:get-food-list"),
-            **self.headers,
-            data=f"session={self.real_session.session}",
-        )
-        food_list_request_data = food_list(login_request)
-        json_response = json.loads(food_list_request_data.content)
-        if food_list_request_data.status_code == 400:
-            errors = [get_deadline_message(), get_insufficient_balance_message()]
-            json_response_error = json_response["error"]
-            self.assertEqual((json_response_error in errors), True)
-            self.assertEqual(json_response["student"]["name"], self.real_student.full_name)
-            self.assertEqual(json_response["student"]["credit"], self.real_student.credit)
+        if self.boostan_username and self.boostan_password:
+            login_request = RequestFactory().post(
+                reverse("boostan_api:get-food-list"),
+                **self.headers,
+                data=f"session={self.real_session.session}",
+            )
+            food_list_request_data = food_list(login_request)
+            json_response = json.loads(food_list_request_data.content)
+            if food_list_request_data.status_code == 400:
+                errors = [get_deadline_message(), get_insufficient_balance_message()]
+                json_response_error = json_response["error"]
+                self.assertEqual((json_response_error in errors), True)
+                self.assertEqual(json_response["student"]["name"], self.real_student.full_name)
+                self.assertEqual(json_response["student"]["credit"], self.real_student.credit)
 
-        elif food_list_request_data.status_code == 200:
-            self.assertNotEqual(json_response.get("food_list", None), None)
+            elif food_list_request_data.status_code == 200:
+                self.assertNotEqual(json_response.get("food_list", None), None)
 
-        self.assertIsInstance(food_list_request_data, JsonResponse)
+            self.assertIsInstance(food_list_request_data, JsonResponse)
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
 
     def test_reserve_food_view(self):
-        # Foodlist passed
-        sample_list = {
-            "total": 0,
-            "days": [],
-        }
-        login_request = RequestFactory().post(
-            reverse("boostan_api:reserve-food"),
-            **self.headers,
-            data=f"session={self.real_session.session}&food-list={json.dumps(sample_list)}",
-        )
-        food_list_request_data = reserve_food(login_request)
-        json_response = json.loads(food_list_request_data.content)
-        if food_list_request_data.status_code == 400:
-            errors = [
-                get_deadline_message(),
-                get_insufficient_balance_message(),
-            ]
-            json_response_error = json_response["error"]
-            self.assertEqual((json_response_error in errors), True)
+        if self.boostan_username and self.boostan_password:
+            # Foodlist passed
+            sample_list = {
+                "total": 0,
+                "days": [],
+            }
+            login_request = RequestFactory().post(
+                reverse("boostan_api:reserve-food"),
+                **self.headers,
+                data=f"session={self.real_session.session}&food-list={json.dumps(sample_list)}",
+            )
+            food_list_request_data = reserve_food(login_request)
+            json_response = json.loads(food_list_request_data.content)
+            if food_list_request_data.status_code == 400:
+                errors = [
+                    get_deadline_message(),
+                    get_insufficient_balance_message(),
+                ]
+                json_response_error = json_response["error"]
+                self.assertEqual((json_response_error in errors), True)
 
-        elif food_list_request_data.status_code == 200:
-            self.assertEqual(json_response["message"], get_success_reserve_message())
-        self.assertIsInstance(food_list_request_data, JsonResponse)
+            elif food_list_request_data.status_code == 200:
+                self.assertEqual(json_response["message"], get_success_reserve_message())
+            self.assertIsInstance(food_list_request_data, JsonResponse)
 
-        # Bad foodlist passed (buggy!)
-        # bad_list = {
-        #     "total": 0,
-        #     "days": [{"index": 0, "meals": [{"name": "br", "self": 23, "food": 1000}]}],
-        # }
+            # Bad foodlist passed (buggy!)
+            # bad_list = {
+            #     "total": 0,
+            #     "days": [{"index": 0, "meals": [{"name": "br", "self": 23, "food": 1000}]}],
+            # }
 
-        # login_request = RequestFactory().post(
-        #     reverse("boostan_api:reserve-food"),
-        #     **self.headers,
-        #     data=f"session={self.real_session.session}&food-list={json.dumps(bad_list)}",
-        # )
-        # food_list_request_data = reserve_food(login_request)
-        # json_response = json.loads(food_list_request_data.content)
-        # print(json_response)
-        # self.assertEqual(food_list_request_data.status_code, 400)
-        # self.assertEqual(json_response["error"], get_food_reserve_unexpected_error_message())
-        # self.assertIsInstance(food_list_request_data, JsonResponse)
+            # login_request = RequestFactory().post(
+            #     reverse("boostan_api:reserve-food"),
+            #     **self.headers,
+            #     data=f"session={self.real_session.session}&food-list={json.dumps(bad_list)}",
+            # )
+            # food_list_request_data = reserve_food(login_request)
+            # json_response = json.loads(food_list_request_data.content)
+            # print(json_response)
+            # self.assertEqual(food_list_request_data.status_code, 400)
+            # self.assertEqual(json_response["error"], get_food_reserve_unexpected_error_message())
+            # self.assertIsInstance(food_list_request_data, JsonResponse)
 
-        # Foodlist not passed
-        login_request = RequestFactory().post(
-            reverse("boostan_api:reserve-food"),
-            **self.headers,
-            data=f"session={self.real_session.session}",
-        )
-        food_list_request_data = reserve_food(login_request)
-        json_response = json.loads(food_list_request_data.content)
-        self.assertEqual(food_list_request_data.status_code, 400)
-        self.assertIsInstance(food_list_request_data, JsonResponse)
-        self.assertEqual(json_response["error"], get_missing_food_list_message())
+            # Foodlist not passed
+            login_request = RequestFactory().post(
+                reverse("boostan_api:reserve-food"),
+                **self.headers,
+                data=f"session={self.real_session.session}",
+            )
+            food_list_request_data = reserve_food(login_request)
+            json_response = json.loads(food_list_request_data.content)
+            self.assertEqual(food_list_request_data.status_code, 400)
+            self.assertIsInstance(food_list_request_data, JsonResponse)
+            self.assertEqual(json_response["error"], get_missing_food_list_message())
+        else:
+            print("Please set boostan_username and boostan_password in environment variables")
