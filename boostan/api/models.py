@@ -554,3 +554,24 @@ def get_all_user_sessions_by_sesion(session):
         return student.sessions.all().order_by("-last_used")
     except:
         return None
+
+
+def get_404_message():
+    try:
+        return Message.objects.filter(name="404_message").first().value
+    except:
+        return ""
+
+
+def get_500_message():
+    try:
+        return Message.objects.filter(name="500_message").first().value
+    except:
+        return ""
+
+
+def get_403_message():
+    try:
+        return Message.objects.filter(name="403_message").first().value
+    except:
+        return ""
