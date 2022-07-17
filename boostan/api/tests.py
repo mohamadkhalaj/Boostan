@@ -1,7 +1,6 @@
 import json
 import time
-# from os import environ as env
-from test.support import EnvironmentVarGuard
+from os import environ as env
 
 from django.http import JsonResponse
 from django.test import RequestFactory, TestCase
@@ -29,6 +28,8 @@ from .models import (
 )
 from .views import food_list, forget_code, get_sessions, login, logout, reserve_food
 
+boostan_username = env.get("BOOSTAN_USERNAME", None)
+boostan_password = env.get("BOOSTAN_PASSWORD", None)
 
 class BaseTest(TestCase):
     fixtures_path = "boostan/api/fixtures"
@@ -52,23 +53,22 @@ class BaseTest(TestCase):
         self.headers = {
             "content_type": "application/x-www-form-urlencoded",
         }
-        with EnvironmentVarGuard() as env:
-            self.boostan_username = env.get("BOOSTAN_USERNAME", None)
-            self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+        self.boostan_username = boostan_username
+        self.boostan_password = boostan_password
 
-            self.assertIsNotNone(self.boostan_username)
-            self.assertIsNotNone(self.boostan_password)
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
 
-            self.real_student = Student.objects.create(
-                stu_number=self.boostan_username,
-                password=self.boostan_password,
-                full_name="real user",
-                count_of_used=0,
-                credit=0,
-            )
-            self.real_session = Session.objects.create(
-                student=self.real_student, session="real_session"
-            )
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
 
 
 class TestDecorators(BaseTest):
