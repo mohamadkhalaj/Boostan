@@ -29,14 +29,15 @@ from .models import (
 from .views import food_list, forget_code, get_sessions, login, logout, reserve_food
 
 
-class BaseTest(TestCase):
+
+class TestDecorators(TestCase):
     fixtures_path = "boostan/api/fixtures"
     fixtures = [
         f"{fixtures_path}/settings.json",
         f"{fixtures_path}/messages.json",
     ]
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.number_of_students = 9
         for i in range(self.number_of_students):
             student = Student.objects.create(
@@ -53,10 +54,6 @@ class BaseTest(TestCase):
         }
         self.boostan_username = env.get("BOOSTAN_USERNAME", None)
         self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
-        
-        import environ
-        envv = environ.Env()
-        print(envv('DATABASE_URL'))
 
         self.assertIsNotNone(self.boostan_username)
         self.assertIsNotNone(self.boostan_password)
@@ -72,8 +69,6 @@ class BaseTest(TestCase):
             student=self.real_student, session="real_session"
         )
 
-
-class TestDecorators(BaseTest):
     def test_permission_decorator(self):
         @permission_decorator
         def typical_view(request, student):
@@ -240,7 +235,46 @@ class TestDecorators(BaseTest):
         self.real_student.save()
 
 
-class TestApi(BaseTest):
+class TestApi(TestCase):
+
+    fixtures_path = "boostan/api/fixtures"
+    fixtures = [
+        f"{fixtures_path}/settings.json",
+        f"{fixtures_path}/messages.json",
+    ]
+
+    def setUp(self):
+        self.number_of_students = 9
+        for i in range(self.number_of_students):
+            student = Student.objects.create(
+                stu_number=i,
+                password=i,
+                full_name="test user",
+                count_of_used=i,
+                credit=i,
+            )
+            Session.objects.create(student=student, session=i)
+
+        self.headers = {
+            "content_type": "application/x-www-form-urlencoded",
+        }
+        self.boostan_username = env.get("BOOSTAN_USERNAME", None)
+        self.boostan_password = env.get("BOOSTAN_PASSWORD", None)
+
+        self.assertIsNotNone(self.boostan_username)
+        self.assertIsNotNone(self.boostan_password)
+
+        self.real_student = Student.objects.create(
+            stu_number=self.boostan_username,
+            password=self.boostan_password,
+            full_name="real user",
+            count_of_used=0,
+            credit=0,
+        )
+        self.real_session = Session.objects.create(
+            student=self.real_student, session="real_session"
+        )
+        
     def test_get_request(self):
 
         login_request = RequestFactory().get(
