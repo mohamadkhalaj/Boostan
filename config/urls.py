@@ -24,6 +24,6 @@ if settings.DEBUG:
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
-handler404 = "config.settings.views.page_not_found_view"
-handler500 = "config.settings.views.handler500"
-handler403 = "config.settings.views.handler403"
+handler404 = "config.views.page_not_found_view"
+handler500 = "config.views.handler500"
+handler403 = "config.views.handler403"
