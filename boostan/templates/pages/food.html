@@ -54,6 +54,7 @@
               <div>
                 <input type="password" id="student_password" spellcheck="false" autocapitalize="off" autocorrect="off" name="student_password" autocomplete="student_password" class="form-control form-control-lg input-password" style="text-align: left;" required>
                 <div id="toggle-password"></div>
+                {% csrf_token %}
               </div>
             </div>
             <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">ورود</button>

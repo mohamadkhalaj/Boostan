@@ -25,6 +25,7 @@ var session_lists = [];
 var food_list;
 var reserve_list = {'total':0, 'days':[]};
 var created_objects = [];
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 const cancel_text = 'کنسل';
 const reserve_text = 'رزرو';
@@ -680,7 +681,7 @@ function submit() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/reserve-food/`, true);
     let session = localStorage.getItem('session');
-    params = `session=${session}&food-list=` + JSON.stringify(reserve_list)
+    params = `csrfmiddlewaretoken=${csrftoken}&session=${session}&food-list=` + JSON.stringify(reserve_list)
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() { // Call a function when the state changes.
@@ -780,7 +781,7 @@ function login_and_place_list(){
     Telegram.WebApp.MainButton.showProgress(true);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-food-list/`, true);
-    params = `session=${session}`
+    params = `csrfmiddlewaretoken=${csrftoken}&session=${session}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() { // Call a function when the state changes.
@@ -870,7 +871,7 @@ function get_session_from_api(username, password) {
     }
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/login/`, true);
-    params = `stun=${username}&password=${password}&telegram_data=${JSON.stringify(telegram_data)}`
+    params = `csrfmiddlewaretoken=${csrftoken}&stun=${username}&password=${password}&telegram_data=${JSON.stringify(telegram_data)}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
@@ -925,7 +926,7 @@ function get_forget_code() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-forget-code/`, true);
     let session = localStorage.getItem('session');
-    params = `session=${session}`
+    params = `csrfmiddlewaretoken=${csrftoken}&session=${session}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
@@ -1012,7 +1013,7 @@ function logout() {
     xhr.open("POST", `${origin}api/v1/logout/`, true);
     let main_session = localStorage.getItem('session');
     let session = this.id;
-    params = `session=${session}`
+    params = `csrfmiddlewaretoken=${csrftoken}&session=${session}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
@@ -1059,7 +1060,7 @@ function get_sessions() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-sessions/`, true);
     let session = localStorage.getItem('session');
-    params = `session=${session}`
+    params = `csrfmiddlewaretoken=${csrftoken}&session=${session}`
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
