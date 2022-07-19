@@ -166,5 +166,13 @@
         "name": "403_message",
         "value": "شما مجاز به دیدن این بخش نیستید."
     }
+},
+{
+    "model": "api.message",
+    "pk": 22,
+    "fields": {
+        "name": "csrf_failure_message",
+        "value": "توکن CSRF ارسال نشده است."
+    }
 }
 ]

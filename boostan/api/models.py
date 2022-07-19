@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max, Min, Sum
+from django.db.models import Max
+from django.db.models import Min
+from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
@@ -573,5 +575,11 @@ def get_500_message():
 def get_403_message():
     try:
         return Message.objects.filter(name="403_message").first().value
+    except:
+        return ""
+
+def get_csrf_failure_message():
+    try:
+        return Message.objects.filter(name="csrf_failure_message").first().value
     except:
         return ""
