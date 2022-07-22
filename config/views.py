@@ -17,5 +17,6 @@ def handler500(request):
 def handler403(request, exception):
     return JsonResponse({"error": get_403_message()}, status=403)
 
+
 def csrf_failure(request, reason=""):
     return JsonResponse({"error": get_csrf_failure_message()}, status=403)
