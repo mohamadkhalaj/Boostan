@@ -1,8 +1,9 @@
+# Controls when the workflow will run
 on:
-  workflow_dispatch:
-    push:
-      branches:
-        - master # Changing the branch here would also work
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
  
 jobs:
   health-checkup-job: #Check the healthy by running tests
