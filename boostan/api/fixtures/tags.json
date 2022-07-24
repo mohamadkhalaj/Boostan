@@ -1,0 +1,74 @@
+[
+{
+    "model": "api.templatetags",
+    "pk": 1,
+    "fields": {
+        "name": "site_description_meta_tag",
+        "value": "سامانه رزرو غذای دانشگاه بین المللی امام خمینی قزوین | بوستان بینول بات"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 2,
+    "fields": {
+        "name": "site_title",
+        "value": "بینول بات | بوستان"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 3,
+    "fields": {
+        "name": "login_page_title",
+        "value": "بینول بات"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 4,
+    "fields": {
+        "name": "login_username_label",
+        "value": "شماره دانشجویی"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 5,
+    "fields": {
+        "name": "login_password_label",
+        "value": "رمزعبور"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 6,
+    "fields": {
+        "name": "login_submit_label",
+        "value": "ورود"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 7,
+    "fields": {
+        "name": "order_button_label",
+        "value": "Order"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 8,
+    "fields": {
+        "name": "menu_sessions_label",
+        "value": "نشست ها"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 9,
+    "fields": {
+        "name": "menu_forget_code_label",
+        "value": "کد فراموشی"
+    }
+}
+]
