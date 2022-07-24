@@ -65,10 +65,12 @@
   <div class="container py-5 h-100" id="login-form">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+        <div class="card shadow-2-strong login-shadow" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
-            <h3 class="mb-5 login-title">{% login_page_title %}</h3>
-            <img class="login-img" src="{% static 'images/favicons/favicon.ico' %}" alt="food">
+            <a href="{% url 'home' %}" class="login-logo-title">
+              <h3 class="mb-5 login-title">{% login_page_title %}</h3>
+              <img class="login-img" src="{% static 'images/favicons/favicon.ico' %}" alt="food">
+            </a>
             <div class="form-outline mb-4">
               <label class="form-label" for="student_number">{% login_username_text %}</label>
               <input type="text" id="student_number" name="student_number" class="form-control form-control-lg" required>

@@ -227,7 +227,8 @@ button {
 }
 
 .form-label {
- color: var(--tg-theme-text-color, #000000) !important;
+ /* color: var(--tg-theme-text-color, #000000) !important; */
+ color: var(--tg-theme-button-color, blue) !important;
  font-weight: bolder;
 }
 
@@ -383,4 +384,20 @@ button:focus {
 input {
   color: var(--tg-theme-text-color, #000000);
   background-color: var(--tg-theme-bg-color, #ffffff);
+}
+
+.login-logo-title {
+  text-decoration: none;
+  color: var(--tg-theme-button-color, blue) !important;
+
+}
+
+.login-logo-title:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--tg-theme-button-color, blue) !important;
+}
+
+.login-shadow {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
