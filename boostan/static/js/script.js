@@ -27,28 +27,27 @@ var reserve_list = {'total':0, 'days':[]};
 var created_objects = [];
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-const cancel_text = 'کنسل';
-const reserve_text = 'رزرو';
-const already_reserved_text = 'رزرو شده';
-const not_reserved_text = 'رزرو نشده';
-const logout_text = 'خروج';
-const insufficient_balance_text = 'موجودی شما کافی نیست';
-const meal_submit_text = 'اعمال تغییرات';
-const breakfast_text = 'صبحانه';
-const lunch_text = 'نهار';
-const dinner_text = 'شام';
-const login_text_message = 'لطفا تا اتمام احراز هویت صبر کنید...';
-const reserve_food_text_message = 'درحال ارسال اطلاعات...';
-const get_food_list_text_message = 'درحال دریافت لیست غذا...';
-const success_food_list_text_message = 'لیست با موفقیت دریافت شد.';
-const get_forget_code_text_message = 'درحال دریافت کد فراموشی...';
-const sessions_ip_text = 'آی پی: ';
-const sessions_os_text = 'سیستم عامل: ';
-const sessions_browser_text = 'مرورگر: ';
-const sessions_last_used_text = 'آخرین استفاده: ';
-const sessions_device_text = 'دستگاه: ';
-const sessions_current_device_text = ' (این دستگاه)';
-
+const cancel_text = tags['cancel'];
+const reserve_text = tags['reserve'];
+const already_reserved_text = tags['already_reserved'];
+const not_reserved_text = tags['not_reserved'];
+const logout_text = tags['logout'];
+const insufficient_balance_text = tags['insufficient_balance'];
+const meal_submit_text = tags['meal_submit'];
+const breakfast_text = tags['breakfast'];
+const lunch_text = tags['lunch'];
+const dinner_text = tags['dinner'];
+const login_text_message = tags['login'];
+const reserve_food_text_message = tags['reserve_food'];
+const get_food_list_text_message = tags['food_list'];
+const success_food_list_text_message = tags['success_food_list'];
+const get_forget_code_text_message = tags['forget_code'];
+const sessions_ip_text = tags['sessions_ip'];
+const sessions_os_text = tags['sessions_os'];
+const sessions_browser_text = tags['sessions_browser'];
+const sessions_last_used_text = tags['sessions_last_used'];
+const sessions_device_text = tags['sessions_device'];
+const sessions_current_device_text = tags['sessions_current_device'];
 
 const passwordInput = document.querySelector("[type='password']");
 const togglePasswordButton = document.getElementById("toggle-password");
@@ -61,6 +60,21 @@ function togglePassword() {
 	}
 }
 
+let login_form = document.getElementById('login-form');
+let student_password = document.getElementById('student_password');
+student_password.addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && login_form.style.display === "block") {
+      event.preventDefault();
+      document.getElementById("login_btn").click();
+    }
+  });
+let student_number = document.getElementById('student_number');
+student_number.addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && login_form.style.display === "block") {
+      event.preventDefault();
+      document.getElementById("login_btn").click();
+    }
+  });
 
 function create_days(){
 	let parent_day_cards = document.getElementById('day-cards');
@@ -505,7 +519,7 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
 
 function pretty_numbers(number) {
     number = parseFloat(number).toFixed(1)/10;
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "٫");
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 function meal_reservation_status(day, meal) {

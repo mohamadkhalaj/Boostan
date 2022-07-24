@@ -51,8 +51,8 @@
   <div class="main-menu" id="main-menu">
     <div class="container mt-3">
       <button type="button" class="btn-close" id='main-menu-close' aria-label="Close"></button>
-      <div id="forgot-code" ><button class="btn submit-btn w-100">{% menu_sessions_label %}</button></div>
-      <div id="sessions" ><button class="btn submit-btn w-100">{% menu_forget_code_label %}</button></div>
+      <div id="forgot-code" ><button class="btn submit-btn w-100">{% menu_forget_code_text %}</button></div>
+      <div id="sessions" ><button class="btn submit-btn w-100">{% menu_sessions_text %}</button></div>
     </div>
   </div>
 
@@ -70,18 +70,18 @@
             <h3 class="mb-5 login-title">{% login_page_title %}</h3>
             <img class="login-img" src="{% static 'images/favicons/favicon.ico' %}" alt="food">
             <div class="form-outline mb-4">
-              <label class="form-label" for="student_number">{% login_username_label %}</label>
+              <label class="form-label" for="student_number">{% login_username_text %}</label>
               <input type="text" id="student_number" name="student_number" class="form-control form-control-lg" required>
             </div>
             <div class="form-outline mb-4">
-              <label class="form-label" for="student_password">{% login_password_label %}</label>
+              <label class="form-label" for="student_password">{% login_password_text %}</label>
               <div>
                 <input type="password" id="student_password" spellcheck="false" autocapitalize="off" autocorrect="off" name="student_password" autocomplete="student_password" class="form-control form-control-lg input-password" style="text-align: left;" required>
                 <div id="toggle-password"></div>
                 {% csrf_token %}
               </div>
             </div>
-            <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">{% login_submit_label %}</button>
+            <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">{% login_submit_text %}</button>
           </div>
         </div>
       </div>
@@ -107,11 +107,14 @@
    <footer class="footer"></footer>
 
    <div class="container" id="submit-btn-web">
-     <button class="btn btn-primary btn-sm w-100" style="height: 60px;">{% order_button_label %}</button>
+     <button class="btn btn-primary btn-sm w-100" style="height: 60px;">{% order_button_text %}</button>
    </div>
 
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script>
+    var tags={{ tags | safe }};
+  </script>
   <script src="{% static 'js/script.js' %}"></script>
 </body>
 

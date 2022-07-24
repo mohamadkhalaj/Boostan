@@ -612,38 +612,164 @@ def get_login_page_title():
     except:
         return ""
 
-def get_login_username_label():
+def get_login_username_text():
     try:
-        return TemplateTags.objects.filter(name="login_username_label").first().value
+        return TemplateTags.objects.filter(name="login_username_text").first().value
     except:
         return ""
 
-def get_login_password_label():
+def get_login_password_text():
     try:
-        return TemplateTags.objects.filter(name="login_password_label").first().value
+        return TemplateTags.objects.filter(name="login_password_text").first().value
     except:
         return ""
 
-def get_login_submit_label():
+def get_login_submit_text():
     try:
-        return TemplateTags.objects.filter(name="login_submit_label").first().value
+        return TemplateTags.objects.filter(name="login_submit_text").first().value
     except:
         return ""
 
-def get_order_button_label():
+def get_order_button_text():
     try:
-        return TemplateTags.objects.filter(name="order_button_label").first().value
+        return TemplateTags.objects.filter(name="order_button_text").first().value
     except:
         return ""
 
-def get_menu_sessions_label():
+def get_menu_sessions_text():
     try:
-        return TemplateTags.objects.filter(name="menu_sessions_label").first().value
+        return TemplateTags.objects.filter(name="menu_sessions_text").first().value
     except:
         return ""
 
-def get_menu_forget_code_label():
+def get_menu_forget_code_text():
     try:
-        return TemplateTags.objects.filter(name="menu_forget_code_label").first().value
+        return TemplateTags.objects.filter(name="menu_forget_code_text").first().value
+    except:
+        return ""
+
+def get_sessions_current_device_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_current_device_text").first().value
+    except:
+        return ""
+
+def get_sessions_device_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_device_text").first().value
+    except:
+        return ""
+
+def get_sessions_last_used_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_last_used_text").first().value
+    except:
+        return ""
+
+def get_sessions_browser_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_browser_text").first().value
+    except:
+        return ""
+
+def get_sessions_os_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_os_text").first().value
+    except:
+        return ""
+
+def get_sessions_ip_text():
+    try:
+        return TemplateTags.objects.filter(name="sessions_ip_text").first().value
+    except:
+        return ""
+
+def get_forget_code_text_message():
+    try:
+        return TemplateTags.objects.filter(name="forget_code_text_message").first().value
+    except:
+        return ""
+
+def get_success_food_list_text_message():
+    try:
+        return TemplateTags.objects.filter(name="success_food_list_text_message").first().value
+    except:
+        return ""
+
+def get_food_list_text_message():
+    try:
+        return TemplateTags.objects.filter(name="food_list_text_message").first().value
+    except:
+        return ""
+
+def get_reserve_food_text_message():
+    try:
+        return TemplateTags.objects.filter(name="reserve_food_text_message").first().value
+    except:
+        return ""
+
+def get_login_text_message():
+    try:
+        return TemplateTags.objects.filter(name="login_text_message").first().value
+    except:
+        return ""
+
+def get_dinner_text():
+    try:
+        return TemplateTags.objects.filter(name="dinner_text").first().value
+    except:
+        return ""
+
+def get_lunch_text():
+    try:
+        return TemplateTags.objects.filter(name="lunch_text").first().value
+    except:
+        return ""
+
+def get_breakfast_text():
+    try:
+        return TemplateTags.objects.filter(name="breakfast_text").first().value
+    except:
+        return ""
+
+def get_meal_submit_text():
+    try:
+        return TemplateTags.objects.filter(name="meal_submit_text").first().value
+    except:
+        return ""
+
+def get_insufficient_balance_text():
+    try:
+        return TemplateTags.objects.filter(name="insufficient_balance_text").first().value
+    except:
+        return ""
+
+def get_logout_text():
+    try:
+        return TemplateTags.objects.filter(name="logout_text").first().value
+    except:
+        return ""
+
+def get_not_reserved_text():
+    try:
+        return TemplateTags.objects.filter(name="not_reserved_text").first().value
+    except:
+        return ""
+
+def get_already_reserved_text():
+    try:
+        return TemplateTags.objects.filter(name="already_reserved_text").first().value
+    except:
+        return ""
+
+def get_reserve_text():
+    try:
+        return TemplateTags.objects.filter(name="reserve_text").first().value
+    except:
+        return ""
+
+def get_cancel_text():
+    try:
+        return TemplateTags.objects.filter(name="cancel_text").first().value
     except:
         return ""
