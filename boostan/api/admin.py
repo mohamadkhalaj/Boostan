@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Message, Session, Setting, Statistics, Student, Visitor
+from .models import Message, Session, Setting, Statistics, Student, Visitor, TemplateTags
 
 admin.site.site_header = _("Boostan API management system")
 
@@ -21,6 +21,12 @@ class messageAdmin(admin.ModelAdmin):
 
 admin.site.register(Message, messageAdmin)
 
+class templateTagAdmin(admin.ModelAdmin):
+    list_display = ("name", "value")
+    search_fields = ("name", "value")
+
+
+admin.site.register(TemplateTags, templateTagAdmin)
 
 class statisticsAdmin(admin.ModelAdmin):
     readonly_fields = ("name", "value")
