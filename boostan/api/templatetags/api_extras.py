@@ -1,13 +1,13 @@
 from api.models import (
     get_site_description_meta_tag,
-    get_login_submit_label,
-    get_login_password_label,
+    get_login_submit_text,
+    get_login_password_text,
     get_site_title,
-    get_login_username_label,
+    get_login_username_text,
     get_login_page_title,
-    get_order_button_label,
-    get_menu_sessions_label,
-    get_menu_forget_code_label,
+    get_order_button_text,
+    get_menu_sessions_text,
+    get_menu_forget_code_text,
 )
 
 from django import template
@@ -19,16 +19,16 @@ def site_description():
     return get_site_description_meta_tag()
 
 @register.simple_tag
-def login_submit_label():
-    return get_login_submit_label()
+def login_submit_text():
+    return get_login_submit_text()
 
 @register.simple_tag
-def login_password_label():
-    return get_login_password_label()
+def login_password_text():
+    return get_login_password_text()
 
 @register.simple_tag
-def login_username_label():
-    return get_login_username_label()
+def login_username_text():
+    return get_login_username_text()
 
 @register.simple_tag
 def site_title():
@@ -39,13 +39,13 @@ def login_page_title():
     return get_login_page_title()
 
 @register.simple_tag
-def order_button_label():
-    return get_order_button_label()
+def order_button_text():
+    return get_order_button_text()
 
 @register.simple_tag
-def menu_sessions_label():
-    return get_menu_sessions_label()
+def menu_sessions_text():
+    return get_menu_sessions_text()
 
 @register.simple_tag
-def menu_forget_code_label():
-    return get_menu_forget_code_label()
+def menu_forget_code_text():
+    return get_menu_forget_code_text()

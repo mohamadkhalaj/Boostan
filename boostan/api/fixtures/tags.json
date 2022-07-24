@@ -27,7 +27,7 @@
     "model": "api.templatetags",
     "pk": 4,
     "fields": {
-        "name": "login_username_label",
+        "name": "login_username_text",
         "value": "شماره دانشجویی"
     }
 },
@@ -35,7 +35,7 @@
     "model": "api.templatetags",
     "pk": 5,
     "fields": {
-        "name": "login_password_label",
+        "name": "login_password_text",
         "value": "رمزعبور"
     }
 },
@@ -43,7 +43,7 @@
     "model": "api.templatetags",
     "pk": 6,
     "fields": {
-        "name": "login_submit_label",
+        "name": "login_submit_text",
         "value": "ورود"
     }
 },
@@ -51,7 +51,7 @@
     "model": "api.templatetags",
     "pk": 7,
     "fields": {
-        "name": "order_button_label",
+        "name": "order_button_text",
         "value": "Order"
     }
 },
@@ -59,7 +59,7 @@
     "model": "api.templatetags",
     "pk": 8,
     "fields": {
-        "name": "menu_sessions_label",
+        "name": "menu_sessions_text",
         "value": "نشست ها"
     }
 },
@@ -67,8 +67,176 @@
     "model": "api.templatetags",
     "pk": 9,
     "fields": {
-        "name": "menu_forget_code_label",
+        "name": "menu_forget_code_text",
         "value": "کد فراموشی"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 10,
+    "fields": {
+        "name": "cancel_text",
+        "value": "کنسل"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 11,
+    "fields": {
+        "name": "reserve_text",
+        "value": "رزرو"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 12,
+    "fields": {
+        "name": "already_reserved_text",
+        "value": "رزرو شده"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 13,
+    "fields": {
+        "name": "not_reserved_text",
+        "value": "رزرو نشده"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 14,
+    "fields": {
+        "name": "logout_text",
+        "value": "خروج"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 15,
+    "fields": {
+        "name": "insufficient_balance_text",
+        "value": "موجودی شما کافی نیست"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 16,
+    "fields": {
+        "name": "meal_submit_text",
+        "value": "اعمال تغییرات"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 17,
+    "fields": {
+        "name": "breakfast_text",
+        "value": "صبحانه"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 18,
+    "fields": {
+        "name": "lunch_text",
+        "value": "نهار"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 19,
+    "fields": {
+        "name": "dinner_text",
+        "value": "شام"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 20,
+    "fields": {
+        "name": "login_text_message",
+        "value": "لطفا تا اتمام احراز هویت صبر کنید..."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 21,
+    "fields": {
+        "name": "reserve_food_text_message",
+        "value": "درحال ارسال اطلاعات..."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 22,
+    "fields": {
+        "name": "food_list_text_message",
+        "value": "درحال دریافت لیست غذا..."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 23,
+    "fields": {
+        "name": "success_food_list_text_message",
+        "value": "لیست با موفقیت دریافت شد."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 24,
+    "fields": {
+        "name": "forget_code_text_message",
+        "value": "درحال دریافت کد فراموشی..."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 25,
+    "fields": {
+        "name": "sessions_ip_text",
+        "value": "آی پی:"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 26,
+    "fields": {
+        "name": "sessions_os_text",
+        "value": "سیستم عامل:"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 27,
+    "fields": {
+        "name": "sessions_browser_text",
+        "value": "مرورگر:"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 28,
+    "fields": {
+        "name": "sessions_last_used_text",
+        "value": "آخرین استفاده:"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 29,
+    "fields": {
+        "name": "sessions_device_text",
+        "value": "دستگاه:"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 30,
+    "fields": {
+        "name": "sessions_current_device_text",
+        "value": "(این دستگاه)"
     }
 }
 ]
