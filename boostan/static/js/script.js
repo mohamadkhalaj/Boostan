@@ -60,19 +60,23 @@ function togglePassword() {
 	}
 }
 
-let login_form = document.getElementById('login-form');
-let student_password = document.getElementById('student_password');
-student_password.addEventListener("keypress", function(event) {
-    if (event.key === "Enter" && login_form.style.display === "block") {
-      event.preventDefault();
-      document.getElementById("login_btn").click();
-    }
-  });
-let student_number = document.getElementById('student_number');
+const login_form = document.getElementById('login-form');
+const student_password = document.getElementById('student_password');
+const student_number = document.getElementById('student_number');
+const login_btn = document.getElementById("login_btn");
+
 student_number.addEventListener("keypress", function(event) {
     if (event.key === "Enter" && login_form.style.display === "block") {
       event.preventDefault();
-      document.getElementById("login_btn").click();
+      student_password.focus();
+    }
+  });
+
+student_password.addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && login_form.style.display === "block") {
+      event.preventDefault();
+      login_btn.click();
+      login_btn.focus();
     }
   });
 
@@ -709,12 +713,7 @@ function submit() {
                 let message = JSON.parse(xhr.responseText)
                 // check relogin attr  
                 if (message['relogin']) {
-                    document.getElementById('login-form').style.visibility='visible'
-                    document.getElementById('login-form').style.display='block'
-                    document.getElementById('submit-btn-web').style.display = 'none';
-                    remove_objects()
-                    Telegram.WebApp.MainButton.disable();
-                    localStorage.removeItem('session');
+                    show_login_page();
                 }
                 create_alert_notification(message['error'], 'danger')
             }
@@ -818,12 +817,7 @@ function login_and_place_list(){
                 let message = JSON.parse(xhr.responseText)
                 // check relogin attr  
                 if (message['relogin']) {
-                    document.getElementById('login-form').style.visibility='visible'
-                    document.getElementById('login-form').style.display='block'
-                    document.getElementById('submit-btn-web').style.display = 'none';
-                    Telegram.WebApp.MainButton.disable();
-                    remove_objects()
-                    localStorage.removeItem('session');
+                    show_login_page();
                 }
                 if (Object.keys(message).includes('student')) {
 	                document.getElementsByClassName('navbar-container')[0].style.visibility='visible';
@@ -845,9 +839,7 @@ function check_login() {
     let session = localStorage.getItem('session');
     if (session == null) {
         // login
-        document.getElementById('login-form').style.visibility='visible'
-        document.getElementById('login-form').style.display='block'
-        Telegram.WebApp.MainButton.disable();
+        show_login_page();
     }
     else {
         // get food list
@@ -897,19 +889,14 @@ function get_session_from_api(username, password) {
                 let message = response['message']
                 document.getElementById('login-form').style.visibility='hidden'
                 document.getElementById('login-form').style.display='none'
-                login_and_place_list()
-                Telegram.WebApp.MainButton.enable();
                 create_alert_notification(message, 'success')
+                Telegram.WebApp.MainButton.enable();
+                login_and_place_list()
             }
             else {
                 let message = JSON.parse(xhr.responseText)
                 if (message['relogin']) {
-                    Telegram.WebApp.MainButton.disable();
-                    document.getElementById('login-form').style.visibility='visible'
-                    document.getElementById('login-form').style.display='block'
-                    document.getElementById('submit-btn-web').style.display = 'none';
-                    remove_objects()
-                    localStorage.removeItem('session');
+                    show_login_page();
                 }
                 create_alert_notification(message['error'], 'danger')
             }
@@ -952,12 +939,7 @@ function get_forget_code() {
             else {
                 let message = JSON.parse(xhr.responseText)
                 if (message['relogin']) {
-                    Telegram.WebApp.MainButton.disable();
-                    document.getElementById('login-form').style.visibility='visible'
-                    document.getElementById('login-form').style.display='block'
-                    document.getElementById('submit-btn-web').style.display = 'none';
-                    remove_objects()
-                    localStorage.removeItem('session');
+                    show_login_page();
                 }
                 create_alert_notification(message['error'], 'danger')
             }
@@ -1037,14 +1019,9 @@ function logout() {
                 create_alert_notification(response['message'], 'success')
                 main_this.parentNode.remove();
                 if (main_session == session) {
-                	Telegram.WebApp.MainButton.disable();
 					close_session_menu()
                 	close_main_menu()
-                    document.getElementById('login-form').style.visibility='visible'
-                    document.getElementById('login-form').style.display='block'
-                    document.getElementById('submit-btn-web').style.display = 'none';
-                    remove_objects()
-                    localStorage.removeItem('session');
+                    show_login_page();
                 }
                 Telegram.WebApp.MainButton.enable();
             }
@@ -1093,6 +1070,16 @@ function get_sessions() {
         }
     };
     xhr.send(params);
+}
+
+function show_login_page(){
+    Telegram.WebApp.MainButton.disable();
+    document.getElementById('login-form').style.visibility='visible'
+    document.getElementById('login-form').style.display='block'
+    student_number.focus();
+    document.getElementById('submit-btn-web').style.display = 'none';
+    remove_objects()
+    localStorage.removeItem('session');
 }
 
 function open_session_menu() {
