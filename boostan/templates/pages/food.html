@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <title>بینول بات | بوستان</title>
-  <meta name="description" content="Beinol-bot boostan crawler">
+  <meta name="description" content="سامانه رزرو غذای دانشگاه بین المللی امام خمینی قزوین|بوستان بینول بات">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="MohammadMahdi Khalaj">
   <link rel="icon" type="image/x-icon" href="{% static 'images/favicons/favicon.ico' %}">
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JY9FTB5CF"></script>
+  <script src="https://browser.sentry-cdn.com/7.7.0/bundle.tracing.min.js" integrity="sha384-lr/bDcE0vmUPBU6dhVBXfmhNYAEilrIepu1BRdVUJ8mZ0Hxhm17aIJ2bt4UfxC72" crossorigin="anonymous"></script>
   <script>
     function setThemeClass() {
       document.documentElement.className = Telegram.WebApp.colorScheme;
@@ -26,6 +27,20 @@
     gtag('js', new Date());
 
     gtag('config', 'G-3JY9FTB5CF');
+
+    // Sentry //
+    Sentry.init({
+      dsn:"https://25259b62297f4fe880e854ac98e8b2e6@o1332494.ingest.sentry.io/6597185",
+    
+      // This enables automatic instrumentation (highly recommended), but is not
+      // necessary for purely manual usage
+      integrations: [new Sentry.BrowserTracing()],
+    
+      // To set a uniform sample rate
+      tracesSampleRate: 0.2
+    });
+
+    myUndefinedFunction();
   </script>
 </head>
 
