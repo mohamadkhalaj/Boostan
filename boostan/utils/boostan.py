@@ -160,7 +160,7 @@ class Boostan:
         already_reserved_foods = self.get_already_reserved_foods(response)
         form = self._create_self_form(response.text)
         response = requests.post(
-            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=form
+            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=form.encode("utf-8")
         )
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -361,7 +361,7 @@ class Boostan:
 
         data = "ctl00%24Scm=ctl00%24UpdatePanel1%7Cctl00%24main%24btsend&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTgxOTM1MTE3OA9kFgJmD2QWAgIDD2QWAgIDD2QWAmYPZBYSAgEPFgIeBFRleHQF2wE8aSBjbGFzcz0nYmFkZ2UgYmFkZ2Utc3VjY2Vzcycgc3R5bGU9J2ZvbnQtc2l6ZTogMThweDsnPiAg2YbYp9mFIDog2YXYrdmF2K%2FZhdmH2K%2FZiiDYrtmE2KwgPC9pPjxpICBzdHlsZT0nZm9udC1zaXplOiAxOHB4O2RpcmVjdGlvbjpydGwnIGNsYXNzPSdiYWRnZSBiYWRnZS1wcmltYXJ5IG15LWNhcnQtYmFkZ2UnPiDYp9i52KrYqNin2LEg2LTZhdinIDE3NTAwMCDYsduM2KfZhDwvaT5kAgMPFgIeB1Zpc2libGVoZAIEDxYCHwFoZAIGDxYCHwFoZAIMDxYCHglpbm5lcmh0bWwFGti02YbYqNmHINiMIDI1INiq2YrYsSAxNDAxZAIODxYCHwFoZAIQDw8WAh8BaGRkAhQPZBYOAgEPFgIfAWhkAgMPFgIfAWhkAgUPFgIfAWhkAgcPFgIfAWhkAgkPFgIfAWhkAgsPFgIfAWhkAg8PFgIfAWhkAhYPZBYEAgEPZBYCAgEPDxYCHwAF%2FgHaqdin2LHYqNixINqv2LHYp9mF2Yog2K%2FZgtiqINio2YHYsdmF2KfZitmK2K8g2KjYudivINin2LIg2KfYs9iq2YHYp9iv2Ycg2KfYsiDYrdiv2Kfaqdir2LEg2KrYudiv2KfYryDZhdis2KfYsiDYr9ixINio2KfYstmHINiy2YXYp9mG2Yog2YXYtNiu2LUg2KfZhdqp2KfZhiDYr9ix2YrYp9mB2Kog2qnYryDZgdix2KfZhdmI2LTZiiDYqNix2KfZiiDYtNmF2Kcg2KjZhyDYtNix2Lcg2b7Ysdiv2KfYrtiqINis2LHZitmF2Ycg2YXZiiDYqNin2LTYr2RkAgMPDxYCHwAFBzM1Mzk5NzNkZGSdFCe4IRiL%2F22RqeYEP17lZ5YKJrydXgUQtyrVN3EQng%3D%3D&__VIEWSTATEGENERATOR=090A0A27&__EVENTVALIDATION=%2FwEdAAJdSSm2pzEtL5tHG5QWYpekd65JHDP6t62kwiwXgYR0S7t%2BF%2BuBEL1LGJo%2BKutCLTtzK1tGxk1KDXKK3nf2NfOO&__ASYNCPOST=true&ctl00%24main%24btsend=%D8%AF%D8%B1%D8%AE%D9%88%D8%A7%D8%B3%D8%AA%20%DB%8C%D8%A7%D8%AF%D8%A2%D9%88%D8%B1%DB%8C%20%DA%A9%D8%AF"
         response = requests.post(
-            Boostan.forget_code_btn, cookies=self.session_cookie, headers=headers, data=data
+            Boostan.forget_code_btn, cookies=self.session_cookie, headers=headers, data=data.encode("utf-8")
         )
         soup = BeautifulSoup(response.text, "html.parser")
         alert_div = soup.find("div", attrs={"id": "ctl00_main_tberror", "class": "bg-success"})
@@ -396,7 +396,7 @@ class Boostan:
 
         data = self._create_food_reserve_data(reserve_list)
         response = requests.post(
-            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=data
+            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=data.encode("utf-8")
         )
         if (
             "1|#||4|50|pageRedirect||%2ferror.aspx%3faspxerrorpath%3d%2ffoodrezerv.aspx|"
@@ -431,7 +431,7 @@ class Boostan:
         }
 
         response = requests.post(
-            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=form
+            Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=form.encode("utf-8")
         )
         self._create_self_form(response.text, submit=True)
         form = self.create_temp_reserve_form(reserve_list, submit=True)
