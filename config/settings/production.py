@@ -50,17 +50,17 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-# APPS
-# ------------------------------------------------------------------------------
-THIRD_PARTY_APPS = [
-    'django_minify_html',
-]
-INSTALLED_APPS += THIRD_PARTY_APPS
+# # APPS
+# # ------------------------------------------------------------------------------
+# THIRD_PARTY_APPS = [
+#     'django_minify_html',
+# ]
+# INSTALLED_APPS += THIRD_PARTY_APPS
 
-# MIDDLEWARE
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#middleware
-MIDDLEWARE += ["django_minify_html.middleware.MinifyHtmlMiddleware",]
+# # MIDDLEWARE
+# # ------------------------------------------------------------------------------
+# # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
+# MIDDLEWARE += ["django_minify_html.middleware.MinifyHtmlMiddleware",]
 
 # SECURITY
 # ------------------------------------------------------------------------------
