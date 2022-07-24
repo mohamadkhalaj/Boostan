@@ -1,11 +1,13 @@
 {% load static  %}
+{% load api_extras %}
+
 <!doctype html>
 <html lang="fa">
 
 <head>
   <meta charset="utf-8">
-  <title>بینول بات | بوستان</title>
-  <meta name="description" content="سامانه رزرو غذای دانشگاه بین المللی امام خمینی قزوین|بوستان بینول بات">
+  <title>{% site_title %}</title>
+  <meta name="description" content="{% site_description %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="MohammadMahdi Khalaj">
   <meta name="google-site-verification" content="rlYNJsJJktY04G_LnK3oTwCloqeEWF3tcwk2cU2rWzk" />
@@ -49,8 +51,8 @@
   <div class="main-menu" id="main-menu">
     <div class="container mt-3">
       <button type="button" class="btn-close" id='main-menu-close' aria-label="Close"></button>
-      <div id="forgot-code" ><button class="btn submit-btn w-100">کد فراموشی</button></div>
-      <div id="sessions" ><button class="btn submit-btn w-100">نشست ها</button></div>
+      <div id="forgot-code" ><button class="btn submit-btn w-100">{% menu_sessions_label %}</button></div>
+      <div id="sessions" ><button class="btn submit-btn w-100">{% menu_forget_code_label %}</button></div>
     </div>
   </div>
 
@@ -65,21 +67,21 @@
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
-            <h3 class="mb-5 login-title">بینول بات</h3>
+            <h3 class="mb-5 login-title">{% login_page_title %}</h3>
             <img class="login-img" src="{% static 'images/favicons/favicon.ico' %}" alt="food">
             <div class="form-outline mb-4">
-              <label class="form-label" for="student_number">شماره دانشجویی</label>
+              <label class="form-label" for="student_number">{% login_username_label %}</label>
               <input type="text" id="student_number" name="student_number" class="form-control form-control-lg" required>
             </div>
             <div class="form-outline mb-4">
-              <label class="form-label" for="student_password">رمزعبور</label>
+              <label class="form-label" for="student_password">{% login_password_label %}</label>
               <div>
                 <input type="password" id="student_password" spellcheck="false" autocapitalize="off" autocorrect="off" name="student_password" autocomplete="student_password" class="form-control form-control-lg input-password" style="text-align: left;" required>
                 <div id="toggle-password"></div>
                 {% csrf_token %}
               </div>
             </div>
-            <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">ورود</button>
+            <button class="btn btn-primary btn-lg btn-block card-header" id="login_btn">{% login_submit_label %}</button>
           </div>
         </div>
       </div>
@@ -105,7 +107,7 @@
    <footer class="footer"></footer>
 
    <div class="container" id="submit-btn-web">
-     <button class="btn btn-primary btn-sm w-100" style="height: 60px;">Order</button>
+     <button class="btn btn-primary btn-sm w-100" style="height: 60px;">{% order_button_label %}</button>
    </div>
 
   <script src="{% static 'js/jquery.min.js' %}"></script>
