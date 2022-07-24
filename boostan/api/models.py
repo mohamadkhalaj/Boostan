@@ -159,6 +159,16 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class TemplateTags(models.Model):
+    name = models.CharField(verbose_name=_("Name"), max_length=256)
+    value = models.TextField(verbose_name=_("Value"))
+
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
+
+    def __str__(self):
+        return f"{self.name}"
 
 class Statistics(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
@@ -581,5 +591,59 @@ def get_403_message():
 def get_csrf_failure_message():
     try:
         return Message.objects.filter(name="csrf_failure_message").first().value
+    except:
+        return ""
+
+def get_site_description_meta_tag():
+    try:
+        return TemplateTags.objects.filter(name="site_description_meta_tag").first().value
+    except:
+        return ""
+
+def get_site_title():
+    try:
+        return TemplateTags.objects.filter(name="site_title").first().value
+    except:
+        return ""
+
+def get_login_page_title():
+    try:
+        return TemplateTags.objects.filter(name="login_page_title").first().value
+    except:
+        return ""
+
+def get_login_username_label():
+    try:
+        return TemplateTags.objects.filter(name="login_username_label").first().value
+    except:
+        return ""
+
+def get_login_password_label():
+    try:
+        return TemplateTags.objects.filter(name="login_password_label").first().value
+    except:
+        return ""
+
+def get_login_submit_label():
+    try:
+        return TemplateTags.objects.filter(name="login_submit_label").first().value
+    except:
+        return ""
+
+def get_order_button_label():
+    try:
+        return TemplateTags.objects.filter(name="order_button_label").first().value
+    except:
+        return ""
+
+def get_menu_sessions_label():
+    try:
+        return TemplateTags.objects.filter(name="menu_sessions_label").first().value
+    except:
+        return ""
+
+def get_menu_forget_code_label():
+    try:
+        return TemplateTags.objects.filter(name="menu_forget_code_label").first().value
     except:
         return ""
