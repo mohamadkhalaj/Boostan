@@ -31,6 +31,18 @@ CACHES = {
     }
 }
 
+# APPS
+# ------------------------------------------------------------------------------
+THIRD_PARTY_APPS = [
+    'django_minify_html',
+]
+INSTALLED_APPS += THIRD_PARTY_APPS
+
+# MIDDLEWARE
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#middleware
+MIDDLEWARE += ["django_minify_html.middleware.MinifyHtmlMiddleware",]
+
 # SECURITY
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
