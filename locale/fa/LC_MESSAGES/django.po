@@ -146,11 +146,11 @@ msgstr "مقدار"
 
 #: boostan/api/models.py:144
 msgid "Setting"
-msgstr "تنضیمات"
+msgstr "تنظیمات"
 
 #: boostan/api/models.py:145
 msgid "Settings"
-msgstr "تنضیمات"
+msgstr "تنظیمات"
 
 #: boostan/api/models.py:156
 msgid "Message"
