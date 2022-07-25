@@ -25,7 +25,7 @@ Instructions on how to use them in your own application are linked below.
 | DJANGO_ADMIN_URL | RANDOM_STRING/ |
 | DJANGO_ALLOWED_HOSTS | YOUR_DOMAIN |
 | DJANGO_ACCOUNT_ALLOW_REGISTRATION | False |
-| REDIS_URL | Your redis url (for memcache) (free redis sever [redis cloud](https://app.redislabs.com/#/login) |
+| REDIS_URL | Your redis url (for memcache) (free redis sever [redis cloud](https://app.redislabs.com/#/login)) |
 | REDIS_SASL_PASSWORD | Redis SASL password |
 | REDIS_SASL_USERNAME | Redis SASL username |
 | SENTRY_DSN | Your sentry error tracker DSN code (See detail [sentry django doc](https://docs.sentry.io/platforms/python/guides/django/)) |
