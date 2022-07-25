@@ -18,3 +18,5 @@ After that you should run below command to compile messages:
 ```
 $ python manage.py compilemessages
 ```
+
+**More details: [Django translation doc](https://docs.djangoproject.com/en/4.0/topics/i18n/translation/).**
