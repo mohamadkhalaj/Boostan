@@ -33,9 +33,6 @@ We used several frameworks and services for doing our job so well:
 - [Sentry]() - Error tracking for both Django/JS
 - [Google analytics]() - For users analysis
 
-## Settings
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
 ## Github workflows (CI/CD)
 
