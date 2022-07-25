@@ -1,0 +1,68 @@
+{
+  "name": "Boostan",
+  "description": "Boostan easy food reserve website.",
+  "repository": "https://github.com/mohamadkhalaj/Boostan",
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "14.4"
+      }
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python.git"
+    }
+  ],
+  "env": {
+    "DJANGO_SECRET_KEY": {
+      "description": "Random secret key for django.",
+      "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "4"
+    },
+    "DJANGO_DEBUG": {
+      "description": "Disable django debug.",
+      "value": "False"
+    },
+    "DJANGO_SETTINGS_MODULE": {
+      "description": "Djanog setting module.",
+      "value": "config.settings.production"
+    },
+    "PYTHONHASHSEED": {
+      "description": "",
+      "value": "random"
+    },
+    "DJANGO_ADMIN_URL": {
+      "description": "You can replace it with random string.",
+      "value": "admin/"
+    },
+    "DJANGO_ALLOWED_HOSTS": {
+      "description": "Replace it with your domain.",
+      "value": "*"
+    },
+    "DJANGO_ACCOUNT_ALLOW_REGISTRATION": {
+      "description": "Disable registration.",
+      "value": "False"
+    },
+    "REDIS_SASL_PASSWORD": {
+      "description": "Redis SASL password.",
+      "value": ""
+    },
+    "REDIS_SASL_USERNAME": {
+      "description": "Redis SASL username.",
+      "value": ""
+    },
+    "REDIS_URL": {
+      "description": "Your redis url (for memcache).",
+      "value": ""
+    },
+    "SENTRY_DSN": {
+      "description": "Your sentry error tracker DSN code get it for Django app.",
+      "value": ""
+    },
+  }
+}
