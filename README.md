@@ -1,12 +1,25 @@
-# boostan
-
-reserve food from boostan website.
+# Boostan
 
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![.github/workflows/prod.yml](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml)
 
+## Features✨
+### Users
+- Beautiful and responsive design
+- Get food list, Reserved list, Credit amount, Reserve food and Get forget code from boostan
+- Change theme based on user telegram theme settings
+- Supports multi sessions and user is always logged in
+- Session manager and devices info
+### Admins
+- Enable/Disable requests logging
+- Set rate limit
+- Different operating modes such: Block, Whitelist and normal mode
+- Telegram alert settings
+- Change any alerts and error messages from admin panel
+- Multi language support see [locale](https://github.com/mohamadkhalaj/Boostan/tree/master/locale)
+- Some statistics
+- 
 ## Tech
-
 We used several frameworks and services for doing our job so well:
 
 - [Django]() - We used django for our backend
