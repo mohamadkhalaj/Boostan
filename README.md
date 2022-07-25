@@ -25,7 +25,7 @@ We used several frameworks and services for doing our job so well:
 
 - [Django]() - We used django for our backend
 - [Redis]() - Datebase memory caching
-- [PostgreSql]() - Sql datebase
+- [PostgreSql]() - Sql based datebase
 - [Telegram web-app-bot]() - Better user experient
 - [JavaScript]() - Our frontEnd made with pure js
 - [jQuery]() - FrontEnd
@@ -54,7 +54,7 @@ Instructions on how to use them in your own application are linked below.
 
 ### Installation (normal)
 
-Install the dependencies and devDependencies and start the server.
+Install the devDependencies and start the server.
 
 ```sh
 $ pip install -r requirements/local.txt
@@ -65,13 +65,9 @@ $ python manage.py runserver
 
 ### Setting Up Your Users
 
--   To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
-
 -   To create a **superuser account**, use this command:
 
         $ python manage.py createsuperuser
-
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
 ## Debug your app with telegram desktop
 
@@ -91,11 +87,11 @@ cert.pem and key.pem files will be created in your current working directory. yo
 but since we shall be running them in Django, copy them to the same folder as manage.py
 
 Run below command to add certificates to browser trusted certificates list.
-```
+```sh
 $ mkcert -install
 ```
 Then you can run project with this command:
-```
+```sh
 $ python manage.py runsslserver — certificate cert.pem — key key.pem
 ```
 
@@ -130,6 +126,7 @@ The following details how to deploy this application.
 ### Environment variables (Production only)
 
 See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
+
 Instructions on how to use them in your own application are linked below.
 
 | KEY | VALUE |
