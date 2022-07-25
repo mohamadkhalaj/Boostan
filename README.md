@@ -121,9 +121,6 @@ $ export BOOSTAN_PASSWORD="YOUR_PASSWORD"
 
     $ python manage.py test api
 
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
 
 ## Deployment
 
@@ -148,6 +145,14 @@ Instructions on how to use them in your own application are linked below.
 | REDIS_SASL_PASSWORD | Redis SASL password |
 | REDIS_SASL_USERNAME | Redis SASL username |
 | SENTRY_DSN | Your sentry error tracker DSN code (See detail [sentry django doc](https://docs.sentry.io/platforms/python/guides/django/)) |
+
+
+```sh
+$ pip install -r requirements.txt
+$ python manage.py migrate
+$ python manage.py loaddefaults
+$ python manage.py runserver
+```
 
 ### Heroku
 **Click below button for easy deploy to heroku!**
