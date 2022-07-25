@@ -607,6 +607,7 @@ function meal_clicked() {
     let menu_id = "meal_menu_" + this.id;
     document.getElementById(menu_id).classList.add('meal-menu-visible');
     document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show');
+    Telegram.WebApp.HapticFeedback.selectionChanged();
     Telegram.WebApp.MainButton.hide();
 }
 
@@ -646,6 +647,7 @@ function change_self(this_obj) {
 }
 
 function cancel_reserve_btn() {
+    Telegram.WebApp.HapticFeedback.selectionChanged();
     let price = get_food_price(this)
     let credit = parseFloat($('#user-credit').attr('value'))
     if (this.innerText == reserve_text) {
@@ -708,6 +710,7 @@ function submit() {
             if (this.status === 200) {
                 let message = JSON.parse(xhr.responseText)['message']
                 create_alert_notification(message, 'success')
+                Telegram.WebApp.HapticFeedback.notificationOccurred('success');
             }
             else {
                 let message = JSON.parse(xhr.responseText)
@@ -716,6 +719,7 @@ function submit() {
                     show_login_page();
                 }
                 create_alert_notification(message['error'], 'danger')
+                Telegram.WebApp.HapticFeedback.notificationOccurred('error');
             }
             Telegram.WebApp.MainButton.setText('Order');
             Telegram.WebApp.MainButton.hideProgress();
@@ -729,6 +733,8 @@ function submit() {
 function create_alert_notification(message, type) {
 	document.getElementById('alert-container').style.visibility = 'visible';
 	let alert_obj = document.getElementById('success-alert');
+    let tel_type = type == 'danger' ? 'error' : type;
+    Telegram.WebApp.HapticFeedback.notificationOccurred(tel_type);
 	if (!alert_obj) {
 		let parent_alert = document.getElementsByClassName('container alert-message')[0];
 		let alert_main = document.createElement('div');
@@ -906,6 +912,7 @@ function get_session_from_api(username, password) {
 
 function main_menu() {
     Telegram.WebApp.MainButton.hide();
+    Telegram.WebApp.HapticFeedback.selectionChanged();
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
 	document.getElementById('main-menu').style.visibility = "visible";
 }
