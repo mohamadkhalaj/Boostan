@@ -18,7 +18,7 @@
 - Change any alerts and error messages from admin panel
 - Multi language support see [locale](https://github.com/mohamadkhalaj/Boostan/tree/master/locale)
 - Some statistics
-- 
+
 ## Tech
 We used several frameworks and services for doing our job so well:
 
