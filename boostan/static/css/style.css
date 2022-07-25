@@ -405,10 +405,10 @@ input {
 .contribute-menu {
   z-index: 400;
   position: fixed;
-  top: 25%;
+  top: 65px;
   left: 50%;
   min-width: 360px;
-  height: 285px;
+  height: 80%;
   transform: translateX(-50%);
   color: var(--tg-theme-text-color, #000000);
   background-color: var(--tg-theme-bg-color, #ffffff);
