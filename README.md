@@ -126,7 +126,7 @@ The following section details how to deploy this application:
 
 See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
 
-Instructions on how to use them in your application are linked below.
+Instructions on how to use them in your application are listed below.
 
 | KEY | VALUE |
 | ------ | ------ |
@@ -156,11 +156,6 @@ $ python manage.py runserver
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan/tree/master/)
 
-## License
-
-GPL-3.0 license
-
-**Free Software, Hell Yeah!**
 
 ## Screenshots
 #### Dynamic theme (Telegram)
@@ -174,3 +169,9 @@ GPL-3.0 license
 ![4](https://user-images.githubusercontent.com/62938359/180774779-8cb04003-b0be-46cf-a12b-e8df5de05874.png)
 ![5](https://user-images.githubusercontent.com/62938359/180774785-7ba64547-e6f9-4807-bead-7f06854f5bc3.png)
 ![7](https://user-images.githubusercontent.com/62938359/180774801-83c8cbb8-9f64-437a-9d6f-f6c02f885a43.png)
+
+## License
+
+GPL-3.0 license
+
+**Free Software, Hell Yeah!**
