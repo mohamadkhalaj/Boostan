@@ -1,5 +1,5 @@
 # Boostan
-Boostan (IKIU reserve food system) fluent and responsive client. 
+Boostan (IKIU reserve food) system fluent and responsive client.
 
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![.github/workflows/prod.yml](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml)
@@ -7,25 +7,25 @@ Boostan (IKIU reserve food system) fluent and responsive client.
 ## Features✨
 ### Users
 - Beautiful and responsive design
-- Get food list, Reserved list, Credit amount, Reserve food and Get forget code from boostan
+- Get food list, Reserved list, Credit amount, Reserve food, and Get forget code from boostan
 - Change theme based on user telegram theme settings
-- Supports multi sessions and user is always logged in
+- Support Multi-sessions, and the user is always logged in
 - Session manager and devices info
 ### Admins
 - Enable/Disable requests logging
 - Set rate limit
-- Different operating modes such: Block, Whitelist and normal mode
+- Different operating modes such: as Block, Whitelist, and normal mode
 - Telegram alert settings
-- Change any alerts and error messages from admin panel
-- Multi language support see [locale](https://github.com/mohamadkhalaj/Boostan/tree/master/locale)
+- Change any alerts and error messages from the admin panel
+- Multi language support see locale
 - Some statistics
 
 ## Tech
-We used several frameworks and services for doing our job so well:
+We used several frameworks and services for doing our job perfect:
 
-- [Django]() - We used django for our backend
-- [Redis]() - Datebase memory caching
-- [PostgreSql]() - Sql based datebase
+- [Django]() - We used Django for our backend
+- [Redis]() - Database memory caching
+- [PostgreSql]() - SQL based database
 - [Telegram web-app-bot]() - Better user experient
 - [JavaScript]() - Our frontEnd made with pure js
 - [jQuery]() - FrontEnd
@@ -37,14 +37,14 @@ We used several frameworks and services for doing our job so well:
 
 ## Github workflows (CI/CD)
 
-If you want to pass ci/cd and auto deploy after each commit, you should add below secrets to your github repo secret lists.
-Instructions on how to use them in your own application are linked below.
+If you want to pass CI/CD and auto deploy after each commit, you should add the below secrets to your GitHub repo secret lists.
+Instructions on how to use them in your application are listed below.
 
 [Github secret instructions](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
 | KEY | VALUE |
 | ------ | ------ |
-| BOOSTAN_USERNAME | Boostan username (for testing) (optional)|
-| BOOSTAN_PASSWORD | Boostan password (for testing) (optional)|
+| BOOSTAN_USERNAME | Boostan username (for testing) **(optional)** |
+| BOOSTAN_PASSWORD | Boostan password (for testing) **(optional)** |
 | HEROKU_API_KEY | Your heroku API_KEY |
 | HEROKU_APP_NAME | Your heroku app name |
 | HEROKU_EMAIL | Your heroku account email |
@@ -71,9 +71,9 @@ $ python manage.py runserver
 
 ## Debug your app with telegram desktop
 
-You should install telegram beta and enable inspect element in experimental setitngs more detail [Telegram doc](https://core.telegram.org/bots/webapps#debug-mode-for-web-apps).
+You should install telegram beta and enable inspect element in experimental settings more detail [Telegram doc](https://core.telegram.org/bots/webapps#debug-mode-for-web-apps).
 
-We should use HTTPS for debugging our app with telegram, so we have to make and install our own certificates.
+We should use HTTPS for debugging our app with the telegram, so we have to make and install our certificates.
 So we should install MkCert (See detail [Mkcert repo](https://github.com/FiloSottile/mkcert)).
 
 Now create the certificates with this command:
@@ -110,7 +110,7 @@ To run the tests, check your test coverage, and generate an HTML coverage report
     $ open htmlcov/index.html
 
 #### Running tests
-**(optional)** If you wanna test with credentials and cover more code testing, you can set your username and password in env variables.
+**(optional)** If you want to test with credentials and cover more code testing, you can set your username and password in env variables.
 ```
 $ export BOOSTAN_USERNAME="YOUR_USERNAME"
 $ export BOOSTAN_PASSWORD="YOUR_PASSWORD"
@@ -120,14 +120,13 @@ $ export BOOSTAN_PASSWORD="YOUR_PASSWORD"
 
 
 ## Deployment
-
-The following details how to deploy this application.
+The following section details how to deploy this application:
 
 ### Environment variables (Production only)
 
 See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
 
-Instructions on how to use them in your own application are linked below.
+Instructions on how to use them in your application are linked below.
 
 | KEY | VALUE |
 | ------ | ------ |
