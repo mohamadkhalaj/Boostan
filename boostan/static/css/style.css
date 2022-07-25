@@ -405,7 +405,7 @@ input {
 .contribute-menu {
   z-index: 400;
   position: fixed;
-  top: 35%;
+  top: 25%;
   left: 50%;
   min-width: 360px;
   height: 285px;
