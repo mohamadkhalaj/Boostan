@@ -49,5 +49,5 @@ Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readt
 The following details how to deploy this application.
 
 ### Heroku
-- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan)
+- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 - See detailed [cookiecutter-django Heroku documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
