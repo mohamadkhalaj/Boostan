@@ -29,6 +29,9 @@ from api.models import (
     get_cancel_text,
 )
 
+'''
+    send template tags to food page
+'''
 def food(request):
     context = {
         'tags': {

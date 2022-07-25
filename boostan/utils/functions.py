@@ -25,30 +25,30 @@ from api.models import (
 
 WAITING_LIST = []
 
-
+# Remove student from rate limit waiting list
 def remove_stun_from_waiting_lit(stun):
-    if is_rate_limit_enabled() and stun in WAITING_LIST:
+    if is_rate_limit_enabled() and stun in WAITING_LIST: # If rate limit is enabled and stun is in waiting list
         try:
             WAITING_LIST.remove(stun)
         except ValueError:
             pass
 
-
+# Handle rate limit
 def rate_limit(stun):
     try:
-        user = get_student_by_stu_number(stun)
-        now = time.mktime(timezone.now().timetuple())
-        last_used = time.mktime(user.last_used.timetuple())
+        user = get_student_by_stu_number(stun) # Get student by stun
+        now = time.mktime(timezone.now().timetuple()) # Get current time
+        last_used = time.mktime(user.last_used.timetuple()) # Get last used time
         limit = get_rate_limit()  # seconds
-        delta = (last_used + limit - now) / 60
-        if now < last_used + limit:
+        delta = (last_used + limit - now) / 60 # Get delta in minutes
+        if now < last_used + limit: # If now is less than last used + limit return limit
             return (False, delta + 1)
         else:
             return (True, 0)
     except:
         return (True, 0)
 
-
+# Get user ip
 def get_client_ip(request):
     x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
     if x_forwarded_for:
@@ -57,17 +57,17 @@ def get_client_ip(request):
         ip = request.META.get("REMOTE_ADDR")
     return ip
 
-
+# Update/Add student data and statistics
 def after_auth_stuffs(ip_address, stu_number, password, name, credit, session, user_agent):
-    if check_student_exists(stu_number):
-        student = get_student_by_stu_number(stu_number)
-        update_user_ip_address_user_agent(session, ip_address, user_agent)
-        if student.password != password:
-            check_and_update_password(student, password)
-        increment_count_of_used(student)
-        update_user_credit(student, credit)
-        check_and_update_student_top_credit(student, credit)
-    else:
+    if check_student_exists(stu_number): # If student exists
+        student = get_student_by_stu_number(stu_number) # Get student by stun
+        update_user_ip_address_user_agent(session, ip_address, user_agent) # Update ip address and user agent
+        if student.password != password: # If password is changed
+            check_and_update_password(student, password) # Check and update password
+        increment_count_of_used(student) # Increment count of used
+        update_user_credit(student, credit) # Update user credit
+        check_and_update_student_top_credit(student, credit) # Check and update student top credit
+    else: # If student does not exist
         student = create_student(
             stu_number=stu_number,
             password=password,
@@ -78,13 +78,13 @@ def after_auth_stuffs(ip_address, stu_number, password, name, credit, session, u
             count_of_used=1,
         )
 
-    remove_stun_from_waiting_lit(stu_number)
-    statistics_total_students_count()
-    statistics_first_user_used()
-    statistics_last_user_used()
-    statistics_total_login()
+    remove_stun_from_waiting_lit(stu_number) # Remove student from rate limit waiting list
+    statistics_total_students_count() # Update total students count
+    statistics_first_user_used() # Update first user used
+    statistics_last_user_used() # Update last user used
+    statistics_total_login() # Increment total logins
 
-
+# Parse user agent and return Json
 def parse_user_agent(user_agent):
     parsed = user_agent_parser(user_agent)
     useragent = {}
@@ -95,7 +95,7 @@ def parse_user_agent(user_agent):
     useragent["device"] = parsed.device.family
     return useragent
 
-
+# Create session list
 def create_sessions_list(sessions):
     sessions_list = []
     for session in sessions:
@@ -118,6 +118,6 @@ def create_sessions_list(sessions):
         sessions_list.append(temp)
     return sessions_list
 
-
+# Generate random string
 def session_generator():
     return "".join(random.choice(string.ascii_letters + string.digits) for _ in range(32))

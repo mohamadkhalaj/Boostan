@@ -3,7 +3,14 @@ from django.core.management.base import BaseCommand
 
 from api.models import Message, Setting, TemplateTags
 
+'''
+    Loads default settings, templates 
+    and messages into the database 
+    if not exists.
 
+    Usage:
+        python manage.py loaddefaults
+'''
 class Command(BaseCommand):
     help = "Load fixtures to db"
 

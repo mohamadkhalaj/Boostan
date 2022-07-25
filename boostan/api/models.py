@@ -8,10 +8,31 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
 
-User = get_user_model()
 
-
+'''
+    Student Model with following fields:
+        stu_number: Student number
+        name: Student name
+        password: Student password
+        credit: Student credit
+        count_of_used: Count of used
+        top_credit: Top credit
+        total_recieved_list: Total recieved list
+        total_reserved_food: Total reserved food
+        total_forget_code: Total forget code
+        status: Student status
+        last_used: Last used
+        first_used: First used
+    
+    This model stores user data
+'''
 class Student(GeneralModel):
+    '''
+        Student status:
+            0: Active
+            1: Banned
+            2: White listed
+    '''
     STATUSES = (
         (0, _("Normal")),
         (1, _("Blocked user")),
@@ -46,9 +67,9 @@ class Student(GeneralModel):
     status = models.IntegerField(
         choices=STATUSES, default=STATUSES[0][0], verbose_name=_("Status")
     )
-    total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)
-    total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)
-    total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0)
+    total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0) # Total recieved list
+    total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0) # Total reserved food
+    total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0) # Total forget code
 
     def __str__(self):
         return f"{self.full_name} {self.stu_number}"
@@ -67,8 +88,27 @@ class Student(GeneralModel):
 
     last_used_time.short_description = _("Last used time")
 
-
+'''
+    Session Model with following fields:
+        student: Student (ForeignKey)
+        session: Session
+        ip_address: IP address
+        telegram_id: Telegram id
+        telegram_username: Telegram username
+        user_agent: User agent
+        last_used: Last used
+        first_used: First used
+    
+    This model stores user sessions
+    each user could have several sessions and
+    each session is permanent until user 
+    logged out manually
+'''
 class Session(GeneralModel):
+    '''
+        Each session has a student
+        and each student could have many sessions
+    '''
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
@@ -76,6 +116,7 @@ class Session(GeneralModel):
         verbose_name=_("Student"),
     )
 
+    # Random generated string
     session = models.TextField(
         verbose_name=_("Session"),
     )
@@ -112,7 +153,19 @@ class Session(GeneralModel):
         verbose_name = _("Session")
         verbose_name_plural = _("Sessions")
 
-
+'''
+    Visitor Model with following fields:
+        ip_address: IP address
+        user_agent: User agent
+        path: Path (URL)
+        is_admin_panel: Is admin panel (Check if the path is admin panel)
+        data: Data (Get/Post)
+        last_used: Last used
+        first_used: First used
+    
+    This model logs any requests 
+    if logging is enabled in settings
+'''
 class Visitor(GeneralModel):
     ip_address = models.GenericIPAddressField(
         verbose_name=_("IP address"),
@@ -135,7 +188,23 @@ class Visitor(GeneralModel):
     def __str__(self):
         return f"{self.ip_address}, {self.user_agent}"
 
-
+'''
+    Setting Model with following fields:
+        name: Setting name
+        value: Setting value
+    
+    This model have several records for for 
+    adjusting site functionallity
+    such:
+        telegram API
+        telegram admin id
+        telegram chat id
+        telegram special users
+        rate limit interval
+        visitor model toggle
+        set site operating mode
+        ...
+'''
 class Setting(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -147,7 +216,14 @@ class Setting(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
+'''
+    Message Model with following fields:
+        name: Message name
+        value: Message value
+    
+    This model stores any BackEnd alerts and errors
+    and can be eddited easily via admin panel
+'''
 class Message(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -159,6 +235,14 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+'''
+    TemplateTags Model with following fields:
+        name: TemplateTags name
+        value: TemplateTags value
+
+    This model stores any FrontEnd user prompts and alerts
+    and can be eddited easily via admin panel
+'''
 class TemplateTags(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -170,6 +254,14 @@ class TemplateTags(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+'''
+    Statistics Model with following fields:
+        name: Statistics name
+        value: Statistics value
+
+    This model can save any user defined statistics 
+    and show them in readonly fields via admin panel
+'''
 class Statistics(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.BigIntegerField(verbose_name=_("Value"), default=0)
@@ -181,7 +273,10 @@ class Statistics(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
+'''
+    All api app queries starts from 
+    here to end of this file
+'''
 def get_telegram_api():
     try:
         return Setting.objects.get(name="telegram_api").value
