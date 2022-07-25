@@ -65,7 +65,7 @@ So we should install MkCert (See detail [Mkcert repo](https://github.com/FiloSot
 
 Now create the certificates with this command:
 ```sh
-mkcert -cert-file cert.pem -key-file key.pem 0.0.0.0 localhost 127.0.0.1 ::1
+$ mkcert -cert-file cert.pem -key-file key.pem 0.0.0.0 localhost 127.0.0.1 ::1
 ```
 Replace 0.0.0.0, localhost, 127.0.0.1 with the domains you’ll be running locally.
 
@@ -75,11 +75,11 @@ but since we shall be running them in Django, copy them to the same folder as ma
 
 Run below command to add certificates to browser trusted certificates list.
 ```
-mkcert -install
+$ mkcert -install
 ```
 Then you can run project with this command:
 ```
-python manage.py runsslserver — certificate cert.pem — key key.pem
+$ python manage.py runsslserver — certificate cert.pem — key key.pem
 ```
 
 ### Type checks
@@ -96,7 +96,12 @@ To run the tests, check your test coverage, and generate an HTML coverage report
     $ coverage html
     $ open htmlcov/index.html
 
-#### Running tests with pytest
+#### Running tests
+(optional) If you wanna test with credentials and cover more code testing, you can set your username and password in env variables.
+```
+$ export BOOSTAN_USERNAME="YOUR_USERNAME"
+$ export BOOSTAN_PASSWORD="YOUR_PASSWORD"
+```
 
     $ python manage.py test api
 
