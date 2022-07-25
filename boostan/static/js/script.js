@@ -585,31 +585,29 @@ function submit_meal_menu() {
         parent.childNodes[0].innerText = self;
 
         if (this.parentElement.childNodes[0].innerText.includes(cancel_text)) {
-            parent.childNodes[3].innerText = already_reserved_text
-            parent.childNodes[3].className = 'btn meal-caption d-block bg-success'
+            parent.childNodes[3].innerText = already_reserved_text;
+            parent.childNodes[3].className = 'btn meal-caption d-block bg-success';
         }
         else {
-            parent.childNodes[3].innerText = not_reserved_text
-            parent.childNodes[3].className = 'btn meal-caption d-block bg-danger'
+            parent.childNodes[3].innerText = not_reserved_text;
+            parent.childNodes[3].className = 'btn meal-caption d-block bg-danger';
         }
-        this.parentElement.parentElement.classList.remove('meal-menu-visible')
-        document.getElementsByClassName('meal-menu-wrapper')[0].classList.remove('meal-menu-wrapper-show')
-        Telegram.WebApp.MainButton.setText('Order')
-        Telegram.WebApp.MainButton.enable()
+        this.parentElement.parentElement.classList.remove('meal-menu-visible');
+        document.getElementsByClassName('meal-menu-wrapper')[0].classList.remove('meal-menu-wrapper-show');
+        Telegram.WebApp.MainButton.show();
     }
     else {
         // better alert
-        $(".alert-balance").show()
+        $(".alert-balance").show();
     }
 }
 
 function meal_clicked() {
-    $(".alert-balance").hide()
-    let menu_id = "meal_menu_" + this.id
-    document.getElementById(menu_id).classList.add('meal-menu-visible')
-    document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
-    Telegram.WebApp.MainButton.disable()
-    Telegram.WebApp.MainButton.setText('Order')
+    $(".alert-balance").hide();
+    let menu_id = "meal_menu_" + this.id;
+    document.getElementById(menu_id).classList.add('meal-menu-visible');
+    document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show');
+    Telegram.WebApp.MainButton.hide();
 }
 
 function check_uniq_reserve(node) {
@@ -696,6 +694,8 @@ function submit() {
     // send request
 
     Telegram.WebApp.MainButton.showProgress(true);
+    Telegram.WebApp.MainButton.setText('Sending...');
+    Telegram.WebApp.MainButton.disable();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/reserve-food/`, true);
     let session = localStorage.getItem('session');
@@ -717,6 +717,7 @@ function submit() {
                 }
                 create_alert_notification(message['error'], 'danger')
             }
+            Telegram.WebApp.MainButton.setText('Order');
             Telegram.WebApp.MainButton.hideProgress();
         }
     };
@@ -790,8 +791,8 @@ function create_submit_list(food, price, self, meal, item) {
 }
 
 function login_and_place_list(){
+    Telegram.WebApp.MainButton.hide();
     let session = localStorage.getItem('session');
-    Telegram.WebApp.MainButton.showProgress(true);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-food-list/`, true);
     params = `csrfmiddlewaretoken=${csrftoken}&session=${session}`
@@ -808,6 +809,8 @@ function login_and_place_list(){
                 $('#user-name').text(food_list['name']);
                 $('#user-credit').text("اعتبار: " + pretty_numbers(food_list['credit']) + " تومان");
                 $('#user-credit').attr('value', food_list['credit'])
+                Telegram.WebApp.MainButton.show();
+                Telegram.WebApp.MainButton.enable();
                 create_days()
                 if (!Object.keys(initDataUnsafe).length) {
                     document.getElementById('submit-btn-web').style.display = 'block';
@@ -827,7 +830,6 @@ function login_and_place_list(){
                 }
                 create_alert_notification(message['error'], 'danger')
             }
-            Telegram.WebApp.MainButton.hideProgress();
         }
     };
     create_alert_notification(get_food_list_text_message, 'warning');
@@ -848,9 +850,7 @@ function check_login() {
 }
 
 function login_button_clicked() {
-    let student_number = document.getElementById('student_number').value;
-    let student_password = document.getElementById('student_password').value;
-    get_session_from_api(student_number, student_password)
+    get_session_from_api(student_number.value, student_password.value);
 }
 
 function remove_objects(){
@@ -866,7 +866,6 @@ function remove_objects(){
 }
 
 function get_session_from_api(username, password) {
-    Telegram.WebApp.MainButton.showProgress(true);
     let telegram_data = {
     	'id': "",
     	'username': "",
@@ -890,7 +889,6 @@ function get_session_from_api(username, password) {
                 document.getElementById('login-form').style.visibility='hidden'
                 document.getElementById('login-form').style.display='none'
                 create_alert_notification(message, 'success')
-                Telegram.WebApp.MainButton.enable();
                 login_and_place_list()
             }
             else {
@@ -900,7 +898,6 @@ function get_session_from_api(username, password) {
                 }
                 create_alert_notification(message['error'], 'danger')
             }
-            Telegram.WebApp.MainButton.hideProgress();
         }
     };
     create_alert_notification(login_text_message, 'warning')
@@ -908,6 +905,7 @@ function get_session_from_api(username, password) {
 }
 
 function main_menu() {
+    Telegram.WebApp.MainButton.hide();
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
 	document.getElementById('main-menu').style.visibility = "visible";
 }
@@ -915,6 +913,7 @@ function main_menu() {
 function close_main_menu(){
 	document.getElementById('main-menu').style.visibility = "hidden";
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.remove('meal-menu-wrapper-show')
+    Telegram.WebApp.MainButton.show();
 }
 
 function close_session_menu(){
@@ -923,7 +922,6 @@ function close_session_menu(){
 }
 
 function get_forget_code() {
-	Telegram.WebApp.MainButton.showProgress(true);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-forget-code/`, true);
     let session = localStorage.getItem('session');
@@ -943,7 +941,6 @@ function get_forget_code() {
                 }
                 create_alert_notification(message['error'], 'danger')
             }
-            Telegram.WebApp.MainButton.hideProgress();
         }
     };
     create_alert_notification(get_forget_code_text_message, 'warning')
@@ -1003,7 +1000,6 @@ function create_sessions(sessions) {
 
 
 function logout() {
-	Telegram.WebApp.MainButton.showProgress(true);
 	let main_this = this;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/logout/`, true);
@@ -1023,13 +1019,11 @@ function logout() {
                 	close_main_menu()
                     show_login_page();
                 }
-                Telegram.WebApp.MainButton.enable();
             }
             else {
                 let message = JSON.parse(xhr.responseText)
                 create_alert_notification(message['error'], 'danger')
             }
-            Telegram.WebApp.MainButton.hideProgress();
         }
     };
     xhr.send(params);
@@ -1047,7 +1041,6 @@ function rempve_sessions() {
 }
 
 function get_sessions() {
-	Telegram.WebApp.MainButton.showProgress(true);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", `${origin}api/v1/get-sessions/`, true);
     let session = localStorage.getItem('session');
@@ -1060,20 +1053,18 @@ function get_sessions() {
                 let response = JSON.parse(xhr.responseText)
                 rempve_sessions();
                 create_sessions(response['message']);
-                Telegram.WebApp.MainButton.enable();
             }
             else {
                 let message = JSON.parse(xhr.responseText)
                 create_alert_notification(message['error'], 'danger')
             }
-            Telegram.WebApp.MainButton.hideProgress();
         }
     };
     xhr.send(params);
 }
 
 function show_login_page(){
-    Telegram.WebApp.MainButton.disable();
+    Telegram.WebApp.MainButton.hide();
     document.getElementById('login-form').style.visibility='visible'
     document.getElementById('login-form').style.display='block'
     student_number.focus();
