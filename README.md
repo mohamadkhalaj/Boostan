@@ -6,6 +6,21 @@ reserve food from boostan website.
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![.github/workflows/prod.yml](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml)
 
+## Tech
+
+We used several frameworks and services for doing our job so well:
+
+- [Django]() - We used django for our backend
+- [Redis]() - Datebase memory caching
+- [PostgreSql]() - Sql datebase
+- [Telegram web-app-bot]() - Better user experient
+- [JavaScript]() - Our frontEnd made with pure js
+- [jQuery]() - FrontEnd
+- [Twitter Bootstrap]() - Great UI boilerplate for modern and responsive web apps
+- [Heroku]() - Deployment
+- [Sentry]() - Error tracking for both Django/JS
+- [Google analytics]() - For users analysis
+
 ## Settings
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
