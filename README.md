@@ -10,7 +10,7 @@ reserve food from boostan website.
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
-## Environment variables (Production)
+## Environment variables (Production only)
 
 See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
 Instructions on how to use them in your own application are linked below.
@@ -55,6 +55,32 @@ Instructions on how to use them in your own application are linked below.
         $ python manage.py createsuperuser
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
+
+## Debug your app with telegram desktop
+
+You should install telegram beta and enable inspect element in experimental setitngs more detail [Telegram doc](https://core.telegram.org/bots/webapps#debug-mode-for-web-apps).
+
+We should use HTTPS for debugging our app with telegram, so we have to make and install our own certificates.
+So we should install MkCert (See detail [Mkcert repo](https://github.com/FiloSottile/mkcert)).
+
+Now create the certificates with this command:
+```sh
+mkcert -cert-file cert.pem -key-file key.pem 0.0.0.0 localhost 127.0.0.1 ::1
+```
+Replace 0.0.0.0, localhost, 127.0.0.1 with the domains you’ll be running locally.
+
+cert.pem and key.pem files will be created in your current working directory. you can replace them whichever names you wish.
+
+but since we shall be running them in Django, copy them to the same folder as manage.py
+
+Run below command to add certificates to browser trusted certificates list.
+```
+mkcert -install
+```
+Then you can run project with this command:
+```
+python manage.py runsslserver — certificate cert.pem — key key.pem
+```
 
 ### Type checks
 
