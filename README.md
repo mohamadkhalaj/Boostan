@@ -142,3 +142,9 @@ Instructions on how to use them in your own application are linked below.
 **Click below button for easy deploy to heroku!**
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan/tree/master/)
+
+## License
+
+GPL-3.0 license
+
+**Free Software, Hell Yeah!**
