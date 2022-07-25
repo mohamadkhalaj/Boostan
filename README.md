@@ -161,3 +161,16 @@ Instructions on how to use them in your own application are linked below.
 GPL-3.0 license
 
 **Free Software, Hell Yeah!**
+
+## Screenshots
+#### Dynamic theme (Telegram)
+![menu](https://user-images.githubusercontent.com/62938359/180774724-312a2754-1bca-453f-873d-8584042f00f8.gif)
+![reserve](https://user-images.githubusercontent.com/62938359/180774810-bc2923cc-229e-441f-80df-6bba1fef2b9a.gif)
+
+#### Desktop version
+![1](https://user-images.githubusercontent.com/62938359/180776746-edcbc2e5-eb97-455c-8628-65208998cde7.png)
+![8](https://user-images.githubusercontent.com/62938359/180776756-b7d2e79e-098f-4066-976c-adcfc40453a2.png)
+![2](https://user-images.githubusercontent.com/62938359/180774771-7e2511bc-59af-422d-81f9-d719491409aa.png)
+![4](https://user-images.githubusercontent.com/62938359/180774779-8cb04003-b0be-46cf-a12b-e8df5de05874.png)
+![5](https://user-images.githubusercontent.com/62938359/180774785-7ba64547-e6f9-4807-bead-7f06854f5bc3.png)
+![7](https://user-images.githubusercontent.com/62938359/180774801-83c8cbb8-9f64-437a-9d6f-f6c02f885a43.png)
