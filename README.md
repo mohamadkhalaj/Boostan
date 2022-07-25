@@ -42,6 +42,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 If you want to pass ci/cd and auto deploy after each commit, you should add below secrets to your github repo secret lists.
 Instructions on how to use them in your own application are linked below.
 
+[Github secret instructions](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
 | KEY | VALUE |
 | ------ | ------ |
 | BOOSTAN_USERNAME | Boostan username (for testing) (optional)|
