@@ -2,7 +2,6 @@
 
 reserve food from boostan website.
 
-[![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![.github/workflows/prod.yml](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml)
 
@@ -25,26 +24,6 @@ We used several frameworks and services for doing our job so well:
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
 
-## Environment variables (Production only)
-
-See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
-Instructions on how to use them in your own application are linked below.
-
-| KEY | VALUE |
-| ------ | ------ |
-| DJANGO_SECRET_KEY | ```$(openssl rand -base64 64)``` |
-| WEB_CONCURRENCY | 4 |
-| DJANGO_DEBUG | False |
-| DJANGO_SETTINGS_MODULE | config.settings.production |
-| PYTHONHASHSEED | random |
-| DJANGO_ADMIN_URL | RANDOM_STRING/ |
-| DJANGO_ALLOWED_HOSTS | YOUR_DOMAIN |
-| DJANGO_ACCOUNT_ALLOW_REGISTRATION | False |
-| REDIS_URL | Your redis url (for memcache) (free redis sever [redis cloud](https://app.redislabs.com/#/login)) |
-| REDIS_SASL_PASSWORD | Redis SASL password |
-| REDIS_SASL_USERNAME | Redis SASL username |
-| SENTRY_DSN | Your sentry error tracker DSN code (See detail [sentry django doc](https://docs.sentry.io/platforms/python/guides/django/)) |
-
 ## Github workflows (CI/CD)
 
 If you want to pass ci/cd and auto deploy after each commit, you should add below secrets to your github repo secret lists.
@@ -60,6 +39,17 @@ Instructions on how to use them in your own application are linked below.
 
 
 ## Basic Commands
+
+### Installation (normal)
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ pip install -r requirements/local.txt
+$ python manage.py migrate
+$ python manage.py loaddefaults
+$ python manage.py runserver
+```
 
 ### Setting Up Your Users
 
@@ -112,7 +102,7 @@ To run the tests, check your test coverage, and generate an HTML coverage report
     $ open htmlcov/index.html
 
 #### Running tests
-(optional) If you wanna test with credentials and cover more code testing, you can set your username and password in env variables.
+**(optional)** If you wanna test with credentials and cover more code testing, you can set your username and password in env variables.
 ```
 $ export BOOSTAN_USERNAME="YOUR_USERNAME"
 $ export BOOSTAN_PASSWORD="YOUR_PASSWORD"
@@ -128,6 +118,27 @@ Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readt
 
 The following details how to deploy this application.
 
+### Environment variables (Production only)
+
+See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
+Instructions on how to use them in your own application are linked below.
+
+| KEY | VALUE |
+| ------ | ------ |
+| DJANGO_SECRET_KEY | ```$(openssl rand -base64 64)``` |
+| WEB_CONCURRENCY | 4 |
+| DJANGO_DEBUG | False |
+| DJANGO_SETTINGS_MODULE | config.settings.production |
+| PYTHONHASHSEED | random |
+| DJANGO_ADMIN_URL | RANDOM_STRING/ |
+| DJANGO_ALLOWED_HOSTS | YOUR_DOMAIN |
+| DJANGO_ACCOUNT_ALLOW_REGISTRATION | False |
+| REDIS_URL | Your redis url (for memcache) (free redis sever [redis cloud](https://app.redislabs.com/#/login)) |
+| REDIS_SASL_PASSWORD | Redis SASL password |
+| REDIS_SASL_USERNAME | Redis SASL username |
+| SENTRY_DSN | Your sentry error tracker DSN code (See detail [sentry django doc](https://docs.sentry.io/platforms/python/guides/django/)) |
+
 ### Heroku
-- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan/tree/master/)
-- See detailed [cookiecutter-django Heroku documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
+**Click below button for easy deploy to heroku!**
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan/tree/master/)
