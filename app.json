@@ -63,6 +63,6 @@
     "SENTRY_DSN": {
       "description": "Your sentry error tracker DSN code get it for Django app.",
       "value": ""
-    },
+    }
   }
 }
