@@ -15,7 +15,7 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JY9FTB5CF"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={% google_analysis_code %}"></script>
   <script src="https://browser.sentry-cdn.com/7.7.0/bundle.tracing.min.js" integrity="sha384-lr/bDcE0vmUPBU6dhVBXfmhNYAEilrIepu1BRdVUJ8mZ0Hxhm17aIJ2bt4UfxC72" crossorigin="anonymous"></script>
   <script>
     function setThemeClass() {
@@ -29,11 +29,11 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-3JY9FTB5CF');
+    gtag('config', '{% google_analysis_code %}');
 
     // Sentry //
     Sentry.init({
-      dsn:"https://25259b62297f4fe880e854ac98e8b2e6@o1332494.ingest.sentry.io/6597185",
+      dsn:"{% sentry_code %}",
     
       // This enables automatic instrumentation (highly recommended), but is not
       // necessary for purely manual usage
@@ -48,14 +48,14 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KSCM2WX');
+    })(window,document,'script','dataLayer','{% google_tag_manager_code %}');
     <!-- End Google Tag Manager -->
   </script>
 </head>
 
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSCM2WX"
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={% google_tag_manager_code %}"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <div class="meal-menu-wrapper"></div>
@@ -65,12 +65,20 @@
       <button type="button" class="btn-close" id='main-menu-close' aria-label="Close"></button>
       <div id="forgot-code" ><button class="btn submit-btn w-100">{% menu_forget_code_text %}</button></div>
       <div id="sessions" ><button class="btn submit-btn w-100">{% menu_sessions_text %}</button></div>
+      <div id="contribute" ><button class="btn submit-btn w-100">{% menu_contribute_text %}</button></div>
     </div>
   </div>
 
   <div class="session-menu" id="session-menu">
     <div class="container mt-3" id='session-menu-parent'>
       <button type="button" class="btn-close" id='session-menu-close' aria-label="Close"></button>
+    </div>
+  </div>
+
+  <div class="contribute-menu" id="contribute-menu">
+    <div class="container mt-3" id='contribute-menu-parent'>
+      <button type="button" class="btn-close" id='contribute-menu-close' aria-label="Close"></button>
+      <div class='container contribute-card'>{% contribute_text %}</div>
     </div>
   </div>
 

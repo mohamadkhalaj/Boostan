@@ -14,6 +14,8 @@ document.getElementById('main-menu-close').addEventListener('click', close_main_
 document.getElementById('session-menu-close').addEventListener('click', close_session_menu);
 document.getElementById('forgot-code').addEventListener('click', get_forget_code);
 document.getElementById('sessions').addEventListener('click', open_session_menu);
+document.getElementById('contribute').addEventListener('click', open_contribute_menu);
+document.getElementById('contribute-menu-close').addEventListener('click', close_contribute_menu);
 document.getElementById('close-alert').addEventListener('click', close_alert);
 
 Telegram.WebApp.MainButton.hideProgress();
@@ -1022,8 +1024,9 @@ function logout() {
                 create_alert_notification(response['message'], 'success')
                 main_this.parentNode.remove();
                 if (main_session == session) {
-					close_session_menu()
-                	close_main_menu()
+					close_session_menu();
+                	close_main_menu();
+                    close_contribute_menu();
                     show_login_page();
                 }
             }
@@ -1084,6 +1087,16 @@ function open_session_menu() {
 	document.getElementById('main-menu').style.visibility = "hidden";
 	document.getElementById('session-menu').style.visibility = "visible";
 	get_sessions()
+}
+
+function open_contribute_menu(){
+    document.getElementById('main-menu').style.visibility = "hidden";
+    document.getElementById('contribute-menu').style.visibility = "visible";
+}
+
+function close_contribute_menu(){
+    document.getElementById('contribute-menu').style.visibility = "hidden";
+    document.getElementById('main-menu').style.visibility = "visible";
 }
 
 function close_alert() {

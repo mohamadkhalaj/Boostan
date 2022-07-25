@@ -868,3 +868,33 @@ def get_cancel_text():
         return TemplateTags.objects.filter(name="cancel_text").first().value
     except:
         return ""
+
+def get_menu_contribute_text():
+    try:
+        return TemplateTags.objects.filter(name="menu_contribute_text").first().value
+    except:
+        return ""
+
+def get_google_analysis_code():
+    try:
+        return TemplateTags.objects.filter(name="google_analysis_code").first().value
+    except:
+        return ""
+
+def get_google_tag_manager_code():
+    try:
+        return TemplateTags.objects.filter(name="google_tag_manager_code").first().value
+    except:
+        return ""
+
+def get_sentry_code():
+    try:
+        return TemplateTags.objects.filter(name="sentry_code").first().value
+    except:
+        return ""
+
+def get_contribute_text():
+    try:
+        return TemplateTags.objects.filter(name="contribute_text").first().value
+    except:
+        return ""

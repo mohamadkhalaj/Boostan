@@ -238,5 +238,45 @@
         "name": "sessions_current_device_text",
         "value": "(این دستگاه)"
     }
+},
+{
+    "model": "api.templatetags",
+    "pk": 31,
+    "fields": {
+        "name": "menu_contribute_text",
+        "value": "مشارکت"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 32,
+    "fields": {
+        "name": "google_analysis_code",
+        "value": "G-0000000000"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 33,
+    "fields": {
+        "name": "sentry_code",
+        "value": "https://sample.ingest.sentry.io/111111"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 34,
+    "fields": {
+        "name": "google_tag_manager_code",
+        "value": "GTM-1111111"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 35,
+    "fields": {
+        "name": "contribute_text",
+        "value": "این سایت یک پروژه اوپن سورس و رایگانه که برای راحتی و رفاه دانشجویان بین‌الملی امام خمینی ساخته شده و سعی شده تا حد امکان ساده و کاربردی باشه.\r\n<br><br>\r\nاگر به مشارکت در این پروژه علاقه‌مندید و تجربه کار با فریموورک Django و یا زبان JavaScript\r\nرو دارید میتونید از طریق گیتهاب پروژه Pull request بزنید و فیچرهای مورد علاقه‌تونو اضافه کنید و یا دیباگ کنید.\r\n<br>\r\n<img src=\"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\" class=\"contribute-icon\" alt=\"Github logo\"/>\r\n<a target=\"_blank\" href=\"https://github.com/mohamadkhalaj/Boostan/\">مخزن پروژه در گیتهاب</a>\r\n<br>\r\n<img src=\" https://cdn-icons-png.flaticon.com/512/2111/2111646.png\" class=\"contribute-icon\" alt=\"Telegram logo\"/>\r\n<a target=\"_blank\" href=\"https://t.me/ikiu_infbot\">ربات تلگرام</a>\r\n<br><br>\r\n<div class=\"contribute-footer\">Made With ♥️ by <a target=\"_blank\" href=\"https://t.me/OxMoh4mmad\">MohammadMahdi Khalaj</a></div>"
+    }
 }
 ]

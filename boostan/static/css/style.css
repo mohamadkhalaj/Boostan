@@ -401,3 +401,50 @@ input {
 .login-shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.contribute-menu {
+  z-index: 400;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  min-width: 360px;
+  height: 285px;
+  transform: translateX(-50%);
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 8px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  visibility: hidden;
+}
+
+.contribute-card {
+  margin-bottom: 30px;
+  border-radius: 10px;
+  color: var(--tg-theme-text-color, #000000);
+  background-color: var(--tg-theme-bg-color, #ffffff);
+  padding: 20px;
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  color: var(--tg-theme-button-color, blue) !important;
+}
+
+a:hover {
+  text-decoration: none;
+
+}
+
+.contribute-footer {
+  text-align: center;
+  direction: ltr; 
+  font-style:italic; 
+  font-size: 11px;
+}
+
+.contribute-icon {
+  width: 24px;
+}
