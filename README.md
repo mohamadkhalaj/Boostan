@@ -157,7 +157,7 @@ $ python manage.py runserver
 ### Heroku
 **Click below button for easy deploy to heroku!**
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/mohamadkhalaj/Boostan/tree/master/)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 
 ## Screenshots
