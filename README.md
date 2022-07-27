@@ -41,7 +41,7 @@ We used several frameworks and services for doing our job perfect:
 ## Github workflows (CI/CD)
 
 If you want to pass CI/CD and auto deploy after each commit, you should add the below secrets to your GitHub repo secret lists.
-Instructions on how to use them in your application are listed below.
+Instructions on how to use them in your application are linked below.
 
 [Github secret instructions](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
 | KEY | VALUE |
@@ -127,9 +127,9 @@ The following section details how to deploy this application:
 
 ### Environment variables (Production only)
 
-See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
+Instructions on how to use them in your application are linked below.
 
-Instructions on how to use them in your application are listed below.
+See detailed [django Heroku](http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html).
 
 | KEY | VALUE |
 | ------ | ------ |
