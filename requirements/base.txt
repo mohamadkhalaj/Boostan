@@ -25,4 +25,4 @@ bs4==0.0.1
 # User-agent for Sessions parsing
 user-agents===2.2.0
 # Rate limit
-django-ratelimit-3.0.1
+django-ratelimit==3.0.1
