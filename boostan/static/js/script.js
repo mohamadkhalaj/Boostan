@@ -23,6 +23,7 @@ var session_lists = [];
 var food_list;
 var reserve_list = {'total':0, 'days':[]};
 var created_objects = [];
+var food_list_response_status;
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 const cancel_text = tags['cancel'];
@@ -823,7 +824,7 @@ function login_and_place_list(){
 
 	xhr.onreadystatechange = function() { // Call a function when the state changes.
 		if (this.readyState === XMLHttpRequest.DONE) {
-
+			food_list_response_status = this.status;
 			if (this.status === 200) {
 				let message = JSON.parse(xhr.responseText)['food_list']
 				create_alert_notification(success_food_list_text_message, 'success');
@@ -1153,10 +1154,12 @@ function hide_order_btn() {
 }
 
 function show_order_btn() {
-	if (!Object.keys(initDataUnsafe).length) {
-		document.getElementById('submit-btn-web').style.display = 'block';
+	if (food_list_response_status == 200) {
+		if (!Object.keys(initDataUnsafe).length) {
+			document.getElementById('submit-btn-web').style.display = 'block';
+		}
+		Telegram.WebApp.MainButton.show();
 	}
-	Telegram.WebApp.MainButton.show();
 }
 
 function check_user_supports_haptic_or_no(){
