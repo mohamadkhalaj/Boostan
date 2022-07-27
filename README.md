@@ -95,7 +95,7 @@ $ mkcert -install
 ```
 Then you can run project with this command:
 ```sh
-$ python manage.py runsslserver — certificate cert.pem — key key.pem
+$ python manage.py runsslserver --certificate cert.pem --key key.pem
 ```
 
 ### Type checks
