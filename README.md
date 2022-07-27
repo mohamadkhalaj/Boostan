@@ -7,18 +7,21 @@ Boostan (IKIU reserve food) system fluent and responsive client.
 ## Features✨
 ### Users
 - Beautiful and responsive design
-- Get food list, Reserved list, Credit amount, Reserve food, and Get forget code from boostan
+- Get foods and reserved list
+- Get credit amount
+- Reserve food
+- Get forgotten code
 - Change theme based on user telegram theme settings
 - Support Multi-sessions, and the user is always logged in
-- Session manager and devices info
+- Manage sessions and device infos
 ### Admins
 - Enable/Disable requests logging
 - Set rate limit
-- Different operating modes such: as Block, Whitelist, and normal mode
+- Different operating modes including: Block, Whitelist, and normal mode
 - Telegram alert settings
 - Change any alerts and error messages from the admin panel
 - Multi language support see [locale](https://github.com/mohamadkhalaj/Boostan/tree/master/locale) 
-- Some statistics
+- Statistics
 
 ## Tech
 We used several frameworks and services for doing our job perfect:
