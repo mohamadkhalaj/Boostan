@@ -17,7 +17,7 @@ Boostan (IKIU reserve food) system fluent and responsive client.
 - Different operating modes such: as Block, Whitelist, and normal mode
 - Telegram alert settings
 - Change any alerts and error messages from the admin panel
-- Multi language support see locale
+- Multi language support see [locale](https://github.com/mohamadkhalaj/Boostan/tree/master/locale) 
 - Some statistics
 
 ## Tech
@@ -54,7 +54,7 @@ Instructions on how to use them in your application are listed below.
 
 ### Installation (normal)
 
-Install the devDependencies and start the server.
+Install the dependencies, migrate and start the server.
 
 ```sh
 $ pip install -r requirements/local.txt
