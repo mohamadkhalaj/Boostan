@@ -444,7 +444,7 @@ a:hover {
   font-style: italic;
   font-size: 11px;
   position: absolute;
-  bottom: 12px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
 }
