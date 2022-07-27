@@ -898,3 +898,21 @@ def get_contribute_text():
         return TemplateTags.objects.filter(name="contribute_text").first().value
     except:
         return ""
+
+def get_telegram_main_btn_order_text():
+    try:
+        return TemplateTags.objects.filter(name="telegram_main_btn_order_text").first().value
+    except:
+        return ""
+
+def get_telegram_main_btn_sending_data_loading_text():
+    try:
+        return TemplateTags.objects.filter(name="telegram_main_btn_sending_data_loading_text").first().value
+    except:
+        return ""
+
+def get_sending_data_loading_text():
+    try:
+        return TemplateTags.objects.filter(name="sending_data_loading_text").first().value
+    except:
+        return ""

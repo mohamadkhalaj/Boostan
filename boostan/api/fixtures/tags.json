@@ -252,7 +252,7 @@
     "pk": 32,
     "fields": {
         "name": "google_analysis_code",
-        "value": "G-0000000000"
+        "value": "G-A1A1A1A1A1"
     }
 },
 {
@@ -260,7 +260,7 @@
     "pk": 33,
     "fields": {
         "name": "sentry_code",
-        "value": "https://sample.ingest.sentry.io/111111"
+        "value": "https://YOURCODE@YOTURCODE.ingest.sentry.io/YOTURCODE"
     }
 },
 {
@@ -268,7 +268,7 @@
     "pk": 34,
     "fields": {
         "name": "google_tag_manager_code",
-        "value": "GTM-1111111"
+        "value": "GTM-AAAAAAA"
     }
 },
 {
@@ -276,7 +276,31 @@
     "pk": 35,
     "fields": {
         "name": "contribute_text",
-        "value": "این سایت یک پروژه اوپن سورس و رایگانه که برای راحتی و رفاه دانشجویان بین‌المللی امام خمینی ساخته شده و سعی شده تا حدامکان ساده و کاربردی باشه.\r\n<br><br>\r\nاگر به مشارکت در این پروژه علاقه‌مندید و تجربه کار با فریموورک Django و یا زبان JavaScript\r\nرو دارید میتونید از طریق گیتهاب پروژه Pull request بزنید و فیچرهای مورد علاقه‌تونو اضافه کنید و یا دیباگ کنید.\r\n<br>\r\n<img src=\"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\" class=\"contribute-icon\" alt=\"Github logo\"/>\r\n<a target=\"_blank\" href=\"https://github.com/mohamadkhalaj/Boostan/\">مخزن پروژه در گیتهاب</a> (🌟 فراموش نشه!)\r\n<br>\r\n<img src=\" https://cdn-icons-png.flaticon.com/512/2111/2111646.png\" class=\"contribute-icon\" alt=\"Telegram logo\"/>\r\n<a target=\"_blank\" href=\"https://t.me/ikiu_infbot\">ربات تلگرام</a>\r\n<br><br>\r\n<div class=\"contribute-footer\">Made With ♥️ by <a target=\"_blank\" href=\"https://t.me/OxMoh4mmad\">MohammadMahdi Khalaj</a></div>"
+        "value": "این سایت یک پروژه اوپن سورس و رایگانه که برای راحتی و رفاه دانشجویان بین‌المللی امام خمینی ساخته شده و سعی شده تا حدامکان ساده و کاربردی باشه.\r\n<br><br>\r\nاگر به مشارکت در این پروژه علاقه‌مندید و تجربه کار با فریموورک Django و یا زبان JavaScript\r\nرو دارید میتونید از طریق گیتهاب پروژه Pull request بزنید و فیچرهای مورد علاقه‌تونو اضافه کنید و یا دیباگ کنید.\r\n<br>\r\n<img src=\"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\" class=\"contribute-icon\" alt=\"Github logo\"/>\r\n<a target=\"_blank\" href=\"https://github.com/mohamadkhalaj/Boostan/\">مخزن پروژه در گیتهاب</a>  (🌟 فراموش نشه!)\r\n<br>\r\n<img src=\" https://cdn-icons-png.flaticon.com/512/2111/2111646.png\" class=\"contribute-icon\" alt=\"Telegram logo\"/>\r\n<a target=\"_blank\" href=\"https://t.me/ikiu_infbot\">ربات تلگرام</a>\r\n<br><br>\r\n<div class=\"contribute-footer\">Made With ♥️ by <a target=\"_blank\" href=\"https://t.me/OxMoh4mmad\">MohammadMahdi Khalaj</a></div>"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 36,
+    "fields": {
+        "name": "telegram_main_btn_order_text",
+        "value": "Order"
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 37,
+    "fields": {
+        "name": "telegram_main_btn_sending_data_loading_text",
+        "value": "Sending..."
+    }
+},
+{
+    "model": "api.templatetags",
+    "pk": 38,
+    "fields": {
+        "name": "sending_data_loading_text",
+        "value": "درحال ارسال..."
     }
 }
 ]

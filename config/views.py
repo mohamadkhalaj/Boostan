@@ -27,6 +27,10 @@ from api.models import (
     get_already_reserved_text,
     get_reserve_text,
     get_cancel_text,
+    get_telegram_main_btn_order_text,
+    get_telegram_main_btn_sending_data_loading_text,
+    get_sending_data_loading_text,
+    get_order_button_text,
 )
 
 '''
@@ -56,6 +60,10 @@ def food(request):
             'already_reserved': get_already_reserved_text(),
             'reserve': get_reserve_text(),
             'cancel': get_cancel_text(),
+            'telegram_main_btn_order': get_telegram_main_btn_order_text(),
+            'telegram_main_btn_sending_data_loading': get_telegram_main_btn_sending_data_loading_text(),
+            'sending_data_loading': get_sending_data_loading_text(),
+            'order_button': get_order_button_text(),
         }
     }
     return render(request, 'pages/food.html', context=context)
