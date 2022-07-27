@@ -1,5 +1,6 @@
 {
   "name": "Boostan",
+  "logo": "https://github.com/mohamadkhalaj/Boostan/blob/master/boostan/static/images/dinner.png",
   "description": "Boostan easy food reserve website.",
   "repository": "https://github.com/mohamadkhalaj/Boostan",
   "addons": [
