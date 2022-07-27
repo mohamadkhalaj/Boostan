@@ -70,6 +70,8 @@ const login_form = document.getElementById('login-form');
 const student_password = document.getElementById('student_password');
 const student_number = document.getElementById('student_number');
 const login_btn = document.getElementById("login_btn");
+const forgotten_code_btn = document.getElementById('forgot-code-btn');
+const submit_btn = document.getElementById('submit-btn-web-text');
 
 student_number.addEventListener("keypress", function(event) {
 	if (event.key === "Enter" && login_form.style.display === "block") {
@@ -677,6 +679,7 @@ function cancel_reserve_btn() {
 
 
 function submit() {
+	submit_btn.disabled = true;
 	reserve_list = {'total':0, 'days':[]}
 	meals = ['br', 'lu', 'di']
 	indexes.forEach(function(item, index){
@@ -733,6 +736,7 @@ function submit() {
 					Telegram.WebApp.HapticFeedback.notificationOccurred('error');
 				}
 			}
+			submit_btn.disabled = false;
 			reset_order_btn_text();
 		}
 	};
@@ -885,6 +889,7 @@ function remove_objects(){
 }
 
 function get_session_from_api(username, password) {
+	login_btn.disabled = true;
 	let telegram_data = {
 		'id': "",
 		'username': "",
@@ -917,6 +922,7 @@ function get_session_from_api(username, password) {
 				}
 				create_alert_notification(message['error'], 'danger')
 			}
+			login_btn.disabled = false;
 		}
 	};
 	create_alert_notification(login_text_message, 'warning')
@@ -944,6 +950,7 @@ function close_session_menu(){
 }
 
 function get_forget_code() {
+	forgotten_code_btn.disabled = true;
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", `${origin}api/v1/get-forget-code/`, true);
 	let session = localStorage.getItem('session');
@@ -963,6 +970,7 @@ function get_forget_code() {
 				}
 				create_alert_notification(message['error'], 'danger')
 			}
+			forgotten_code_btn.disabled = false;
 		}
 	};
 	create_alert_notification(get_forget_code_text_message, 'warning')
@@ -1088,6 +1096,9 @@ function get_sessions() {
 
 function show_login_page(){
 	hide_order_btn();
+	forgotten_code_btn.disabled = false;
+	login_btn.disabled = false;
+	submit_btn.disabled = false;
 	document.getElementById('login-form').style.visibility='visible'
 	document.getElementById('login-form').style.display='block'
 	student_number.focus();
