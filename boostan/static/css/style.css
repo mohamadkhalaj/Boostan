@@ -440,9 +440,13 @@ a:hover {
 
 .contribute-footer {
   text-align: center;
-  direction: ltr; 
-  font-style:italic; 
+  direction: ltr;
+  font-style: italic;
   font-size: 11px;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .contribute-icon {
