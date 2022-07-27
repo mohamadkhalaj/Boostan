@@ -66,7 +66,7 @@ $ python manage.py loaddefaults
 $ python manage.py runserver
 ```
 
-### Setting Up Your Users
+### Setting Up Super User
 
 -   To create a **superuser account**, use this command:
 
