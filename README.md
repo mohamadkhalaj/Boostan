@@ -29,9 +29,9 @@ We used several frameworks and services for doing our job perfect:
 - [Django]() - We used Django for our backend
 - [Redis]() - Database memory caching
 - [PostgreSql]() - SQL based database
-- [Telegram web-app-bot]() - Better user experient
-- [JavaScript]() - Our frontEnd made with pure js
-- [jQuery]() - FrontEnd
+- [Telegram web-app-bot]() - Better user experience
+- [JavaScript]() - Dynamic UI
+- [jQuery]() - Easy to use
 - [Twitter Bootstrap]() - Great UI boilerplate for modern and responsive web apps
 - [Heroku]() - Deployment
 - [Sentry]() - Error tracking for both Django/JS
