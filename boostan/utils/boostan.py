@@ -76,9 +76,7 @@ class Boostan:
             "Cookie": f"ASP.NET_SessionId={self.cookie}",
         }
 
-        response = requests.get(
-            Boostan.main_food_url, cookies=self.session_cookie, headers=headers
-        )
+        response = requests.get(Boostan.main_food_url, cookies=self.session_cookie, headers=headers)
         name, credit = self.extract_user_name_credit(response)
         self.name = name
         self.credit = credit
@@ -147,9 +145,7 @@ class Boostan:
             "Cookie": f"ASP.NET_SessionId={self.cookie}",
         }
 
-        response = requests.get(
-            Boostan.food_list_url, cookies=self.session_cookie, headers=headers
-        )
+        response = requests.get(Boostan.food_list_url, cookies=self.session_cookie, headers=headers)
         if (
             "زمان انتخاب برنامه غذایی به پایان رسیده است ." in response.text
             or "زمان انتخاب برنامه غذایی نرسیده است ." in response.text
@@ -202,9 +198,7 @@ class Boostan:
         option = 0
         while True:
             try:
-                meal_food = soup.find_all(
-                    "input", attrs={"id": f"ctl00_main_rb{meal}{index+1}_{option}"}
-                )[0]
+                meal_food = soup.find_all("input", attrs={"id": f"ctl00_main_rb{meal}{index+1}_{option}"})[0]
             except IndexError:
                 break
             option += 1
@@ -221,11 +215,7 @@ class Boostan:
             temp["value"] = value
             temp["selected"] = False
             for item in reserved_list:
-                if (
-                    item["day_id"] == index + 1
-                    and item["meal_id"] == meal
-                    and item["food_id"] == value
-                ):
+                if item["day_id"] == index + 1 and item["meal_id"] == meal and item["food_id"] == value:
                     temp["selected"] = True
                     break
             ar.append(temp)
@@ -241,11 +231,7 @@ class Boostan:
             temp["value"] = self_["value"]
             temp["selected"] = False
             for item in reserved_list:
-                if (
-                    item["day_id"] == index + 1
-                    and item["meal_id"] == meal
-                    and item["self_id"] == self_["value"]
-                ):
+                if item["day_id"] == index + 1 and item["meal_id"] == meal and item["self_id"] == self_["value"]:
                     temp["selected"] = True
                     break
             ar.append(temp)
@@ -258,12 +244,7 @@ class Boostan:
         ignore_list = ["-1", "ثبت تغییرات", "ثبت"]
         saved_name = []
         saved_name_value = []
-        form = (
-            self.url_encoder("ctl00$Scm")
-            + "="
-            + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$rblu3$0")
-            + "&"
-        )
+        form = self.url_encoder("ctl00$Scm") + "=" + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$rblu3$0") + "&"
 
         for inp in inputs:
             if not inp["value"].strip() in ignore_list:
@@ -310,9 +291,7 @@ class Boostan:
             "Connection": "close",
             "Cookie": f"ASP.NET_SessionId={self.cookie}",
         }
-        response = requests.get(
-            Boostan.forget_code_url, cookies=self.session_cookie, headers=headers
-        )
+        response = requests.get(Boostan.forget_code_url, cookies=self.session_cookie, headers=headers)
         message = 2
         soup = BeautifulSoup(response.text, "html.parser")
         alert_div = soup.find("div", attrs={"id": "ctl00_main_tberror", "class": "bg-danger"})
@@ -398,10 +377,7 @@ class Boostan:
         response = requests.post(
             Boostan.food_reserve_url, cookies=self.session_cookie, headers=headers, data=data.encode("utf-8")
         )
-        if (
-            "1|#||4|50|pageRedirect||%2ferror.aspx%3faspxerrorpath%3d%2ffoodrezerv.aspx|"
-            in response.text
-        ):
+        if "1|#||4|50|pageRedirect||%2ferror.aspx%3faspxerrorpath%3d%2ffoodrezerv.aspx|" in response.text:
             return 0
         elif "میزان غذای انتخابی شما از میزان اعتبار شما بیشتر است" in response.text:
             return 2
@@ -438,19 +414,9 @@ class Boostan:
         return form
 
     def create_temp_reserve_form(self, reserve_list, submit=False):
-        form = (
-            self.url_encoder("ctl00$Scm")
-            + "="
-            + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$rblu3$0")
-            + "&"
-        )
+        form = self.url_encoder("ctl00$Scm") + "=" + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$rblu3$0") + "&"
         if submit:
-            form = (
-                self.url_encoder("ctl00$Scm")
-                + "="
-                + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$Btsend")
-                + "&"
-            )
+            form = self.url_encoder("ctl00$Scm") + "=" + self.url_encoder("ctl00$UpdatePanel1|ctl00$main$Btsend") + "&"
 
         for item in self.saved_name_value:
             form += item

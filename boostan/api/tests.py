@@ -62,9 +62,7 @@ class BaseTest(TestCase):
                 count_of_used=0,
                 credit=0,
             )
-            self.real_session = Session.objects.create(
-                student=self.real_student, session="real_session"
-            )
+            self.real_session = Session.objects.create(student=self.real_student, session="real_session")
 
 
 class TestDecorators(BaseTest):
@@ -178,9 +176,7 @@ class TestDecorators(BaseTest):
     def test_login_decorator(self):
         @login_decorator
         def typical_view(request, student, boostan):
-            return JsonResponse(
-                data={"student": student.stu_number, "boostan": boostan.username}, status=200
-            )
+            return JsonResponse(data={"student": student.stu_number, "boostan": boostan.username}, status=200)
 
         if self.boostan_username and self.boostan_password:
             # Successfull login
@@ -238,6 +234,7 @@ class TestDecorators(BaseTest):
             self.real_student.save()
         else:
             print("Please set boostan_username and boostan_password in environment variables")
+
 
 class TestApi(BaseTest):
     def test_get_request(self):
@@ -462,9 +459,7 @@ class TestApi(BaseTest):
             login_request_data = login(login_request)
             self.assertEqual(login_request_data.status_code, 200)
             self.assertIsInstance(login_request_data, JsonResponse)
-            self.assertEqual(
-                json.loads(login_request_data.content)["message"], get_succeess_login_message()
-            )
+            self.assertEqual(json.loads(login_request_data.content)["message"], get_succeess_login_message())
             self.assertNotEqual(json.loads(login_request_data.content)["session"], "")
         else:
             print("Please set boostan_username and boostan_password in environment variables")
@@ -479,9 +474,7 @@ class TestApi(BaseTest):
             login_request_data = login(login_request)
             self.assertEqual(login_request_data.status_code, 401)
             self.assertIsInstance(login_request_data, JsonResponse)
-            self.assertEqual(
-                json.loads(login_request_data.content)["error"], get_invalid_credential_message()
-            )
+            self.assertEqual(json.loads(login_request_data.content)["error"], get_invalid_credential_message())
             self.assertEqual(json.loads(login_request_data.content).get("session", None), None)
         else:
             print("Please set boostan_username and boostan_password in environment variables")

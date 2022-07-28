@@ -3,14 +3,16 @@ from django.core.management.base import BaseCommand
 
 from api.models import Message, Setting, TemplateTags
 
-'''
+"""
     Loads default settings, templates 
     and messages into the database 
     if not exists.
 
     Usage:
         python manage.py loaddefaults
-'''
+"""
+
+
 class Command(BaseCommand):
     help = "Load fixtures to db"
 
@@ -29,7 +31,7 @@ class Command(BaseCommand):
             call_command("loaddata", fixtures_path + "messages.json")
         else:
             self.stdout.write("Skip loading data for message model.")
-        
+
         template_tags_count = TemplateTags.objects.all().count()
         if not template_tags_count:
             self.stdout.write("Load template tags model data...")

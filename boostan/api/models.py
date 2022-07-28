@@ -1,15 +1,11 @@
-from django.contrib.auth import get_user_model
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
-from django.db.models import Max
-from django.db.models import Min
-from django.db.models import Sum
+from django.db.models import Max, Min, Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from utils.general_model import GeneralModel
 
-
-'''
+"""
     Student Model with following fields:
         stu_number: Student number
         name: Student name
@@ -25,14 +21,17 @@ from utils.general_model import GeneralModel
         first_used: First used
     
     This model stores user data
-'''
+"""
+
+
 class Student(GeneralModel):
-    '''
-        Student status:
-            0: Active
-            1: Banned
-            2: White listed
-    '''
+    """
+    Student status:
+        0: Active
+        1: Banned
+        2: White listed
+    """
+
     STATUSES = (
         (0, _("Normal")),
         (1, _("Blocked user")),
@@ -64,12 +63,10 @@ class Student(GeneralModel):
         default=0.0,
     )
 
-    status = models.IntegerField(
-        choices=STATUSES, default=STATUSES[0][0], verbose_name=_("Status")
-    )
-    total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0) # Total recieved list
-    total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0) # Total reserved food
-    total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0) # Total forget code
+    status = models.IntegerField(choices=STATUSES, default=STATUSES[0][0], verbose_name=_("Status"))
+    total_recieved_list = models.IntegerField(verbose_name=_("Tota received list"), default=0)  # Total recieved list
+    total_reserved_food = models.IntegerField(verbose_name=_("Total reserved food"), default=0)  # Total reserved food
+    total_forget_code = models.IntegerField(verbose_name=_("Total forget code"), default=0)  # Total forget code
 
     def __str__(self):
         return f"{self.full_name} {self.stu_number}"
@@ -93,7 +90,8 @@ class Student(GeneralModel):
 
     sessions_count.short_description = _("Sessions count")
 
-'''
+
+"""
     Session Model with following fields:
         student: Student (ForeignKey)
         session: Session
@@ -108,12 +106,15 @@ class Student(GeneralModel):
     each user could have several sessions and
     each session is permanent until user 
     logged out manually
-'''
+"""
+
+
 class Session(GeneralModel):
-    '''
-        Each session has a student
-        and each student could have many sessions
-    '''
+    """
+    Each session has a student
+    and each student could have many sessions
+    """
+
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
@@ -132,12 +133,8 @@ class Session(GeneralModel):
         null=True,
     )
 
-    telegram_id = models.CharField(
-        max_length=64, blank=True, null=True, verbose_name=_("Telegram ID")
-    )
-    telegram_username = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name=_("Telegram Username")
-    )
+    telegram_id = models.CharField(max_length=64, blank=True, null=True, verbose_name=_("Telegram ID"))
+    telegram_username = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Telegram Username"))
 
     user_agent = models.CharField(verbose_name=_("User agent"), max_length=256, null=True)
 
@@ -158,7 +155,8 @@ class Session(GeneralModel):
         verbose_name = _("Session")
         verbose_name_plural = _("Sessions")
 
-'''
+
+"""
     Visitor Model with following fields:
         ip_address: IP address
         user_agent: User agent
@@ -170,7 +168,9 @@ class Session(GeneralModel):
     
     This model logs any requests 
     if logging is enabled in settings
-'''
+"""
+
+
 class Visitor(GeneralModel):
     ip_address = models.GenericIPAddressField(
         verbose_name=_("IP address"),
@@ -193,7 +193,8 @@ class Visitor(GeneralModel):
     def __str__(self):
         return f"{self.ip_address}, {self.user_agent}"
 
-'''
+
+"""
     Setting Model with following fields:
         name: Setting name
         value: Setting value
@@ -209,7 +210,9 @@ class Visitor(GeneralModel):
         visitor model toggle
         set site operating mode
         ...
-'''
+"""
+
+
 class Setting(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -221,14 +224,17 @@ class Setting(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-'''
+
+"""
     Message Model with following fields:
         name: Message name
         value: Message value
     
     This model stores any BackEnd alerts and errors
     and can be eddited easily via admin panel
-'''
+"""
+
+
 class Message(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -240,14 +246,17 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-'''
+
+"""
     TemplateTags Model with following fields:
         name: TemplateTags name
         value: TemplateTags value
 
     This model stores any FrontEnd user prompts and alerts
     and can be eddited easily via admin panel
-'''
+"""
+
+
 class TemplateTags(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.TextField(verbose_name=_("Value"))
@@ -259,14 +268,17 @@ class TemplateTags(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-'''
+
+"""
     Statistics Model with following fields:
         name: Statistics name
         value: Statistics value
 
     This model can save any user defined statistics 
     and show them in readonly fields via admin panel
-'''
+"""
+
+
 class Statistics(models.Model):
     name = models.CharField(verbose_name=_("Name"), max_length=256)
     value = models.BigIntegerField(verbose_name=_("Value"), default=0)
@@ -278,10 +290,13 @@ class Statistics(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-'''
+
+"""
     All api app queries starts from 
     here to end of this file
-'''
+"""
+
+
 def get_telegram_api():
     try:
         return Setting.objects.get(name="telegram_api").value
@@ -550,9 +565,7 @@ def statistics_total_forget_code():
 
 
 def statistics_first_user_used():
-    first_time = int(
-        Student.objects.aggregate(Min("first_used"))["first_used__min"].strftime("%Y%m%d%H%M%S")
-    )
+    first_time = int(Student.objects.aggregate(Min("first_used"))["first_used__min"].strftime("%Y%m%d%H%M%S"))
     try:
         statistics = Statistics.objects.get(name="first_user_used")
         statistics.value = first_time
@@ -562,9 +575,7 @@ def statistics_first_user_used():
 
 
 def statistics_last_user_used():
-    last_time = int(
-        Student.objects.aggregate(Max("last_used"))["last_used__max"].strftime("%Y%m%d%H%M%S")
-    )
+    last_time = int(Student.objects.aggregate(Max("last_used"))["last_used__max"].strftime("%Y%m%d%H%M%S"))
     try:
         statistics = Statistics.objects.get(name="last_user_used")
         statistics.value = last_time
@@ -688,11 +699,13 @@ def get_403_message():
     except:
         return ""
 
+
 def get_csrf_failure_message():
     try:
         return Message.objects.filter(name="csrf_failure_message").first().value
     except:
         return ""
+
 
 def get_site_description_meta_tag():
     try:
@@ -700,11 +713,13 @@ def get_site_description_meta_tag():
     except:
         return ""
 
+
 def get_site_title():
     try:
         return TemplateTags.objects.filter(name="site_title").first().value
     except:
         return ""
+
 
 def get_login_page_title():
     try:
@@ -712,11 +727,13 @@ def get_login_page_title():
     except:
         return ""
 
+
 def get_login_username_text():
     try:
         return TemplateTags.objects.filter(name="login_username_text").first().value
     except:
         return ""
+
 
 def get_login_password_text():
     try:
@@ -724,11 +741,13 @@ def get_login_password_text():
     except:
         return ""
 
+
 def get_login_submit_text():
     try:
         return TemplateTags.objects.filter(name="login_submit_text").first().value
     except:
         return ""
+
 
 def get_order_button_text():
     try:
@@ -736,11 +755,13 @@ def get_order_button_text():
     except:
         return ""
 
+
 def get_menu_sessions_text():
     try:
         return TemplateTags.objects.filter(name="menu_sessions_text").first().value
     except:
         return ""
+
 
 def get_menu_forget_code_text():
     try:
@@ -748,11 +769,13 @@ def get_menu_forget_code_text():
     except:
         return ""
 
+
 def get_sessions_current_device_text():
     try:
         return TemplateTags.objects.filter(name="sessions_current_device_text").first().value
     except:
         return ""
+
 
 def get_sessions_device_text():
     try:
@@ -760,11 +783,13 @@ def get_sessions_device_text():
     except:
         return ""
 
+
 def get_sessions_last_used_text():
     try:
         return TemplateTags.objects.filter(name="sessions_last_used_text").first().value
     except:
         return ""
+
 
 def get_sessions_browser_text():
     try:
@@ -772,11 +797,13 @@ def get_sessions_browser_text():
     except:
         return ""
 
+
 def get_sessions_os_text():
     try:
         return TemplateTags.objects.filter(name="sessions_os_text").first().value
     except:
         return ""
+
 
 def get_sessions_ip_text():
     try:
@@ -784,11 +811,13 @@ def get_sessions_ip_text():
     except:
         return ""
 
+
 def get_forget_code_text_message():
     try:
         return TemplateTags.objects.filter(name="forget_code_text_message").first().value
     except:
         return ""
+
 
 def get_success_food_list_text_message():
     try:
@@ -796,11 +825,13 @@ def get_success_food_list_text_message():
     except:
         return ""
 
+
 def get_food_list_text_message():
     try:
         return TemplateTags.objects.filter(name="food_list_text_message").first().value
     except:
         return ""
+
 
 def get_reserve_food_text_message():
     try:
@@ -808,11 +839,13 @@ def get_reserve_food_text_message():
     except:
         return ""
 
+
 def get_login_text_message():
     try:
         return TemplateTags.objects.filter(name="login_text_message").first().value
     except:
         return ""
+
 
 def get_dinner_text():
     try:
@@ -820,11 +853,13 @@ def get_dinner_text():
     except:
         return ""
 
+
 def get_lunch_text():
     try:
         return TemplateTags.objects.filter(name="lunch_text").first().value
     except:
         return ""
+
 
 def get_breakfast_text():
     try:
@@ -832,11 +867,13 @@ def get_breakfast_text():
     except:
         return ""
 
+
 def get_meal_submit_text():
     try:
         return TemplateTags.objects.filter(name="meal_submit_text").first().value
     except:
         return ""
+
 
 def get_insufficient_balance_text():
     try:
@@ -844,11 +881,13 @@ def get_insufficient_balance_text():
     except:
         return ""
 
+
 def get_logout_text():
     try:
         return TemplateTags.objects.filter(name="logout_text").first().value
     except:
         return ""
+
 
 def get_not_reserved_text():
     try:
@@ -856,11 +895,13 @@ def get_not_reserved_text():
     except:
         return ""
 
+
 def get_already_reserved_text():
     try:
         return TemplateTags.objects.filter(name="already_reserved_text").first().value
     except:
         return ""
+
 
 def get_reserve_text():
     try:
@@ -868,11 +909,13 @@ def get_reserve_text():
     except:
         return ""
 
+
 def get_cancel_text():
     try:
         return TemplateTags.objects.filter(name="cancel_text").first().value
     except:
         return ""
+
 
 def get_menu_contribute_text():
     try:
@@ -880,11 +923,13 @@ def get_menu_contribute_text():
     except:
         return ""
 
+
 def get_google_analysis_code():
     try:
         return TemplateTags.objects.filter(name="google_analysis_code").first().value
     except:
         return ""
+
 
 def get_google_tag_manager_code():
     try:
@@ -892,11 +937,13 @@ def get_google_tag_manager_code():
     except:
         return ""
 
+
 def get_sentry_code():
     try:
         return TemplateTags.objects.filter(name="sentry_code").first().value
     except:
         return ""
+
 
 def get_contribute_text():
     try:
@@ -904,17 +951,20 @@ def get_contribute_text():
     except:
         return ""
 
+
 def get_telegram_main_btn_order_text():
     try:
         return TemplateTags.objects.filter(name="telegram_main_btn_order_text").first().value
     except:
         return ""
 
+
 def get_telegram_main_btn_sending_data_loading_text():
     try:
         return TemplateTags.objects.filter(name="telegram_main_btn_sending_data_loading_text").first().value
     except:
         return ""
+
 
 def get_sending_data_loading_text():
     try:

@@ -1,10 +1,18 @@
-from attr import fields
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Message, Session, Setting, Statistics, Student, Visitor, TemplateTags
+from .models import (
+    Message,
+    Session,
+    Setting,
+    Statistics,
+    Student,
+    TemplateTags,
+    Visitor,
+)
 
 admin.site.site_header = _("Boostan API management system")
+
 
 def custom_titled_filter(title):
     class Wrapper(admin.FieldListFilter):
@@ -12,6 +20,7 @@ def custom_titled_filter(title):
             instance = admin.FieldListFilter.create(*args, **kwargs)
             instance.title = title
             return instance
+
     return Wrapper
 
 
@@ -30,12 +39,14 @@ class messageAdmin(admin.ModelAdmin):
 
 admin.site.register(Message, messageAdmin)
 
+
 class templateTagAdmin(admin.ModelAdmin):
     list_display = ("name", "value")
     search_fields = ("name", "value")
 
 
 admin.site.register(TemplateTags, templateTagAdmin)
+
 
 class statisticsAdmin(admin.ModelAdmin):
     readonly_fields = ("name", "value")
@@ -93,23 +104,30 @@ class studentAdmin(admin.ModelAdmin):
         "sessions_count",
     )
     list_filter = (
-        "status", 
-        "first_used", 
+        "status",
+        "first_used",
         "last_used",
-        ("sessions__first_used", custom_titled_filter('Session first used'),),
-        ("sessions__last_used", custom_titled_filter('Session last used'),),
+        (
+            "sessions__first_used",
+            custom_titled_filter("Session first used"),
+        ),
+        (
+            "sessions__last_used",
+            custom_titled_filter("Session last used"),
+        ),
     )
     search_fields = (
-        "full_name", 
+        "full_name",
         "stu_number",
-        'sessions__session',
-        'sessions__ip_address',
-        'sessions__user_agent',
-        'sessions__telegram_id',
-        'sessions__telegram_username',
+        "sessions__session",
+        "sessions__ip_address",
+        "sessions__user_agent",
+        "sessions__telegram_id",
+        "sessions__telegram_username",
     )
     ordering = ("-last_used", "status")
     inlines = [sessionAdmin]
+
 
 admin.site.register(Student, studentAdmin)
 
