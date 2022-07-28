@@ -49,6 +49,10 @@ class sessionAdmin(admin.StackedInline):
     model = Session
     extra = 0
 
+    # This will help you to disbale add functionality
+    def has_add_permission(self, request, obj=None):
+        return False
+
     readonly_fields = (
         "session",
         "ip_address",
