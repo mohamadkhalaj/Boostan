@@ -26,3 +26,5 @@ bs4==0.0.1
 user-agents===2.2.0
 # Rate limit
 django-ratelimit==3.0.1
+# Fake Django admin login screen
+django-admin-honeypot-updated-2021==1.2.0
