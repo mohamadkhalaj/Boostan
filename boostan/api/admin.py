@@ -1,9 +1,18 @@
+from attr import fields
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
 from .models import Message, Session, Setting, Statistics, Student, Visitor, TemplateTags
 
 admin.site.site_header = _("Boostan API management system")
+
+def custom_titled_filter(title):
+    class Wrapper(admin.FieldListFilter):
+        def __new__(cls, *args, **kwargs):
+            instance = admin.FieldListFilter.create(*args, **kwargs)
+            instance.title = title
+            return instance
+    return Wrapper
 
 
 class settingAdmin(admin.ModelAdmin):
@@ -36,7 +45,10 @@ class statisticsAdmin(admin.ModelAdmin):
 admin.site.register(Statistics, statisticsAdmin)
 
 
-class sessionAdmin(admin.ModelAdmin):
+class sessionAdmin(admin.StackedInline):
+    model = Session
+    extra = 0
+
     readonly_fields = (
         "session",
         "ip_address",
@@ -47,29 +59,7 @@ class sessionAdmin(admin.ModelAdmin):
         "telegram_id",
         "telegram_username",
     )
-    list_display = (
-        "student",
-        "ip_address",
-        "session",
-        "first_used_time",
-        "last_used_time",
-        "user_agent",
-        "telegram_id",
-        "telegram_username",
-    )
     ordering = ("-last_used",)
-    list_filter = ("first_used", "last_used")
-    search_fields = (
-        "student__full_name",
-        "student__stu_number",
-        "session",
-        "user_agent",
-        "telegram_id",
-        "telegram_username",
-    )
-
-
-admin.site.register(Session, sessionAdmin)
 
 
 class studentAdmin(admin.ModelAdmin):
@@ -85,6 +75,7 @@ class studentAdmin(admin.ModelAdmin):
         "total_recieved_list",
         "total_reserved_food",
         "total_forget_code",
+        "sessions_count",
     ]
     list_display = (
         "full_name",
@@ -95,11 +86,26 @@ class studentAdmin(admin.ModelAdmin):
         "total_recieved_list",
         "total_reserved_food",
         "total_forget_code",
+        "sessions_count",
     )
-    list_filter = ("status", "first_used", "last_used")
-    search_fields = ("full_name", "stu_number")
+    list_filter = (
+        "status", 
+        "first_used", 
+        "last_used",
+        ("sessions__first_used", custom_titled_filter('Session first used'),),
+        ("sessions__last_used", custom_titled_filter('Session last used'),),
+    )
+    search_fields = (
+        "full_name", 
+        "stu_number",
+        'sessions__session',
+        'sessions__ip_address',
+        'sessions__user_agent',
+        'sessions__telegram_id',
+        'sessions__telegram_username',
+    )
     ordering = ("-last_used", "status")
-
+    inlines = [sessionAdmin]
 
 admin.site.register(Student, studentAdmin)
 

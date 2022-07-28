@@ -88,6 +88,11 @@ class Student(GeneralModel):
 
     last_used_time.short_description = _("Last used time")
 
+    def sessions_count(self):
+        return self.sessions.count()
+
+    sessions_count.short_description = _("Sessions count")
+
 '''
     Session Model with following fields:
         student: Student (ForeignKey)
@@ -147,7 +152,7 @@ class Session(GeneralModel):
     last_used_time.short_description = _("Last used time")
 
     def __str__(self):
-        return f"{self.student.full_name} {self.session}"
+        return f"{self.pk} {self.session}"
 
     class Meta:
         verbose_name = _("Session")
