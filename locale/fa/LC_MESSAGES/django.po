@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 15:49+0430\n"
+"POT-Creation-Date: 2022-07-28 12:43+0430\n"
 "PO-Revision-Date: 2022-07-14 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,157 +18,161 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: boostan/api/admin.py:6
+#: boostan/api/admin.py:7
 msgid "Boostan API management system"
 msgstr "پنل ادمین بوستان"
 
-#: boostan/api/models.py:16
+#: boostan/api/models.py:37
 msgid "Normal"
 msgstr "عادی"
 
-#: boostan/api/models.py:17
+#: boostan/api/models.py:38
 msgid "Blocked user"
 msgstr "کاربر مسدود شده"
 
-#: boostan/api/models.py:18
+#: boostan/api/models.py:39
 msgid "Whitelist user"
 msgstr "کاربر لیست سفید"
 
-#: boostan/api/models.py:22
+#: boostan/api/models.py:43
 msgid "Full name"
 msgstr "نام و نام خانوادگی"
 
-#: boostan/api/models.py:26
+#: boostan/api/models.py:47
 msgid "Student number"
 msgstr "شماره دانشجویی"
 
-#: boostan/api/models.py:30
+#: boostan/api/models.py:51
 msgid "Password"
 msgstr "رمز عبور"
 
-#: boostan/api/models.py:34
+#: boostan/api/models.py:55
 msgid "count of used"
 msgstr "تعداد استفاده شده"
 
-#: boostan/api/models.py:38
+#: boostan/api/models.py:59
 msgid "Credit"
 msgstr "موجودی"
 
-#: boostan/api/models.py:42
+#: boostan/api/models.py:63
 msgid "Top credit"
 msgstr "بیشترین موجودی"
 
-#: boostan/api/models.py:47
+#: boostan/api/models.py:68
 msgid "Status"
 msgstr "وضعیت"
 
-#: boostan/api/models.py:49
+#: boostan/api/models.py:70
 msgid "Tota received list"
 msgstr "مجموع لیست های گرفته شده"
 
-#: boostan/api/models.py:50
+#: boostan/api/models.py:71
 msgid "Total reserved food"
 msgstr "مجموع رزرو ها"
 
-#: boostan/api/models.py:51
+#: boostan/api/models.py:72
 msgid "Total forget code"
 msgstr "مجموع کد های فراموشی گرفته شده"
 
-#: boostan/api/models.py:57 boostan/api/models.py:76
+#: boostan/api/models.py:78 boostan/api/models.py:121
 msgid "Student"
 msgstr "دانشجو"
 
-#: boostan/api/models.py:58
+#: boostan/api/models.py:79
 msgid "Students"
 msgstr "دانشجو ها"
 
-#: boostan/api/models.py:63 boostan/api/models.py:101
+#: boostan/api/models.py:84 boostan/api/models.py:147
 msgid "First used time"
 msgstr "اولین استفاده"
 
-#: boostan/api/models.py:68 boostan/api/models.py:106 boostan/api/models.py:129
+#: boostan/api/models.py:89 boostan/api/models.py:152 boostan/api/models.py:187
 msgid "Last used time"
 msgstr "آخرین استفاده"
 
-#: boostan/api/models.py:80 boostan/api/models.py:112
+#: boostan/api/models.py:94
+msgid "Sessions count"
+msgstr "تعداد نشست ها"
+
+#: boostan/api/models.py:126 boostan/api/models.py:158
 msgid "Session"
 msgstr "نشست"
 
-#: boostan/api/models.py:84 boostan/api/models.py:118
+#: boostan/api/models.py:130 boostan/api/models.py:176
 msgid "IP address"
 msgstr "آدرس آی پی"
 
-#: boostan/api/models.py:90
+#: boostan/api/models.py:136
 msgid "Telegram ID"
 msgstr "آی دی تلگرام"
 
-#: boostan/api/models.py:93
+#: boostan/api/models.py:139
 msgid "Telegram Username"
 msgstr "نام کاربری تلگرام"
 
-#: boostan/api/models.py:96 boostan/api/models.py:121
+#: boostan/api/models.py:142 boostan/api/models.py:179
 msgid "User agent"
 msgstr "یوزر ایجنت"
 
-#: boostan/api/models.py:113
+#: boostan/api/models.py:159
 msgid "Sessions"
 msgstr "نشست ها"
 
-#: boostan/api/models.py:122
+#: boostan/api/models.py:180
 msgid "Url path"
 msgstr "مسیر"
 
-#: boostan/api/models.py:123
+#: boostan/api/models.py:181
 msgid "Is admin panel"
 msgstr "آیا پنل ادمین است؟"
 
-#: boostan/api/models.py:124
+#: boostan/api/models.py:182
 msgid "Data"
 msgstr "داده ها"
 
-#: boostan/api/models.py:132
+#: boostan/api/models.py:190
 msgid "visitor"
 msgstr "بازدیدکننده"
 
-#: boostan/api/models.py:133
+#: boostan/api/models.py:191
 msgid "visitors"
 msgstr "بازدید کنندگان"
 
-#: boostan/api/models.py:140 boostan/api/models.py:152
-#: boostan/api/models.py:163 boostan/api/models.py:174
+#: boostan/api/models.py:214 boostan/api/models.py:233
+#: boostan/api/models.py:252 boostan/api/models.py:271
 msgid "Name"
 msgstr "نام"
 
-#: boostan/api/models.py:141 boostan/api/models.py:153
-#: boostan/api/models.py:164 boostan/api/models.py:175
+#: boostan/api/models.py:215 boostan/api/models.py:234
+#: boostan/api/models.py:253 boostan/api/models.py:272
 msgid "Value"
 msgstr "مقدار"
 
-#: boostan/api/models.py:144
+#: boostan/api/models.py:218
 msgid "Setting"
 msgstr "تنظیمات"
 
-#: boostan/api/models.py:145
+#: boostan/api/models.py:219
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: boostan/api/models.py:156
+#: boostan/api/models.py:237
 msgid "Message"
 msgstr "پیام"
 
-#: boostan/api/models.py:157
+#: boostan/api/models.py:238
 msgid "Messages"
 msgstr "پیام ها"
 
-#: boostan/api/models.py:167
+#: boostan/api/models.py:256
 msgid "Tag"
 msgstr "تگ"
 
-#: boostan/api/models.py:168
+#: boostan/api/models.py:257
 msgid "Tags"
 msgstr "تگ ها"
 
-#: boostan/api/models.py:178 boostan/api/models.py:179
+#: boostan/api/models.py:275 boostan/api/models.py:276
 msgid "Statistics"
 msgstr "آمار ها"
 
