@@ -314,12 +314,13 @@ SPECTACULAR_SETTINGS = {
 CSP_DEFAULT_SRC = ["'none'"]
 CSP_SCRIPT_SRC = [
     "'self'",
-    "https://www.googletagmanager.com",
-    "https://telegram.org",
-    "https://browser.sentry-cdn.com",
+    "https://www.googletagmanager.com/gtag/js",
+    "https://telegram.org/js/telegram-web-app.js",
+    "https://browser.sentry-cdn.com/7.7.0/bundle.tracing.min.js",
 ]
 CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
 CSP_IMG_SRC = ["'self'", "data: image/svg+xml"]
-CSP_CONNECT_SRC = ["'self'", "https://*.google-analytics.com/", "https://*.ingest.sentry.io"]
+CSP_CONNECT_SRC = ["'self'", "https://*.google-analytics.com/g/collect", "https://*.ingest.sentry.io/api/"]
 CSP_FONT_SRC = ["'self'"]
+CSP_BASE_URI = ["'self'"]
 CSP_INCLUDE_NONCE_IN = ("script-src",)
