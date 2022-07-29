@@ -492,7 +492,7 @@ class TestApi(BaseTest):
                 errors = [get_deadline_message(), get_insufficient_balance_message()]
                 json_response_error = json_response["error"]
                 self.assertEqual((json_response_error in errors), True)
-                self.assertEqual(json_response["student"]["name"], self.real_student.full_name)
+                self.assertEqual(json_response["student"]["name"], True)
                 self.assertEqual(json_response["student"]["credit"], self.real_student.credit)
 
             elif food_list_request_data.status_code == 200:
