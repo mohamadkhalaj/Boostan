@@ -17,7 +17,7 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id={% google_analysis_code %}"></script>
   <script src="https://browser.sentry-cdn.com/7.7.0/bundle.tracing.min.js" integrity="sha384-lr/bDcE0vmUPBU6dhVBXfmhNYAEilrIepu1BRdVUJ8mZ0Hxhm17aIJ2bt4UfxC72" crossorigin="anonymous"></script>
-  <script>
+  <script nonce="{{ CSP_NONCE }}">
     function setThemeClass() {
       document.documentElement.className = Telegram.WebApp.colorScheme;
     }
@@ -112,7 +112,7 @@
 
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container navbar-container">
-      <div id="user-name" onclick="main_menu()" class="text-lg-right font-weight-bolder submit-btn navbar-user-data"></div>
+      <div id="user-name" class="text-lg-right font-weight-bolder submit-btn navbar-user-data"></div>
       <div id="user-credit" class="text-lg-left font-weight-bolder submit-btn navbar-user-data"></div>
     </div>
   </nav>
@@ -134,7 +134,7 @@
 
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script>
+  <script nonce="{{ CSP_NONCE }}">
     var tags={{ tags | safe }};
   </script>
   <script src="{% static 'js/script.js' %}"></script>

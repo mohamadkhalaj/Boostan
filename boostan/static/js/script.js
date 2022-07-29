@@ -8,15 +8,20 @@ if (!Telegram.WebApp.isExpanded) {
   Telegram.WebApp.expand();
 }
 
-document.getElementById('login_btn').addEventListener('click', login_button_clicked);
-document.getElementById('submit-btn-web').addEventListener('click', submit);
-document.getElementById('main-menu-close').addEventListener('click', close_main_menu);
-document.getElementById('session-menu-close').addEventListener('click', close_session_menu);
-document.getElementById('forgot-code').addEventListener('click', get_forget_code);
-document.getElementById('sessions').addEventListener('click', open_session_menu);
-document.getElementById('contribute').addEventListener('click', open_contribute_menu);
-document.getElementById('contribute-menu-close').addEventListener('click', close_contribute_menu);
-document.getElementById('close-alert').addEventListener('click', close_alert);
+function getElement(id) {
+	return document.getElementById(id);
+}
+
+getElement('login_btn').addEventListener('click', login_button_clicked);
+getElement('submit-btn-web').addEventListener('click', submit);
+getElement('main-menu-close').addEventListener('click', close_main_menu);
+getElement('session-menu-close').addEventListener('click', close_session_menu);
+getElement('forgot-code').addEventListener('click', get_forget_code);
+getElement('sessions').addEventListener('click', open_session_menu);
+getElement('contribute').addEventListener('click', open_contribute_menu);
+getElement('user-name').addEventListener('click', main_menu);
+getElement('contribute-menu-close').addEventListener('click', close_contribute_menu);
+getElement('close-alert').addEventListener('click', close_alert);
 
 var indexes = [];
 var session_lists = [];
@@ -53,7 +58,7 @@ const sessions_device_text = tags['sessions_device'];
 const sessions_current_device_text = tags['sessions_current_device'];
 
 const passwordInput = document.querySelector("[type='password']");
-const togglePasswordButton = document.getElementById("toggle-password");
+const togglePasswordButton = getElement("toggle-password");
 togglePasswordButton.addEventListener("click", togglePassword);
 function togglePassword() {
 	if (passwordInput.type === "password") {
@@ -67,12 +72,12 @@ Telegram.WebApp.MainButton.hideProgress();
 Telegram.WebApp.MainButton.setText(telegram_main_btn_order_text).onClick(submit);
 Telegram.WebApp.BackButton.show().onClick(Telegram.WebApp.close);
 
-const login_form = document.getElementById('login-form');
-const student_password = document.getElementById('student_password');
-const student_number = document.getElementById('student_number');
-const login_btn = document.getElementById("login_btn");
-const forgotten_code_btn = document.getElementById('forgot-code-btn');
-const submit_btn = document.getElementById('submit-btn-web-text');
+const login_form = getElement('login-form');
+const student_password = getElement('student_password');
+const student_number = getElement('student_number');
+const login_btn = getElement("login_btn");
+const forgotten_code_btn = getElement('forgot-code-btn');
+const submit_btn = getElement('submit-btn-web-text');
 
 student_number.addEventListener("keypress", function(event) {
 	if (event.key === "Enter" && login_form.style.display === "block") {
@@ -90,7 +95,7 @@ student_password.addEventListener("keypress", function(event) {
   });
 
 function create_days(){
-	let parent_day_cards = document.getElementById('day-cards');
+	let parent_day_cards = getElement('day-cards');
 	food_list['days'].forEach(function(item, index) {
 
 		// create elements
@@ -583,7 +588,7 @@ function clean_self_name(self) {
 
 function submit_meal_menu() {
 	if (parseFloat($('#user-credit').attr('value')) >= 0) {
-		let parent = document.getElementById(this.parentElement.parentElement.id.replace('meal_menu_', ''))
+		let parent = getElement(this.parentElement.parentElement.id.replace('meal_menu_', ''))
 		let self;
 		this.parentElement.childNodes[1].childNodes[0].childNodes.forEach(function(item, index){
 			if (item.hasAttribute('selected')){
@@ -614,7 +619,7 @@ function submit_meal_menu() {
 function meal_clicked() {
 	$(".alert-balance").hide();
 	let menu_id = "meal_menu_" + this.id;
-	document.getElementById(menu_id).classList.add('meal-menu-visible');
+	getElement(menu_id).classList.add('meal-menu-visible');
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show');
 	if (check_user_supports_haptic_or_no()) {
 		Telegram.WebApp.HapticFeedback.selectionChanged();
@@ -686,7 +691,7 @@ function submit() {
 	indexes.forEach(function(item, index){
 		meals.forEach(function(meal, index){
 			let id = `meal_menu_day_${meal}_${item}`
-			let menu = document.getElementById(id);
+			let menu = getElement(id);
 			if (menu != null) {
 				menu.childNodes[1].childNodes[0].childNodes.forEach(function(food_item, index) {
 					if (food_item.className != 'col-2' && food_item.childNodes[0].innerHTML.includes(cancel_text)){
@@ -747,8 +752,8 @@ function submit() {
 }
 
 function create_alert_notification(message, type) {
-	document.getElementById('alert-container').style.visibility = 'visible';
-	let alert_obj = document.getElementById('success-alert');
+	getElement('alert-container').style.visibility = 'visible';
+	let alert_obj = getElement('success-alert');
 	let tel_type = type == 'danger' ? 'error' : type;
 	if (check_user_supports_haptic_or_no()){
 		Telegram.WebApp.HapticFeedback.notificationOccurred(tel_type);
@@ -837,7 +842,7 @@ function login_and_place_list(){
 				Telegram.WebApp.MainButton.enable();
 				create_days()
 				if (!Object.keys(initDataUnsafe).length) {
-					document.getElementById('submit-btn-web').style.display = 'block';
+					getElement('submit-btn-web').style.display = 'block';
 				}
 			}
 			else {
@@ -911,8 +916,8 @@ function get_session_from_api(username, password) {
 				let session = response['session']
 				localStorage.setItem('session', session)
 				let message = response['message']
-				document.getElementById('login-form').style.visibility='hidden'
-				document.getElementById('login-form').style.display='none'
+				getElement('login-form').style.visibility='hidden'
+				getElement('login-form').style.display='none'
 				create_alert_notification(message, 'success')
 				login_and_place_list()
 			}
@@ -936,18 +941,18 @@ function main_menu() {
 		Telegram.WebApp.HapticFeedback.selectionChanged();
 	}
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
-	document.getElementById('main-menu').style.visibility = "visible";
+	getElement('main-menu').style.visibility = "visible";
 }
 
 function close_main_menu(){
-	document.getElementById('main-menu').style.visibility = "hidden";
+	getElement('main-menu').style.visibility = "hidden";
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.remove('meal-menu-wrapper-show')
 	show_order_btn();
 }
 
 function close_session_menu(){
-	document.getElementById('session-menu').style.visibility = "hidden";
-	document.getElementById('main-menu').style.visibility = "visible";
+	getElement('session-menu').style.visibility = "hidden";
+	getElement('main-menu').style.visibility = "visible";
 }
 
 function get_forget_code() {
@@ -980,7 +985,7 @@ function get_forget_code() {
 
 function create_sessions(sessions) {
 	let session = localStorage.getItem('session');
-	let parent = document.getElementById('session-menu-parent');
+	let parent = getElement('session-menu-parent');
 	sessions.forEach(function (item, index) {
 		let useragent = item['user_agent'];
 
@@ -1100,32 +1105,32 @@ function show_login_page(){
 	forgotten_code_btn.disabled = false;
 	login_btn.disabled = false;
 	submit_btn.disabled = false;
-	document.getElementById('login-form').style.visibility='visible'
-	document.getElementById('login-form').style.display='block'
+	getElement('login-form').style.visibility='visible'
+	getElement('login-form').style.display='block'
 	student_number.focus();
-	document.getElementById('submit-btn-web').style.display = 'none';
+	getElement('submit-btn-web').style.display = 'none';
 	remove_objects()
 	localStorage.removeItem('session');
 }
 
 function open_session_menu() {
-	document.getElementById('main-menu').style.visibility = "hidden";
-	document.getElementById('session-menu').style.visibility = "visible";
+	getElement('main-menu').style.visibility = "hidden";
+	getElement('session-menu').style.visibility = "visible";
 	get_sessions()
 }
 
 function open_contribute_menu(){
-	document.getElementById('main-menu').style.visibility = "hidden";
-	document.getElementById('contribute-menu').style.visibility = "visible";
+	getElement('main-menu').style.visibility = "hidden";
+	getElement('contribute-menu').style.visibility = "visible";
 }
 
 function close_contribute_menu(){
-	document.getElementById('contribute-menu').style.visibility = "hidden";
-	document.getElementById('main-menu').style.visibility = "visible";
+	getElement('contribute-menu').style.visibility = "hidden";
+	getElement('main-menu').style.visibility = "visible";
 }
 
 function close_alert() {
-	document.getElementById('alert-container').style.visibility = 'hidden';
+	getElement('alert-container').style.visibility = 'hidden';
 }
 
 function sending_data_loading() {
@@ -1134,21 +1139,21 @@ function sending_data_loading() {
 	Telegram.WebApp.MainButton.disable();
 
 	if (!Object.keys(initDataUnsafe).length) {
-		document.getElementById('submit-btn-web-text').innerText = sending_data_loading_text;
+		getElement('submit-btn-web-text').innerText = sending_data_loading_text;
 	}
 }
 
 function reset_order_btn_text() {
 	Telegram.WebApp.MainButton.setText(telegram_main_btn_order_text);
 	if (!Object.keys(initDataUnsafe).length) {
-		document.getElementById('submit-btn-web-text').innerText = order_button_text;
+		getElement('submit-btn-web-text').innerText = order_button_text;
 	}
 	Telegram.WebApp.MainButton.hideProgress();
 }
 
 function hide_order_btn() {
 	if (!Object.keys(initDataUnsafe).length) {
-		document.getElementById('submit-btn-web').style.display = 'none';
+		getElement('submit-btn-web').style.display = 'none';
 	}
 	Telegram.WebApp.MainButton.hide();
 }
@@ -1156,7 +1161,7 @@ function hide_order_btn() {
 function show_order_btn() {
 	if (food_list_response_status == 200) {
 		if (!Object.keys(initDataUnsafe).length) {
-			document.getElementById('submit-btn-web').style.display = 'block';
+			getElement('submit-btn-web').style.display = 'block';
 		}
 		Telegram.WebApp.MainButton.show();
 	}

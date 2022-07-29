@@ -145,6 +145,7 @@ MIDDLEWARE = [
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "utils.middleware.vistorsMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 # STATIC
@@ -191,6 +192,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "boostan.users.context_processors.allauth_settings",
+                "csp.context_processors.nonce",
             ],
         },
     }
@@ -308,3 +310,16 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+# CSP Settings
+CSP_DEFAULT_SRC = ["'none'"]
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "https://www.googletagmanager.com",
+    "https://telegram.org",
+    "https://browser.sentry-cdn.com",
+]
+CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
+CSP_IMG_SRC = ["'self'", "data: image/svg+xml"]
+CSP_CONNECT_SRC = ["'self'", "https://*.google-analytics.com/", "https://*.ingest.sentry.io"]
+CSP_FONT_SRC = ["'self'"]
+CSP_INCLUDE_NONCE_IN = ("script-src",)

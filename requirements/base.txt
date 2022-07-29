@@ -28,3 +28,5 @@ user-agents===2.2.0
 django-ratelimit==3.0.1
 # Fake Django admin login screen
 django-admin-honeypot-updated-2021==1.2.0
+# Django CSP
+django-csp==3.7.0
