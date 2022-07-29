@@ -492,7 +492,7 @@ class TestApi(BaseTest):
                 errors = [get_deadline_message(), get_insufficient_balance_message()]
                 json_response_error = json_response["error"]
                 self.assertEqual((json_response_error in errors), True)
-                self.assertEqual(json_response["student"]["name"], True)
+                self.assertNotEqual(json_response["student"].get(["name", None]), None)
                 self.assertEqual(json_response["student"]["credit"], self.real_student.credit)
 
             elif food_list_request_data.status_code == 200:
@@ -527,24 +527,6 @@ class TestApi(BaseTest):
             elif food_list_request_data.status_code == 200:
                 self.assertEqual(json_response["message"], get_success_reserve_message())
             self.assertIsInstance(food_list_request_data, JsonResponse)
-
-            # Bad foodlist passed (buggy!)
-            # bad_list = {
-            #     "total": 0,
-            #     "days": [{"index": 0, "meals": [{"name": "br", "self": 23, "food": 1000}]}],
-            # }
-
-            # login_request = RequestFactory().post(
-            #     reverse("boostan_api:reserve-food"),
-            #     **self.headers,
-            #     data=f"session={self.real_session.session}&food-list={json.dumps(bad_list)}",
-            # )
-            # food_list_request_data = reserve_food(login_request)
-            # json_response = json.loads(food_list_request_data.content)
-            # print(json_response)
-            # self.assertEqual(food_list_request_data.status_code, 400)
-            # self.assertEqual(json_response["error"], get_food_reserve_unexpected_error_message())
-            # self.assertIsInstance(food_list_request_data, JsonResponse)
 
             # Foodlist not passed
             login_request = RequestFactory().post(
