@@ -495,7 +495,9 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
 			let form = document.createElement('form')
 			form.id = 'self-form'
 			let self_select = document.createElement('select');
-			self_select.setAttribute('onChange', 'change_self(this)')
+			self_select.addEventListener("change", function(){
+				change_self(this);
+			}, false);
 			self_select.className = 'custom-select mt-3 alert alert-danger self'
 			let has_selected = false;
 			let options_ar = []
@@ -655,7 +657,6 @@ function get_food_price(node) {
 
 function change_self(this_obj) {
 	var strUser = this_obj.options[this_obj.selectedIndex];
-	console.log(strUser);
 	this_obj.childNodes.forEach(function(item, index) {
 		item.removeAttribute('selected')
 	})
