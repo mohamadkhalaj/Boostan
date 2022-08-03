@@ -6,7 +6,7 @@ from django.urls import include, path
 from config.views import food, home
 
 urlpatterns = [
-    path("", home, name="home"),
+    path("", food, name="home"),
     path("food/", food, name="food"),
     path(settings.ADMIN_URL, admin.site.urls),
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
