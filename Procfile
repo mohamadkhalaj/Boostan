@@ -1,2 +1,2 @@
-release: python manage.py migrate && python3 manage.py loaddefaults 
+release: release: chmod u+x release.sh && ./release.sh
 web: gunicorn config.wsgi:application
