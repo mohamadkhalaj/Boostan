@@ -29,8 +29,8 @@ jobs:
           python-version: 3.8
       - name: Install requirements
         env:
-          DJANGO_DEBUG: false
-          DEBUG: false
+          DJANGO_DEBUG: "0"
+          DEBUG: "0"
           DJANGO_SECRET_KEY: "secretsecretsecretsecret123456"
           DJANGO_SETTINGS_MODULE: "config.settings.production"
           DJANGO_ALLOWED_HOSTS: "*"
