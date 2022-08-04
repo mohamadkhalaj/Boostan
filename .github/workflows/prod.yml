@@ -39,7 +39,7 @@ jobs:
           BOOSTAN_USERNAME: ${{secrets.BOOSTAN_USERNAME}}
           BOOSTAN_PASSWORD: ${{secrets.BOOSTAN_PASSWORD}}
         run: |
-          pip install -r requirements.txt && pip install -r requirements/local.txt
+          pip install -r requirements.txt
       - name: Collect statics
         run: |
           python manage.py collectstatic --noinput  
