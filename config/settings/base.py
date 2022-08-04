@@ -77,10 +77,10 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "rest_framework",
-    "rest_framework.authtoken",
+    # "rest_framework",
+    # "rest_framework.authtoken",
     "corsheaders",
-    "drf_spectacular",
+    # "drf_spectacular",
     "admin_honeypot",
 ]
 
@@ -283,14 +283,14 @@ SOCIALACCOUNT_FORMS = {"signup": "boostan.users.forms.UserSocialSignupForm"}
 # django-rest-framework
 # -------------------------------------------------------------------------------
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "rest_framework.authentication.SessionAuthentication",
+#         "rest_framework.authentication.TokenAuthentication",
+#     ),
+#     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+# }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"
@@ -298,16 +298,16 @@ CSRF_FAILURE_VIEW = "config.views.csrf_failure"
 
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
-SPECTACULAR_SETTINGS = {
-    "TITLE": "boostan API",
-    "DESCRIPTION": "Documentation of API endpoints of boostan",
-    "VERSION": "1.0.0",
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
-    "SERVERS": [
-        {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
-        {"url": "https://https://boostan.herokuapp.com/", "description": "Production server"},
-    ],
-}
+# SPECTACULAR_SETTINGS = {
+#     "TITLE": "boostan API",
+#     "DESCRIPTION": "Documentation of API endpoints of boostan",
+#     "VERSION": "1.0.0",
+#     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+#     "SERVERS": [
+#         {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
+#         {"url": "https://https://boostan.herokuapp.com/", "description": "Production server"},
+#     ],
+# }
 # Your stuff...
 # ------------------------------------------------------------------------------
 # CSP Settings
