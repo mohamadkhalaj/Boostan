@@ -4,6 +4,7 @@ import time
 
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.utils import timezone
+from django.utils.html import escape
 from user_agents import parse as user_agent_parser
 
 from api.models import (
@@ -92,11 +93,11 @@ def after_auth_stuffs(ip_address, stu_number, password, name, credit, session, u
 def parse_user_agent(user_agent):
     parsed = user_agent_parser(user_agent)
     useragent = {}
-    useragent["browser"] = parsed.browser.family
-    useragent["browser-version"] = parsed.browser.version_string
-    useragent["os"] = parsed.os.family
-    useragent["os-version"] = parsed.os.version_string
-    useragent["device"] = parsed.device.family
+    useragent["browser"] = escape(parsed.browser.family)
+    useragent["browser-version"] = escape(parsed.browser.version_string)
+    useragent["os"] = escape(parsed.os.family)
+    useragent["os-version"] = escape(parsed.os.version_string)
+    useragent["device"] = escape(parsed.device.family)
     return useragent
 
 
@@ -105,9 +106,9 @@ def create_sessions_list(sessions):
     sessions_list = []
     for session in sessions:
         temp = {}
-        temp["session"] = session.session
-        temp["ip_address"] = session.ip_address
-        temp["last_used"] = naturaltime(session.last_used)
+        temp["session"] = escape(session.session)
+        temp["ip_address"] = escape(session.ip_address)
+        temp["last_used"] = escape(naturaltime(session.last_used))
         parsed_user_agent = {
             "browser": None,
             "browser-version": "",
