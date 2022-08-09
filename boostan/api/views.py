@@ -189,11 +189,17 @@ def logout(request):
 @require_http_methods(["POST"])
 def get_sessions(request):
     if not {"session"}.issubset(set(request.POST)):
-        return JsonResponse({"error": get_session_not_passed_message()}, status=400)  # Missing session parameter
+        return JsonResponse(
+            {"error": get_session_not_passed_message(), "relogin": True}, status=400
+        )  # Missing session parameter
     session = request.POST.get("session").strip()  # Get session parameter
     if not session:
-        return JsonResponse({"error": get_session_not_passed_message()}, status=400)  # Invalid session parameter
+        return JsonResponse(
+            {"error": get_session_not_passed_message(), "relogin": True}, status=400
+        )  # Invalid session parameter
     sessions = get_all_user_sessions_by_sesion(session)  # Get all user sessions by student session
     if not sessions:
-        return JsonResponse({"error": get_session_not_found_message()}, status=400)  # Session not found
+        return JsonResponse(
+            {"error": get_session_not_found_message(), "relogin": True}, status=400
+        )  # Session not found
     return JsonResponse({"message": create_sessions_list(sessions)}, status=200)  # Successful sessions
