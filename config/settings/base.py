@@ -70,6 +70,7 @@ DJANGO_APPS = [
     "django.contrib.humanize",  # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    "django.contrib.redirects",
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -146,6 +147,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "utils.middleware.vistorsMiddleware",
     "csp.middleware.CSPMiddleware",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
 
 # STATIC

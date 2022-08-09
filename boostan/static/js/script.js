@@ -1094,6 +1094,9 @@ function get_sessions() {
 			}
 			else {
 				let message = JSON.parse(xhr.responseText)
+				if (message['relogin']) {
+					show_login_page();
+				}
 				create_alert_notification(message['error'], 'danger')
 			}
 		}
@@ -1103,6 +1106,9 @@ function get_sessions() {
 
 function show_login_page(){
 	hide_order_btn();
+	close_session_menu();
+	close_contribute_menu();
+	close_main_menu();
 	forgotten_code_btn.disabled = false;
 	login_btn.disabled = false;
 	submit_btn.disabled = false;
