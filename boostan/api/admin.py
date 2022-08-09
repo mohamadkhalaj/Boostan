@@ -1,5 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.translation import gettext as _
+from django.utils.translation import ngettext
 
 from .models import (
     Message,
@@ -127,6 +128,72 @@ class studentAdmin(admin.ModelAdmin):
     )
     ordering = ("-last_used", "status")
     inlines = [sessionAdmin]
+    actions = [
+        "delete_sessions",
+        "mark_as_normal",
+        "mark_as_blocked",
+        "mark_as_whitlist",
+    ]
+
+    @admin.action(description=_("Mark selected students as normal"))
+    def mark_as_normal(self, request, queryset):
+        updated = queryset.update(status=0)
+        self.message_user(
+            request,
+            ngettext(
+                "%d student was successfully marked as normal.",
+                "%d students were successfully marked as normal.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    @admin.action(description=_("Mark selected students as blocked"))
+    def mark_as_blocked(self, request, queryset):
+        updated = queryset.update(status=1)
+        self.message_user(
+            request,
+            ngettext(
+                "%d student was successfully marked as blocked.",
+                "%d students were successfully marked as blocked.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    @admin.action(description=_("Mark selected students as whitelist"))
+    def mark_as_whitlist(self, request, queryset):
+        updated = queryset.update(status=2)
+        self.message_user(
+            request,
+            ngettext(
+                "%d student was successfully marked as whitelist.",
+                "%d students were successfully marked as whitelist.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
+
+    @admin.action(description=_("Delete selected student sessions"))
+    def delete_sessions(self, request, queryset):
+        # delete sessions from selected students
+        result = Session.objects.filter(student__in=queryset)
+        updated = result.count()
+        result.delete()
+
+        self.message_user(
+            request,
+            ngettext(
+                "%d session was successfully deleted.",
+                "%d sessions were successfully deleted.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
 
 
 admin.site.register(Student, studentAdmin)
