@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-14 10:18+0200\n"
+"POT-Creation-Date: 2022-08-09 21:06+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,149 +18,205 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: boostan/api/admin.py:6
+#: boostan/api/admin.py:15
 msgid "Boostan API management system"
 msgstr ""
 
-#: boostan/api/models.py:14
+#: boostan/api/admin.py:138
+msgid "Mark selected students as normal"
+msgstr ""
+
+#: boostan/api/admin.py:144
+#, python-format
+msgid "%d student was successfully marked as normal."
+msgid_plural "%d students were successfully marked as normal."
+msgstr[0] ""
+msgstr[1] ""
+
+#: boostan/api/admin.py:152
+msgid "Mark selected students as blocked"
+msgstr ""
+
+#: boostan/api/admin.py:158
+#, python-format
+msgid "%d student was successfully marked as blocked."
+msgid_plural "%d students were successfully marked as blocked."
+msgstr[0] ""
+msgstr[1] ""
+
+#: boostan/api/admin.py:166
+msgid "Mark selected students as whitelist"
+msgstr ""
+
+#: boostan/api/admin.py:172
+#, python-format
+msgid "%d student was successfully marked as whitelist."
+msgid_plural "%d students were successfully marked as whitelist."
+msgstr[0] ""
+msgstr[1] ""
+
+#: boostan/api/admin.py:180
+msgid "Delete selected student sessions"
+msgstr ""
+
+#: boostan/api/admin.py:190
+#, python-format
+msgid "%d session was successfully deleted."
+msgid_plural "%d sessions were successfully deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: boostan/api/models.py:36
 msgid "Normal"
 msgstr ""
 
-#: boostan/api/models.py:15
+#: boostan/api/models.py:37
 msgid "Blocked user"
 msgstr ""
 
-#: boostan/api/models.py:16
+#: boostan/api/models.py:38
 msgid "Whitelist user"
 msgstr ""
 
-#: boostan/api/models.py:20
+#: boostan/api/models.py:42
 msgid "Full name"
 msgstr ""
 
-#: boostan/api/models.py:24
+#: boostan/api/models.py:46
 msgid "Student number"
 msgstr ""
 
-#: boostan/api/models.py:28
+#: boostan/api/models.py:50
 msgid "Password"
 msgstr ""
 
-#: boostan/api/models.py:32
+#: boostan/api/models.py:54
 msgid "count of used"
 msgstr ""
 
-#: boostan/api/models.py:36
+#: boostan/api/models.py:58
 msgid "Credit"
 msgstr ""
 
-#: boostan/api/models.py:40
+#: boostan/api/models.py:62
 msgid "Top credit"
 msgstr ""
 
-#: boostan/api/models.py:45
+#: boostan/api/models.py:66
 msgid "Status"
 msgstr ""
 
-#: boostan/api/models.py:47
+#: boostan/api/models.py:67
 msgid "Tota received list"
 msgstr ""
 
-#: boostan/api/models.py:48
+#: boostan/api/models.py:68
 msgid "Total reserved food"
 msgstr ""
 
-#: boostan/api/models.py:49
+#: boostan/api/models.py:69
 msgid "Total forget code"
 msgstr ""
 
-#: boostan/api/models.py:55 boostan/api/models.py:74
+#: boostan/api/models.py:75 boostan/api/models.py:122
 msgid "Student"
 msgstr ""
 
-#: boostan/api/models.py:56
+#: boostan/api/models.py:76
 msgid "Students"
 msgstr ""
 
-#: boostan/api/models.py:61 boostan/api/models.py:99
+#: boostan/api/models.py:81 boostan/api/models.py:144
 msgid "First used time"
 msgstr ""
 
-#: boostan/api/models.py:66 boostan/api/models.py:104 boostan/api/models.py:127
+#: boostan/api/models.py:86 boostan/api/models.py:149 boostan/api/models.py:187
 msgid "Last used time"
 msgstr ""
 
-#: boostan/api/models.py:78 boostan/api/models.py:110
+#: boostan/api/models.py:91
+msgid "Sessions count"
+msgstr ""
+
+#: boostan/api/models.py:127 boostan/api/models.py:155
 msgid "Session"
 msgstr ""
 
-#: boostan/api/models.py:82 boostan/api/models.py:116
+#: boostan/api/models.py:131 boostan/api/models.py:176
 msgid "IP address"
 msgstr ""
 
-#: boostan/api/models.py:88
+#: boostan/api/models.py:136
 msgid "Telegram ID"
 msgstr ""
 
-#: boostan/api/models.py:91
+#: boostan/api/models.py:137
 msgid "Telegram Username"
 msgstr ""
 
-#: boostan/api/models.py:94 boostan/api/models.py:119
+#: boostan/api/models.py:139 boostan/api/models.py:179
 msgid "User agent"
 msgstr ""
 
-#: boostan/api/models.py:111
+#: boostan/api/models.py:156
 msgid "Sessions"
 msgstr ""
 
-#: boostan/api/models.py:120
+#: boostan/api/models.py:180
 msgid "Url path"
 msgstr ""
 
-#: boostan/api/models.py:121
+#: boostan/api/models.py:181
 msgid "Is admin panel"
 msgstr ""
 
-#: boostan/api/models.py:122
+#: boostan/api/models.py:182
 msgid "Data"
 msgstr ""
 
-#: boostan/api/models.py:130
+#: boostan/api/models.py:190
 msgid "visitor"
 msgstr ""
 
-#: boostan/api/models.py:131
+#: boostan/api/models.py:191
 msgid "visitors"
 msgstr ""
 
-#: boostan/api/models.py:138 boostan/api/models.py:150
-#: boostan/api/models.py:162
+#: boostan/api/models.py:217 boostan/api/models.py:239
+#: boostan/api/models.py:261 boostan/api/models.py:283
 msgid "Name"
 msgstr ""
 
-#: boostan/api/models.py:139 boostan/api/models.py:151
-#: boostan/api/models.py:163
+#: boostan/api/models.py:218 boostan/api/models.py:240
+#: boostan/api/models.py:262 boostan/api/models.py:284
 msgid "Value"
 msgstr ""
 
-#: boostan/api/models.py:142
+#: boostan/api/models.py:221
 msgid "Setting"
 msgstr ""
 
-#: boostan/api/models.py:143
+#: boostan/api/models.py:222
 msgid "Settings"
 msgstr ""
 
-#: boostan/api/models.py:154
+#: boostan/api/models.py:243
 msgid "Message"
 msgstr ""
 
-#: boostan/api/models.py:155
+#: boostan/api/models.py:244
 msgid "Messages"
 msgstr ""
 
-#: boostan/api/models.py:166 boostan/api/models.py:167
+#: boostan/api/models.py:265
+msgid "Tag"
+msgstr ""
+
+#: boostan/api/models.py:266
+msgid "Tags"
+msgstr ""
+
+#: boostan/api/models.py:287 boostan/api/models.py:288
 msgid "Statistics"
 msgstr ""
 
@@ -256,7 +312,7 @@ msgstr ""
 
 #: boostan/templates/account/login.html:7
 #: boostan/templates/account/login.html:11
-#: boostan/templates/account/login.html:56 boostan/templates/base.html:73
+#: boostan/templates/account/login.html:56
 msgid "Sign In"
 msgstr ""
 
@@ -288,7 +344,7 @@ msgstr ""
 
 #: boostan/templates/account/logout.html:5
 #: boostan/templates/account/logout.html:8
-#: boostan/templates/account/logout.html:17 boostan/templates/base.html:62
+#: boostan/templates/account/logout.html:17
 msgid "Sign Out"
 msgstr ""
 
@@ -365,7 +421,7 @@ msgid "Signup"
 msgstr ""
 
 #: boostan/templates/account/signup.html:9
-#: boostan/templates/account/signup.html:19 boostan/templates/base.html:68
+#: boostan/templates/account/signup.html:19
 msgid "Sign Up"
 msgstr ""
 
@@ -419,10 +475,6 @@ msgid ""
 "mail address</a>."
 msgstr ""
 
-#: boostan/templates/base.html:58
-msgid "My Profile"
-msgstr ""
-
 #: boostan/users/admin.py:18
 msgid "Personal info"
 msgstr ""
@@ -459,6 +511,6 @@ msgstr ""
 msgid "Last Used Time"
 msgstr ""
 
-#: boostan/utils/telegram.py:28 boostan/utils/telegram.py:46
+#: boostan/utils/telegram.py:29 boostan/utils/telegram.py:47
 msgid "Telegram timeout."
 msgstr ""
