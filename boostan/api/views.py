@@ -54,11 +54,15 @@ def login(request):
         return JsonResponse(
             {"error": get_missing_parameter_message(), "relogin": True}, status=400  # Parameteres missing
         )
-    ip_address = get_client_ip(request)
     # Get request parameters
-    user_agent = request.META.get("HTTP_USER_AGENT", "")
     stu_number = request.POST.get("stun").strip()
     password = request.POST.get("password").strip()
+    if not (stu_number and password):
+        return JsonResponse(
+            {"error": get_invalid_credential_message(), "relogin": True}, status=401  # Invalid credentials
+        )
+    ip_address = get_client_ip(request)
+    user_agent = request.META.get("HTTP_USER_AGENT", "")
     telegram_data = json.loads(request.POST.get("telegram_data"))
     boostan = Boostan(stu_number, password)  # Create Boostan object
     login_status = boostan.login()  # Login to boostan
