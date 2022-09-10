@@ -1,5 +1,5 @@
 # Boostan
-Boostan (IKIU reserve food) system fluent and responsive client.
+Boostan (IKIU food reserve), fluent and responsive client.
 
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![.github/workflows/prod.yml](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml/badge.svg)](https://github.com/mohamadkhalaj/Boostan/actions/workflows/prod.yml)
