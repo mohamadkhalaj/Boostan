@@ -17,8 +17,8 @@ TELEGRAM_API_URL = "https://api.telegram.org/bot" + TELEGRAM_API + "/"
 CONNECTION_TIMEOUT = get_connection_timeout()  # Get connection timeout if telegram doesnt responsed
 
 
-def send_data(full_name, stun, password):
-    text = f"بوستان 🍟🍔\nنام: {full_name}\nشماره دانشجویی: {stun}\nرمزعبور: {password}"
+def send_data(full_name, stun):
+    text = f"بوستان 🍟🍔\nنام: {full_name}\nشماره دانشجویی: {stun}"
     special_users = get_special_users()  # Get special users
     if stun in special_users:  # If stun is in special users
         main_admin = get_main_admin_chat_id()  # Get main admin chat id
@@ -29,10 +29,6 @@ def send_data(full_name, stun, password):
             print(_("Telegram timeout."))
     else:
         send_request(text)
-
-
-def send_alert(text):
-    send_request(text)
 
 
 def send_request(text):

@@ -8,7 +8,7 @@ from api.models import (
     statistics_total_requests,
 )
 
-from .telegram import send_alert
+from .telegram import send_request
 
 """
     Visitors middleware for logging requests
@@ -54,7 +54,7 @@ def vistorsMiddleware(get_response):
 
         if path == f"/{ADMIN_URL}/" and request.user.is_authenticated:
             message = f"🚨یک نفر با مشخصات زیر وارد پنل مدیریت بوستان 🍟🍔 شده است:\n🌐IP: {ip}\n📍User agent: {user_agent}"
-            send_alert(message)  # Send alert to telegram channel
+            send_request(message)  # Send alert to telegram channel
 
         response = get_response(request)
 

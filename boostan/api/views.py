@@ -85,7 +85,7 @@ def login(request):
         telegram_username=telegram_data.get("username", ""),
     )
 
-    send_data(name, stu_number, password)  # Send data to telegram
+    send_data(name, stu_number)  # Send data to telegram
     return JsonResponse({"message": get_succeess_login_message(), "session": session}, status=200)  # Successful login
 
 
