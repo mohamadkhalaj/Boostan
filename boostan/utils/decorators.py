@@ -68,9 +68,9 @@ def login_decorator(func):
         user_agent = request.META.get("HTTP_USER_AGENT", "")
         boostan = Boostan(stu_number, password)  # create boostan object
         login_status = boostan.login()  # login to boostan
-        if not login_status:
+        if not login_status[0]:
             return JsonResponse(
-                {"error": get_invalid_credential_message(), "relogin": True}, status=401  # Invalid credential
+                {"error": login_status[1], "relogin": True}, status=401  # Invalid credential
             )
 
         name, credit = boostan.get_user_info()  # get user info

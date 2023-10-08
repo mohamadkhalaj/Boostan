@@ -1,11 +1,11 @@
-Telegram.WebApp.MainButton.showProgress(true);
-Telegram.WebApp.ready();
-const initData = Telegram.WebApp.initData || "";
-const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+window.Telegram.WebApp.MainButton.show();
+window.Telegram.WebApp.MainButton.showProgress(true);
+window.Telegram.WebApp.ready();
+const initDataUnsafe = window.Telegram.WebView.initParams;
 var origin = window.location.origin + '/';
 
-if (!Telegram.WebApp.isExpanded) {
-  Telegram.WebApp.expand();
+if (!window.Telegram.WebApp.isExpanded) {
+  window.Telegram.WebApp.expand();
 }
 
 function getElement(id) {
@@ -38,9 +38,9 @@ const not_reserved_text = tags['not_reserved'];
 const logout_text = tags['logout'];
 const insufficient_balance_text = tags['insufficient_balance'];
 const meal_submit_text = tags['meal_submit'];
-const telegram_main_btn_order_text = tags['telegram_main_btn_order'];
+const telegram_main_btn_order_text = tags['telegram_main_btn_order']; // deprecated
 const sending_data_loading_text = tags['sending_data_loading'];
-const telegram_main_btn_sending_data_loading_text = tags['telegram_main_btn_sending_data_loading'];
+const telegram_main_btn_sending_data_loading_text = tags['telegram_main_btn_sending_data_loading']; // deprecated
 const breakfast_text = tags['breakfast'];
 const lunch_text = tags['lunch'];
 const order_button_text = tags['order_button'];
@@ -68,9 +68,9 @@ function togglePassword() {
 	}
 }
 
-Telegram.WebApp.MainButton.hideProgress();
-Telegram.WebApp.MainButton.setText(telegram_main_btn_order_text).onClick(submit);
-Telegram.WebApp.BackButton.show().onClick(Telegram.WebApp.close);
+window.Telegram.WebApp.MainButton.hideProgress();
+window.Telegram.WebApp.MainButton.setText(order_button_text).onClick(submit);
+window.Telegram.WebApp.BackButton.show().onClick(window.Telegram.WebApp.close);
 
 const login_form = getElement('login-form');
 const student_password = getElement('student_password');
@@ -454,6 +454,8 @@ function create_meal_menu(meal, meal_name, self_id, food_id, meal_id, day, date,
 						meal_menu_body_col1_card_text.className = 'fw-bolder'
 
 						meal_menu_body_col1_card_text.innerText = item['name']
+						meal_menu_body_col1_card_text.setAttribute('value', item['value'])
+						meal_menu_body_col1_card_text.setAttribute('index', index)
 						meal_menu_body_col1_card_text_price.innerText = pretty_numbers(item['price']) + ' تومان'
 						meal_menu_body_col1_card_text_price.setAttribute('value', item['price'])
 
@@ -624,7 +626,7 @@ function meal_clicked() {
 	getElement(menu_id).classList.add('meal-menu-visible');
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show');
 	if (check_user_supports_haptic_or_no()) {
-		Telegram.WebApp.HapticFeedback.selectionChanged();
+		window.Telegram.WebApp.HapticFeedback.selectionChanged();
 	}
 	hide_order_btn();
 }
@@ -665,7 +667,7 @@ function change_self(this_obj) {
 
 function cancel_reserve_btn() {
 	if (check_user_supports_haptic_or_no()) {
-		Telegram.WebApp.HapticFeedback.selectionChanged();
+		window.Telegram.WebApp.HapticFeedback.selectionChanged();
 	}
 	let price = get_food_price(this)
 	let credit = parseFloat($('#user-credit').attr('value'))
@@ -729,7 +731,7 @@ function submit() {
 				let message = JSON.parse(xhr.responseText)['message']
 				create_alert_notification(message, 'success')
 				if (check_user_supports_haptic_or_no()) {
-					Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+					window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
 				}
 			}
 			else {
@@ -740,7 +742,7 @@ function submit() {
 				}
 				create_alert_notification(message['error'], 'danger')
 				if (check_user_supports_haptic_or_no()) {
-					Telegram.WebApp.HapticFeedback.notificationOccurred('error');
+					window.Telegram.WebApp.HapticFeedback.notificationOccurred('error');
 				}
 			}
 			submit_btn.disabled = false;
@@ -749,7 +751,7 @@ function submit() {
 	};
 	create_alert_notification(reserve_food_text_message, 'warning')
 	xhr.send(params);
-	// Telegram.WebApp.close()
+	// window.Telegram.WebApp.close()
 }
 
 function create_alert_notification(message, type) {
@@ -757,7 +759,7 @@ function create_alert_notification(message, type) {
 	let alert_obj = getElement('success-alert');
 	let tel_type = type == 'danger' ? 'error' : type;
 	if (check_user_supports_haptic_or_no()){
-		Telegram.WebApp.HapticFeedback.notificationOccurred(tel_type);
+		window.Telegram.WebApp.HapticFeedback.notificationOccurred(tel_type);
 	}
 	if (!alert_obj) {
 		let parent_alert = document.getElementsByClassName('container alert-message')[0];
@@ -840,7 +842,7 @@ function login_and_place_list(){
 				$('#user-credit').text("اعتبار: " + pretty_numbers(food_list['credit']) + " تومان");
 				$('#user-credit').attr('value', food_list['credit'])
 				show_order_btn();
-				Telegram.WebApp.MainButton.enable();
+				window.Telegram.WebApp.MainButton.enable();
 				create_days()
 				if (!Object.keys(initDataUnsafe).length) {
 					getElement('submit-btn-web').style.display = 'block';
@@ -901,6 +903,7 @@ function get_session_from_api(username, password) {
 		'id': "",
 		'username': "",
 	}
+	const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
 	if (Object.keys(initDataUnsafe).length != 0){
 		telegram_data['id'] = initDataUnsafe.user.id;
 		telegram_data['username'] = initDataUnsafe.user.username;
@@ -939,7 +942,7 @@ function get_session_from_api(username, password) {
 function main_menu() {
 	hide_order_btn();
 	if (check_user_supports_haptic_or_no()) {
-		Telegram.WebApp.HapticFeedback.selectionChanged();
+		window.Telegram.WebApp.HapticFeedback.selectionChanged();
 	}
 	document.getElementsByClassName('meal-menu-wrapper')[0].classList.add('meal-menu-wrapper-show')
 	getElement('main-menu').style.visibility = "visible";
@@ -1056,6 +1059,7 @@ function logout() {
 					close_contribute_menu();
 					close_main_menu();
 					show_login_page();
+					window.Telegram.WebApp.MainButton.hide();
 				}
 			}
 			else {
@@ -1118,6 +1122,7 @@ function show_login_page(){
 	getElement('submit-btn-web').style.display = 'none';
 	remove_objects()
 	localStorage.removeItem('session');
+	window.Telegram.WebApp.MainButton.hide();
 }
 
 function open_session_menu() {
@@ -1141,9 +1146,9 @@ function close_alert() {
 }
 
 function sending_data_loading() {
-	Telegram.WebApp.MainButton.showProgress(true);
-	Telegram.WebApp.MainButton.setText(telegram_main_btn_sending_data_loading_text);
-	Telegram.WebApp.MainButton.disable();
+	window.Telegram.WebApp.MainButton.showProgress(true);
+	window.Telegram.WebApp.MainButton.setText(sending_data_loading_text);
+	window.Telegram.WebApp.MainButton.disable();
 
 	if (!Object.keys(initDataUnsafe).length) {
 		getElement('submit-btn-web-text').innerText = sending_data_loading_text;
@@ -1151,18 +1156,18 @@ function sending_data_loading() {
 }
 
 function reset_order_btn_text() {
-	Telegram.WebApp.MainButton.setText(telegram_main_btn_order_text);
+	window.Telegram.WebApp.MainButton.setText(order_button_text);
 	if (!Object.keys(initDataUnsafe).length) {
 		getElement('submit-btn-web-text').innerText = order_button_text;
 	}
-	Telegram.WebApp.MainButton.hideProgress();
+	window.Telegram.WebApp.MainButton.hideProgress();
 }
 
 function hide_order_btn() {
 	if (!Object.keys(initDataUnsafe).length) {
 		getElement('submit-btn-web').style.display = 'none';
 	}
-	Telegram.WebApp.MainButton.hide();
+	window.Telegram.WebApp.MainButton.hide();
 }
 
 function show_order_btn() {
@@ -1170,15 +1175,15 @@ function show_order_btn() {
 		if (!Object.keys(initDataUnsafe).length) {
 			getElement('submit-btn-web').style.display = 'block';
 		}
-		Telegram.WebApp.MainButton.show();
+		window.Telegram.WebApp.MainButton.show();
 	}
 }
 
 function check_user_supports_haptic_or_no(){
-	let tg_version = parseFloat(Telegram.WebApp.version);
+	let tg_version = parseFloat(window.Telegram.WebApp.version);
 	let tg_data_available = Object.keys(initDataUnsafe).length;
 	return tg_data_available && tg_version >= 6.1;
 }
 
-Telegram.WebApp.MainButton.disable();
+window.Telegram.WebApp.MainButton.disable();
 check_login()

@@ -52,7 +52,7 @@ from .models import (
 def login(request):
     if not {"stun", "password", "telegram_data"}.issubset(set(request.POST)):
         return JsonResponse(
-            {"error": get_missing_parameter_message(), "relogin": True}, status=400  # Parameteres missing
+            {"error": get_missing_parameter_message(), "relogin": True}, status=400  # Parameters missing
         )
     # Get request parameters
     stu_number = request.POST.get("stun").strip()
@@ -66,9 +66,9 @@ def login(request):
     telegram_data = json.loads(request.POST.get("telegram_data"))
     boostan = Boostan(stu_number, password)  # Create Boostan object
     login_status = boostan.login()  # Login to boostan
-    if not login_status:
+    if not login_status[0]:
         return JsonResponse(
-            {"error": get_invalid_credential_message(), "relogin": True}, status=401  # Invalid credentials
+            {"error": login_status[1], "relogin": True}, status=401  # Invalid credentials
         )
     name, credit = boostan.get_user_info()  # Get user info
     session = session_generator()  # Generate session
@@ -102,12 +102,9 @@ def food_list(request, student, boostan):
     food_list_status = boostan.get_food_list()  # Get food list from boostan
     name, credit = boostan.get_user_info()  # Get user info
     student_info = {"name": name, "credit": credit}
-    if not food_list_status:
-        return JsonResponse({"error": get_deadline_message(), "student": student_info}, status=400)  # Deadline
-    elif food_list_status == 1:
-        return JsonResponse(
-            {"error": get_insufficient_balance_message(), "student": student_info}, status=400  # Insufficient balance
-        )
+    if False in food_list_status and not food_list_status[0]:
+        return JsonResponse({"error": food_list_status[1], "student": student_info}, status=400)  # Deadline
+
     food_list = food_list_status
     statistics_total_list()  # Increment total food list recieved
     increment_total_recieved_list(student)  # Increment total food list recieved by student

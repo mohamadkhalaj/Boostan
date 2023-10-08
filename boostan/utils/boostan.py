@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 
 
 class Boostan:
-
     login_url = "https://stu.ikiu.ac.ir/foodlog.aspx"
     main_food_url = "https://stu.ikiu.ac.ir/desktopfood.aspx"
     food_list_url = "https://stu.ikiu.ac.ir/layers.aspx?quiz=resfood"
@@ -23,6 +22,14 @@ class Boostan:
         self.credit = 0
         self.list = {}
         self.session_cookie = {}
+
+    @staticmethod
+    def replace_arabic_with_persian(text):
+        # Define a translation table for Arabic to Persian characters
+        table = {"ي": "ی", "ك": "ک"}
+        for key, value in table.items():
+            text = text.replace(key, value)
+        return text.replace(" .", ".")
 
     def _get_login_form_data(self):
         login_response = requests.get(Boostan.login_url).text
@@ -47,6 +54,22 @@ class Boostan:
         form += "__ASYNCPOST=true&"
         return form
 
+    def get_errors(self, response, function_name):
+        soup = BeautifulSoup(response.text, "html.parser")
+        if function_name == "login":
+            error = soup.find("span", attrs={"id": "lbe", "style": "color:Red;"})
+            if error:
+                return Boostan.replace_arabic_with_persian(error.text)
+        elif function_name == "get-list":
+            error = soup.find("span", attrs={"id": "ctl00_main_abl"})
+            if error:
+                return Boostan.replace_arabic_with_persian(error.text)
+        elif function_name == "forgotten-code":
+            error = soup.find("div", attrs={"id": "ctl00_main_tberror"})
+            if error:
+                return Boostan.replace_arabic_with_persian(error.text)
+        return None
+
     def login(self):
         headers = {
             "Host": "stu.ikiu.ac.ir",
@@ -68,16 +91,9 @@ class Boostan:
         data = self._get_login_form_data()
         response = requests.post(Boostan.login_url, headers=headers, data=data.encode("utf-8"))
         cookie_token = response.cookies.get_dict()["ASP.NET_SessionId"]
-        error_message = [
-            "نام کاربری و يا کلمه عبور شما اشتباه می باشد",
-            "نام کاربری شما اشتباه می باشد",
-            " اطلاعات ورودی نادرست می باشد.",
-            "نام کاربری  شما اشتباه می باشد",
-            "لطفا نام کاربری را به عدد وارد نمایید .",
-        ]
-        for error in error_message:
-            if error in response.text:
-                return False
+        error = self.get_errors(response, "login")
+        if error:
+            return False, error
         self.cookie = cookie_token
         self.session_cookie = {
             "ASP.NET_SessionId": self.cookie,
@@ -170,13 +186,9 @@ class Boostan:
         }
 
         response = requests.get(Boostan.food_list_url, cookies=self.session_cookie, headers=headers)
-        if (
-            "زمان انتخاب برنامه غذایی به پایان رسیده است ." in response.text
-            or "زمان انتخاب برنامه غذایی نرسیده است ." in response.text
-        ):
-            return 0
-        if "اعتبار فعلی شما برای انتخاب غذا کافی نیست" in response.text:
-            return 1
+        error = self.get_errors(response, "get-list")
+        if error:
+            return False, error
         already_reserved_foods = self.get_already_reserved_foods(response)
         form = self._create_self_form(response.text)
         response = requests.post(
@@ -192,7 +204,7 @@ class Boostan:
         }
         for index, day in enumerate(days):
             try:
-                date_and_day = soup.findAll("div", {"id": f"ctl00_main_Div{index+1}"})[0]
+                date_and_day = soup.findAll("div", {"id": f"ctl00_main_Div{index + 1}"})[0]
             except IndexError:
                 continue
             day = re.findall(r"<b>(.*)<br/>", str(date_and_day.span.b))[0]
@@ -222,7 +234,7 @@ class Boostan:
         option = 0
         while True:
             try:
-                meal_food = soup.find_all("input", attrs={"id": f"ctl00_main_rb{meal}{index+1}_{option}"})[0]
+                meal_food = soup.find_all("input", attrs={"id": f"ctl00_main_rb{meal}{index + 1}_{option}"})[0]
             except IndexError:
                 break
             option += 1
@@ -246,7 +258,7 @@ class Boostan:
         return ar
 
     def _create_self_option(self, soup, index, meal, reserved_list):
-        selfs = soup.find_all("select", attrs={"name": f"ctl00$main$dpself{meal}{index+1}"})
+        selfs = soup.find_all("select", attrs={"name": f"ctl00$main$dpself{meal}{index + 1}"})
         ar = []
         for self_ in selfs[0].find_all("option"):
             temp = {}
@@ -262,7 +274,6 @@ class Boostan:
         return ar
 
     def _create_self_form(self, food_response, submit=False):
-
         soup = BeautifulSoup(food_response, "html.parser")
         inputs = soup.find_all("input")
         ignore_list = ["-1", "ثبت تغییرات", "ثبت"]
@@ -378,7 +389,6 @@ class Boostan:
                 return 2
 
     def reserve_food(self, reserve_list):
-
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
             "Accept": "*/*",
