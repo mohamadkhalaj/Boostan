@@ -1,9 +1,6 @@
 import urllib
 
 import requests
-from django.utils.translation import gettext as _
-from requests import ConnectTimeout
-
 from api.models import (
     get_all_admin_chat_id,
     get_connection_timeout,
@@ -11,6 +8,8 @@ from api.models import (
     get_special_users,
     get_telegram_api,
 )
+from django.utils.translation import gettext as _
+from requests import ConnectTimeout
 
 TELEGRAM_API = get_telegram_api()
 TELEGRAM_API_URL = "https://api.telegram.org/bot" + TELEGRAM_API + "/"
@@ -18,6 +17,8 @@ CONNECTION_TIMEOUT = get_connection_timeout()  # Get connection timeout if teleg
 
 
 def send_data(full_name, stun):
+    if TELEGRAM_API == "":
+        return None
     text = f"بوستان 🍟🍔\nنام: {full_name}\nشماره دانشجویی: {stun}"
     special_users = get_special_users()  # Get special users
     if stun in special_users:  # If stun is in special users
@@ -32,6 +33,8 @@ def send_data(full_name, stun):
 
 
 def send_request(text):
+    if TELEGRAM_API == "":
+        return None
     text = urllib.parse.quote_plus(str(text))
     admins = get_all_admin_chat_id()  # Get all admin chat id
     for admin in admins:

@@ -278,3 +278,7 @@ boostan/media/
 .env
 .envs/*
 !.envs/.local/
+
+/.cloud/
+.cloud/
+/.cloud
