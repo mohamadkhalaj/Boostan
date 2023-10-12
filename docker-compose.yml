@@ -10,7 +10,7 @@ services:
              python manage.py collectstatic --noinput && \
              python manage.py createsuperuser --user admin --email exchange@localhost --noinput > /dev/null; \
              python manage.py loaddefaults; \
-             gunicorn -b 0.0.0.0 -p 8000 config.wsgi:application"
+             gunicorn --workers=2 --threads=2 -b 0.0.0.0 -p 8000 config.wsgi:application"
     volumes:
       - ./web:/web
 
