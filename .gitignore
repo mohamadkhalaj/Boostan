@@ -6,7 +6,9 @@ __pycache__/
 *.pem
 # C extensions
 *.so
-
+postgre
+.idea
+.envs
 # Distribution / packaging
 .Python
 build/

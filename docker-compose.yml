@@ -1,0 +1,36 @@
+version: "3.11"
+
+services:
+  web:
+    restart: always
+    container_name: web
+    build: ./web/
+    command: sh -c "while ! python manage.py sqlflush > /dev/null 2>&1; do sleep 1; done && \
+             python manage.py migrate --noinput && \
+             python manage.py collectstatic --noinput && \
+             python manage.py createsuperuser --user admin --email exchange@localhost --noinput > /dev/null; \
+             python manage.py loaddefaults; \
+             gunicorn -b 0.0.0.0 -p 8000 config.wsgi:application"
+    volumes:
+      - ./web:/web
+
+  db:
+    restart: always
+    container_name: db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgre:/var/lib/postgresql/data
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./web/staticfiles:/web/staticfiles
